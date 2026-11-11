@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ff5a00"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='14' fill='%23ff5a00'/%3E%3Cpath d='M14 19h20l-1.6 16a3 3 0 01-3 2.7H18.6a3 3 0 01-3-2.7z' fill='%23fff'/%3E%3C/svg%3E">
+<title>طلبات | توريد المناديب</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{ink:'#14161a',sun:'#ff5a00'}}}}</script>
+<style>
+body{font-family:Cairo,Tahoma,sans-serif;background:#f6efe5;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
+.dark body{background:#170b0e}
+.hdr{background:linear-gradient(160deg,#ff6a1a,#ff5a00);position:relative;overflow:hidden;border-radius:0 0 32px 32px;box-shadow:0 12px 30px -14px #c2410c99}
+.hdr::before{content:"";position:absolute;width:230px;height:230px;border-radius:46% 54% 58% 42%;background:#ffffff14;top:-90px;left:-70px}.hdr::after{content:"";position:absolute;width:150px;height:150px;border-radius:55% 45% 40% 60%;background:#3f131914;bottom:-60px;right:-40px}.hdr>*{position:relative;z-index:1}
+.wm{display:inline-block;background:#3f1319;color:#f6efe5;font-weight:800;font-size:21px;padding:1px 13px 3px;border-radius:9px;transform:rotate(-2.5deg);box-shadow:0 6px 14px -6px #0006}
+.av{width:46px;height:46px;border-radius:16px;background:#f6efe5;color:#3f1319;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center}
+.ib{width:40px;height:40px;border-radius:14px;background:#ffffff2e;color:#fff;display:flex;align-items:center;justify-content:center}.ib:active{background:#ffffff44}
+.card{background:#fff;border-radius:22px;padding:18px;border:1px solid #e5e9f0;box-shadow:0 1px 2px #0f172a08,0 10px 28px -16px #0f172a22}
+.dark .card{background:#251317;border-color:#3d2128;box-shadow:none}
+.tic{width:52px;height:52px;border-radius:16px;background:#ff5a0026;color:#e04e00;display:flex;align-items:center;justify-content:center;flex:none}.dark .tic{color:#ff5a00}.tic svg{width:26px;height:26px}
+.inp{width:100%;border:1.5px solid #e3d6c6;border-radius:16px;padding:14px 16px;background:#fff;outline:none;font-size:16px;transition:border-color .15s,box-shadow .15s}
+.dark .inp{background:#170b0e;border-color:#4a2830;color:#f1f5f9}
+.inp:focus{border-color:#ff5a00;box-shadow:0 0 0 4px #ff5a0030}
+.btn{width:100%;background:#ff5a00;color:#fff;font-weight:800;border-radius:999px;padding:15px 22px;font-size:17px;transition:transform .1s;display:block;text-align:center;box-shadow:0 8px 18px -10px #e04e00}
+.btn:active{transform:scale(.98)}.btn.dk{background:#3f1319;color:#f6efe5;box-shadow:none}.dark .btn.dk{background:#5a2330}
+.btn.rd{background:#c8102e;color:#fff;box-shadow:none}.btn.gh{background:transparent;border:2px solid #e3d6c6;color:inherit;box-shadow:none}.dark .btn.gh{border-color:#4a2830}
+.btn.s{width:auto;padding:8px 16px;font-size:14px;border-radius:999px;display:inline-block}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block}
+.trk-ic{width:68px;height:68px;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center}.trk-ic svg{width:34px;height:34px}
+.trk-ic.ok{background:#10b9811f;color:#10b981}.trk-ic.no{background:#e11d481f;color:#e11d48}
+.sw{width:48px;height:28px;border-radius:99px;background:#cbd2dc;position:relative;transition:background .25s;flex:none}.dark .sw{background:#4a2830}.sw.on{background:#ff5a00}.sw i{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0004;transition:transform .25s cubic-bezier(.4,0,.2,1)}.sw.on i{transform:translateX(-20px)}
+.num{direction:ltr;unicode-bidi:embed;font-variant-numeric:tabular-nums}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}.step{animation:up .25s}
+.cdb{transition:width 1s linear}
+
+.oc{background:#fff;border:1px solid #eadfce;border-radius:22px;padding:16px;box-shadow:0 1px 2px #0f172a08,0 12px 28px -18px #3f131955}
+.dark .oc{background:#251317;border-color:#3d2128;box-shadow:none}
+.oc-open{border:2px solid #ff5a00}
+.oi{width:46px;height:46px;border-radius:15px;display:flex;align-items:center;justify-content:center;flex:none}
+.idbox{margin-top:10px;border:1.5px dashed #ff5a0099;background:#ff5a000f;border-radius:16px;padding:12px}
+.cpy{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:13px;border-radius:14px;background:#3f1319;color:#f6efe5;font-weight:800;font-size:16px;transition:transform .1s}
+.cpy:active{transform:scale(.97)}.dark .cpy{background:#5a2330}
+.kv{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;padding:8px 0;border-top:1px solid #f0e7da}.dark .kv{border-color:#3d2128}.kv:first-child{border-top:0}
+.amt{margin:12px 0 2px;padding:12px;border-radius:16px;background:#ff5a000f;text-align:center}
+.sw.site{background:#f87171;width:60px;height:34px;box-shadow:0 0 0 3px #ffffff40}.sw.site i{width:28px;height:28px;top:3px;right:3px}.sw.site.on{background:#22c55e}.sw.site.on i{transform:translateX(-26px)}
+.btn.gr{background:#059669;color:#fff;box-shadow:none}
+.ntc{border-radius:14px;padding:10px 12px;font-size:13px;font-weight:700;margin-top:8px;background:#0ea5e91a;color:#0369a1}.dark .ntc{color:#7dd3fc}
+</style>
+</head>
+<body class="text-ink dark:text-slate-100 min-h-screen">
+<div id="app" class="max-w-lg mx-auto pb-24"></div>
+<div id="toast" class="fixed top-3 inset-x-3 z-50 flex flex-col items-center gap-2 pointer-events-none"></div>
+<script>
+/* ============ إعدادات Firebase (بتاعتك) ============ */
+const CFG={apiKey:"AIzaSyBtAQvHw5bW8Bk8LpsSoguFhl5g5SZKtaI",authDomain:"dffvfv.firebaseapp.com",databaseURL:"https://dffvfv-default-rtdb.europe-west1.firebasedatabase.app",projectId:"dffvfv",storageBucket:"dffvfv.firebasestorage.app",messagingSenderId:"443974849871",appId:"1:443974849871:web:d16ea3d30389fac8efa13a"};
+const ADMIN='7777777',NTFY='https://ntfy.sh/';
+const $=s=>document.querySelector(s);
+let D=null,DB={users:{},orders:{},settings:{},presence:{},pinreq:{}},me=null,loaded=false,err='',view='home',tab='orders',mode='login',w={},wd={},seen={},seenPin={},seenU={},lf='all',lo=true;
+try{const c=JSON.parse(localStorage.getItem('cred')||'null');if(c)me=c}catch(e){}
+const IC={home:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>',tag:'<path d="M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0L3 13V3h10l7.6 7.6a2 2 0 010 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',moon:'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',out:'<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>',in:'<path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/>',users:'<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8"/>',phone:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>',chev:'<path d="M15 18l-6-6 6-6"/>',inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.1L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.5-6.9A2 2 0 0016.8 4H7.2a2 2 0 00-1.7 1.1z"/>',chart:'<path d="M3 3v18h18M7 15v3M12 9v9M17 5v13"/>',cog:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',check:'<path d="M20 6L9 17l-5-5"/>',x:'<path d="M18 6L6 18M6 6l12 12"/>',bank:'<path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/>',receipt:'<path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6"/>',copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>',unlock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 017.5-2"/>'};
+const ic=(n,c='')=>`<svg class="${c}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
+const LOGO=(z=44)=>`<svg width="${z}" height="${z}" viewBox="0 0 48 48"><rect width="48" height="48" rx="16" fill="#f6efe5"/><path d="M14 19h20l-1.6 16a3 3 0 01-3 2.7H18.6a3 3 0 01-3-2.7z" fill="#ff5a00"/><path d="M19 22v-3a5 5 0 0110 0v3" fill="none" stroke="#ff5a00" stroke-width="3" stroke-linecap="round"/><path d="M20 29.5l3 3 5.5-6" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const f=n=>Number(n||0).toLocaleString('en');
+const MN={insta:'انستا باي',wallet:'محفظة إلكترونية',ajel:'آجل'};
+const SL={pending:['بانتظار الأدمن','bg-amber-100 text-amber-800 dark:bg-amber-400/15 dark:text-amber-300'],processing:['فوري بعت SMS','bg-sky-100 text-sky-800 dark:bg-sky-400/15 dark:text-sky-300'],done:['تم ✅','bg-emerald-100 text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-300'],rejected:['مرفوض','bg-rose-100 text-rose-800 dark:bg-rose-400/15 dark:text-rose-300']};
+const FD={insta:5,wal:10,walMax:1500,ajL:5,ajH:10,ajT:1000},FC=()=>({...FD,...(S().fees||{})});
+const fee=(m,a)=>{const c=FC();return m==='insta'?+c.insta:m==='wallet'?(a>0&&a<=c.walMax?+c.wal:null):m==='ajel'?(a>0?(a>c.ajT?+c.ajH:+c.ajL):null):null};
+const mydisc=()=>Object.entries((U()||{}).disc||{}).map(([k,v])=>({code:k,...(S().codes||{})[k],left:v.left})).filter(d=>d.pct&&d.on!==false);
+const dsc=(m,b)=>{if(b===null)return{fe:null};let best=null;mydisc().forEach(d=>{if((d.method==='all'||d.method===m)&&(!best||d.pct>best.pct))best=d});return best?{fe:Math.round(b*(1-best.pct/100)),base:b,code:best.code,pct:best.pct}:{fe:b,base:b}};
+const time=t=>new Date(t).toLocaleString('ar-EG',{hour:'2-digit',minute:'2-digit',day:'numeric',month:'short'});
+const hs=s=>{let a=0xdeadbeef,b=0x41c6ce57;for(let i=0,c;i<s.length;i++){c=s.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^(a>>>16),2246822507)^Math.imul(b^(b>>>13),3266489909);b=Math.imul(b^(b>>>16),2246822507)^Math.imul(a^(a>>>13),3266489909);return(4294967296*(2097151&b)+(a>>>0)).toString(36)};
+const pwh=(id,pw)=>hs('dlv|'+id+'|'+pw);
+const rnd=()=>'dlv-'+Array.from(crypto.getRandomValues(new Uint8Array(12)),b=>b.toString(36).padStart(2,'0')).join('');
+const isA=()=>me&&me.id===ADMIN,U=()=>me&&DB.users[me.id],S=()=>DB.settings||{};
+const ords=()=>Object.entries(DB.orders||{}).map(([k,o])=>({...o,id:k})).sort((a,b)=>b.ts-a.ts);
+if(localStorage.getItem('dk')==='1'||(localStorage.getItem('dk')===null&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark');
+const dark=()=>localStorage.setItem('dk',document.documentElement.classList.toggle('dark')?1:0);
+function toast(m,t){const d=document.createElement('div');d.className='pointer-events-auto px-4 py-3 rounded-2xl shadow-xl font-bold text-white '+(t==='err'?'bg-rose-600':t==='alert'?'bg-ink border-2 border-sun':'bg-emerald-600');d.textContent=m;$('#toast').appendChild(d);setTimeout(()=>d.remove(),t==='alert'?7000:3000)}
+function copy(t){const ok=()=>toast('تم النسخ');try{navigator.clipboard.writeText(t).then(ok,fb)}catch(e){fb()}function fb(){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{document.execCommand('copy')}catch(e){}x.remove();ok()}}
+
+/* ============ الإشعارات الحقيقية عبر ntfy (شغالة والتطبيق مقفول) ============ */
+const ping=(topic,title,message,p)=>{if(!topic)return Promise.resolve(false);return fetch(NTFY,{method:'POST',body:JSON.stringify({topic,title,message,priority:p||4,tags:['moneybag']})}).then(r=>r.ok).catch(()=>false)};
+async function testPing(){const t=myTopic();if(!t)return toast('مفيش قناة لسه، اضغط "غيّر القناة"','err');toast('جاري الإرسال…');const ok=await ping(t,'إشعار تجريبي ✅','لو شايف الرسالة دي يبقى الإشعارات شغالة',4);ok?toast('ntfy استلم الرسالة ✅ لو مجتش على موبايلك راجع اشتراكك في التطبيق'):toast('فشل الإرسال لـ ntfy.sh ❌ النت أو الشبكة بتحجبه','err')}
+async function newTopic(){const t=rnd();if(isA())await D.update(P('settings'),{adminTopic:t});else await D.update(P('users/'+me.id),{topic:t});localStorage.removeItem('nt_'+me.id);toast('تم تغيير القناة، اشترك في الاسم الجديد');render()}
+const myTopic=()=>isA()?S().adminTopic:(U()||{}).topic;
+function alertNow(t,b,big){toast(t+(b?" — "+b:"")+(big?" ("+big+")":""),"alert")}
+function notifV(){
+  const t=myTopic()||'';
+  return head('تفعيل الإشعارات')+`</div><div class="px-4"><div class="card step space-y-3"><h2 class="text-xl font-extrabold">3 خطوات والإشعارات توصلك والتطبيق مقفول</h2>
+  <p><b>1)</b> نزّل تطبيق <b>ntfy</b> (مجاني): <a class="underline font-bold" href="https://play.google.com/store/apps/details?id=io.heckel.ntfy" target="_blank">أندرويد</a> · <a class="underline font-bold" href="https://apps.apple.com/app/ntfy/id1625396347" target="_blank">آيفون</a></p>
+  <p><b>2)</b> افتحه واضغط <b>+</b> واكتب اسم القناة ده (أو اضغط الزر):</p>
+  <div class="rounded-2xl border-2 border-dashed border-sun p-3 num text-center font-bold break-all">${esc(t)}</div>
+  <div class="grid grid-cols-2 gap-2"><button class="btn s dk" onclick="copy('${esc(t)}')">نسخ الاسم</button><a class="btn s" href="ntfy://ntfy.sh/${esc(t)}">افتح في ntfy</a><a class="btn s gh" target="_blank" rel="noopener" href="https://ntfy.sh/${esc(t)}">افتح القناة في المتصفح</a></div>
+  <p><b>3)</b> اضغط هنا وشوف الإشعار وصلك:</p>
+  <button class="btn" onclick="testPing()">ابعت إشعار تجريبي</button><button class="btn gh" onclick="newTopic()">غيّر القناة (اسم جديد)</button>
+  <button class="btn gh" onclick="localStorage.setItem('nt_${me.id}',1);view='home';render()">وصلني الإشعار، تمام</button>${isA()?'':'<button class="btn gh" onclick="view=\'home\';render()">رجوع</button>'}
+  <p class="text-sm">لو الاختبار نجح وظهرت الرسالة في المتصفح ومجتش في التطبيق: اسمح بالإشعارات للتطبيق وشيل عنه توفير البطارية، وتأكد إنك مشترك بنفس الاسم بالظبط.</p><p class="text-sm"></p><p class="text-xs opacity-60">القناة سرية: اسمها عشوائي ومحدش يعرفه غيرك. متشاركوش مع حد.</p></div></div>`;
+}
+const ntBanner=()=>!isA()||localStorage.getItem('nt_'+(me&&me.id))?'':`<button class="btn mb-3" onclick="view='notif';render()">🔔 فعّل الإشعارات (توصلك والتطبيق مقفول)</button>`;
+
+/* ============ Firebase ============ */
+async function initFB(){
+  try{
+    const A=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'),R=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js');
+    D=Object.assign({db:R.getDatabase(A.initializeApp(CFG))},R);
+    D.onValue(D.ref(D.db,'dlv'),s=>{const v=s.val()||{};DB={users:v.users||{},orders:v.orders||{},settings:v.settings||{},presence:v.presence||{},pinreq:v.pinreq||{}};if(!loaded){loaded=true;checkCred()}onData()},e=>{err='تعذّر الاتصال بقاعدة البيانات. تأكد إن قواعد Realtime Database بتسمح بالقراءة والكتابة.';render()});
+    D.onValue(D.ref(D.db,'.info/connected'),s=>{if(s.val())markOnline()});
+  }catch(e){err='تعذّر تحميل Firebase. تأكد من الإنترنت.';render()}
+}
+const P=p=>D.ref(D.db,'dlv/'+p);
+function markOnline(){if(!D||!me||isA())return;const r=P('presence/'+me.id);D.set(r,Date.now());D.onDisconnect(r).remove()}
+function checkCred(){
+  if(!me)return;
+  const ok=isA()?me.ph===(S().adminHash||pwh(ADMIN,'admin123')):DB.users[me.id]&&!DB.users[me.id].banned;
+  if(!ok){me=null;localStorage.removeItem('cred');return}
+  snapSeen();markOnline();
+}
+function snapSeen(){seenU={};Object.keys(DB.users).forEach(k=>seenU[k]=1);seen={};ords().forEach(o=>seen[o.id]=o.status);seenPin={};Object.entries(DB.pinreq||{}).forEach(([k,r])=>seenPin[k+'_'+r.ts]=1)}
+function onData(){
+  if(isA()){const n=ords().filter(OPEN).length;document.title=(n?'('+n+') ':'')+'طلبات'}
+  if(me&&!isA()&&DB.users[me.id]&&DB.users[me.id].banned){logout();toast('تم حظر الحساب','err');return}
+  if(me){
+    ords().forEach(o=>{const p=seen[o.id];seen[o.id]=o.status;
+      if(isA()){if(p===undefined&&o.status==='pending')alertNow(o.kind==='withdraw'?'طلب سحب جديد':o.kind==='repay'?'طلب سداد آجل':'طلب توريد جديد',o.fromName+(o.fromOffice?' ('+o.fromOffice+')':'')+(o.amount?' — '+f(o.amount)+' ج.م':''))}
+      else if(p!==undefined&&p!==o.status&&(o.from===me.id||o.target===me.id))alertNow('تحديث على طلبك',SL[o.status][0]);
+    });
+  }
+  if(isA())Object.values(DB.users).forEach(x=>{if(!seenU[x.id]){seenU[x.id]=1;alertNow('مندوب جديد 👤',x.name+(x.office?' — '+x.office:''))}});
+  const so=siteOpen(),ch=so!==lo;lo=so;
+  const typing=/INPUT|SELECT/.test(document.activeElement.tagName);
+  if(isA()){if(!typing)render()}else if(!me||ch||view==='home'||view==='log'||(view==='wiz'&&w.step===4)||(view==='wd'&&wd.step===3)||(view==='pay'&&rp.oid)||(view==='disc'&&!typing))render();
+}
+
+/* ============ دخول ============ */
+function authV(){
+  const reg=mode==='reg';
+  return `<div class="min-h-screen flex flex-col"><div class="hdr text-white px-6 pt-16 pb-14"><div class="flex items-center gap-3 mb-3">${LOGO(56)}<h1 class="wm" style="font-size:36px;padding:2px 18px 5px">طلبات</h1></div><p class="inline-block mt-2 bg-[#f6efe5] text-[#3f1319] rounded-full px-4 py-1.5 text-sm font-extrabold">توريد المناديب · ${reg?'اعمل حسابك في دقيقة':'ادخل بالـ ID بتاعك'}</p></div>
+  <div class="px-5 -mt-6"><div class="card space-y-3 step">${err?`<p class="text-rose-600 font-bold text-sm">${err}</p>`:''}${!siteOpen()?'<div class="rounded-2xl bg-rose-100 text-rose-800 font-bold text-sm p-3">🔒 الموقع مقفول حالياً، الدخول للأدمن فقط</div>':''}
+  ${reg?'<input id="nm" class="inp" placeholder="الاسم"><input id="of" class="inp" placeholder="اسم المكتب"><input id="ph" class="inp num" inputmode="tel" maxlength="11" placeholder="رقم الموبايل 01xxxxxxxxx">':''}
+  <input id="id" class="inp num" inputmode="numeric" maxlength="7" placeholder="الـ ID (7 أرقام)" ${reg?'':`oninput="$('#apw').classList.toggle('hidden',this.value!=='${ADMIN}')" onkeydown="if(event.key==='Enter')doAuth()"`}>
+  ${reg?'<input id="id2" class="inp num" inputmode="numeric" maxlength="7" placeholder="أكّد الـ ID (اكتبه تاني)">':`<div id="apw" class="hidden"><input id="pw" type="password" class="inp" placeholder="كلمة سر الأدمن" onkeydown="if(event.key==='Enter')doAuth()"></div>`}
+  <button class="btn" onclick="doAuth()">${reg?'إنشاء الحساب':'دخول'}</button>
+  <button class="w-full text-sm font-bold opacity-70" onclick="mode='${reg?'login':'reg'}';render()">${reg?'عندي حساب':'مندوب جديد؟ سجّل هنا'}</button></div>
+  <button class="mx-auto block mt-4 text-sm opacity-60" onclick="dark()">🌓 الوضع الداكن</button></div></div>`;
+}
+async function doAuth(){
+  if(!loaded)return toast('استنى الاتصال بقاعدة البيانات…','err');
+  const id=$('#id').value.trim();
+  if(!/^\d{7}$/.test(id))return toast('الـ ID لازم 7 أرقام','err');
+  if(id!==ADMIN&&!siteOpen())return toast('الموقع مقفول حالياً، حاول بعدين','err');
+  if(mode==='reg'){
+    const nm=$('#nm').value.trim(),of=$('#of').value.trim(),phone=$('#ph').value.trim();
+    if(!nm)return toast('اكتب الاسم','err');
+    if(!of)return toast('اكتب اسم المكتب','err');
+    if(!/^01[0125]\d{8}$/.test(phone))return toast('رقم الموبايل غير صحيح','err');
+    if($('#id2').value.trim()!==id)return toast('الـ ID مش متطابق، اكتبه تاني صح','err');
+    if(id===ADMIN||DB.users[id])return toast('الـ ID ده مستخدم','err');
+    await D.set(P('users/'+id),{id,name:nm.slice(0,40),office:of.slice(0,40),phone,banned:false,ajelOn:false,used:0,ts:Date.now()});
+    ping(S().adminTopic,'👤 مندوب جديد',nm+' — '+of+' ('+id+')',3);
+    me={id};
+  }else if(id===ADMIN){
+    const ph=pwh(ADMIN,$('#pw').value);
+    if(ph!==(S().adminHash||pwh(ADMIN,'admin123')))return toast('كلمة سر الأدمن غلط','err');
+    if(!S().adminTopic)await D.update(P('settings'),{adminTopic:rnd()});
+    me={id,ph};
+  }else{
+    const u=DB.users[id];
+    if(!u)return toast('الـ ID ده مش مسجّل. سجّل كمندوب جديد.','err');
+    if(u.banned)return toast('الحساب ده محظور','err');
+    me={id};
+  }
+  localStorage.setItem('cred',JSON.stringify(me));view='home';tab='orders';err='';snapSeen();markOnline();render();
+}
+function logout(){if(D&&me&&!isA())D.remove(P('presence/'+me.id));me=null;localStorage.removeItem('cred');view='home';render()}
+
+/* ============ مشترك ============ */
+const head=sub=>`<div class="hdr text-white px-5 pb-8 mb-4" style="padding-top:calc(env(safe-area-inset-top) + 24px)"><div class="flex justify-between items-center"><div class="flex items-center gap-2.5">${LOGO(40)}<span class="wm">طلبات</span></div><div class="flex gap-2"><button class="ib" onclick="dark()" aria-label="الوضع">${ic('moon')}</button><button class="ib" onclick="logout()" aria-label="خروج">${ic('out')}</button></div></div><div class="mt-5 flex items-center gap-3"><div class="av">${esc((isA()?'أ':U().name).trim().charAt(0))}</div><div><div class="text-white/80 text-xs">${sub}</div><div class="text-lg font-extrabold leading-tight">${esc(isA()?'الأدمن':U().name)}</div></div><div class="num text-xs bg-white/20 rounded-full px-2.5 py-1" style="margin-inline-start:auto">ID ${me.id}</div></div>`;
+const chip=s=>`<span class="px-2.5 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1.5 ${SL[s][1]}"><i class="dot"></i>${SL[s][0]}</span>`;
+const sw=(on,fn,l)=>`<div class="flex items-center justify-between py-2"><span class="text-sm font-semibold">${l}</span><button role="switch" aria-checked="${on}" onclick="this.classList.toggle('on');${fn}" class="sw ${on?'on':''}"><i></i></button></div>`;
+const siteOpen=()=>S().siteOpen!==false;
+function toggleSite(){const o=siteOpen();if(o&&!confirm('متأكد إنك عايز تقفل الموقع؟ المناديب مش هيقدروا يبعتوا أي طلبات لحد ما تشغّله تاني.'))return;D.update(P('settings'),{siteOpen:!o}).then(()=>toast(o?'تم قفل الموقع 🔒':'تم تشغيل الموقع ✅'))}
+const siteBar=()=>{const o=siteOpen();return `<div class="mt-4 rounded-2xl p-3 flex items-center gap-3 ${o?'bg-white/20':'bg-[#3f1319]'}"><span class="dot" style="width:11px;height:11px;background:${o?'#4ade80':'#f87171'}"></span><div class="flex-1 min-w-0"><div class="font-extrabold text-sm">${o?'الموقع شغّال':'الموقع مقفول'}</div><div class="text-xs text-white/70">${o?'المناديب يقدروا يبعتوا طلبات':'استقبال الطلبات متوقف'}</div></div><button role="switch" aria-checked="${o}" aria-label="تشغيل أو قفل الموقع" onclick="toggleSite()" class="sw site ${o?'on':''}"><i></i></button></div>`};
+const kmeta=o=>o.kind==='repay'?{i:'receipt',l:'سداد آجل',c:'bg-violet-100 text-violet-700 dark:bg-violet-400/15 dark:text-violet-300'}:o.kind==='withdraw'?{i:'phone',l:'طلب سحب من محفظة',c:'bg-sky-100 text-sky-700 dark:bg-sky-400/15 dark:text-sky-300'}:{i:'in',l:'طلب توريد',c:'bg-orange-100 text-orange-700 dark:bg-orange-400/15 dark:text-orange-300'};
+const kv=(l,v)=>`<div class="kv"><span class="opacity-60">${l}</span><b class="text-left">${v}</b></div>`;
+const cbox=(l,v,b)=>`<div class="idbox"><div class="text-xs opacity-60 mb-0.5">${l}</div><div class="num text-2xl font-extrabold tracking-wider break-all">${esc(v)}</div><button class="cpy" onclick="copy('${esc(v)}')">${ic('copy')}<span>${b}</span></button></div>`;
+const idBox=(l,id)=>cbox(l,id,'نسخ الـ ID');
+const KF=[['all','الكل'],['deposit','توريد'],['withdraw','سحب'],['repay','سداد']];
+const kfBar=()=>`<div class="flex gap-2 overflow-x-auto pb-1 mb-3">${KF.map(k=>`<button onclick="lf='${k[0]}';render()" class="px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap border-2 ${lf===k[0]?'bg-sun text-white border-sun':'border-[#e3d6c6] dark:border-[#4a2830]'}">${k[1]}</button>`).join('')}</div>`;
+const kfl=o=>lf==='all'||o.kind===lf;
+
+/* ============ الدور والعداد ============ */
+const OPEN=o=>o.status==='pending'||o.status==='processing',WAIT=3e5,ob=id=>ords().find(o=>o.id===id);
+const qpos=o=>{const q=ords().filter(OPEN).sort((a,b)=>a.ts-b.ts);return{n:q.findIndex(x=>x.id===o.id)+1,t:q.length}};
+const cd=ts=>{const r=Math.max(0,ts+WAIT-Date.now()),s=Math.ceil(r/1000);return{r,txt:String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'),p:Math.min(100,100-r/WAIT*100)}};
+function trk(o){
+  if(!o)return'';
+  if(!OPEN(o)){const ok=o.status==='done';return `<div class="py-2"><div class="trk-ic ${ok?'ok':'no'}">${ic(ok?'check':'x')}</div><div class="text-xl font-extrabold mt-3">${ok?'تم تأكيد طلبك':'تم رفض الطلب'}</div><div class="text-sm opacity-60 mt-1">${ok?'العملية اتسجلت بنجاح':'تواصل مع الأدمن لو محتاج توضيح'}</div></div>`}
+  const q=qpos(o),c=cd(o.ts),pr=o.status==='processing';
+  return `<div><div class="text-sm opacity-60 mb-1">${pr?'الأدمن شغال على طلبك الآن':'الوقت المتوقع للمراجعة'}</div><div class="num text-5xl font-extrabold tracking-wider cd" data-ts="${o.ts}">${c.txt}</div><div class="h-1.5 rounded-full bg-slate-200 dark:bg-slate-700 mt-3 overflow-hidden"><div class="h-full bg-sun rounded-full cdb" style="width:${c.p}%"></div></div>
+  <div class="mt-4 rounded-2xl bg-slate-100 dark:bg-white/5 p-3 flex items-center justify-between"><div class="text-right"><div class="text-xs opacity-60">ترتيب دورك</div><div class="font-extrabold">${q.n===1?'أنت التالي':'رقم '+q.n+' من '+q.t}</div>${q.n>1?`<div class="text-xs opacity-60">قدامك ${q.n-1} ${q.n-1===1?'طلب':'طلبات'}</div>`:''}</div><div class="num text-3xl font-extrabold text-[#ff5a00]">#${q.n}</div></div></div>`;
+}
+setInterval(()=>document.querySelectorAll('.cd').forEach(e=>{const c=cd(+e.dataset.ts);e.textContent=c.txt;const b=e.parentNode.querySelector('.cdb');if(b)b.style.width=c.p+'%'}),1000);
+
+/* ============ المندوب ============ */
+const avail=u=>u.ajelOn?Math.max(0,(u.limit||0)-(u.used||0)):0;
+function ordCard(o){
+  const mine=o.from===me.id,m=kmeta(o),k=o.kind;let rows='';
+  if(k==='deposit'){
+    m.l=mine?'توريد':'توريد وصلك';
+    rows=kv('الطريقة',MN[o.method]+(o.via==='fawry'?' (سحب بفوري)':''))+kv(mine?'المستفيد':'من',mine?(o.target!==o.from?esc(o.targetName||o.target):'لنفسي'):esc(o.fromName))+(mine?kv('الرسوم',`<span class="num">${f(o.fee)} ج.م</span>`)+kv('الإجمالي',`<span class="num">${f((o.amount||0)+(o.fee||0))} ج.م</span>`):'');
+  }else if(k==='withdraw')rows=kv('رقم المحفظة',`<span class="num">${esc(o.wallet)}</span>`);
+  else rows=kv('نوع العملية',o.manual?'تسجيل يدوي من الأدمن':'سداد من رصيدك الآجل');
+  const hint=(k==='withdraw'||o.via==='fawry')&&o.status==='processing'?'<div class="ntc">📩 افتح رسالة SMS من فوري واتبع التعليمات</div>':'';
+  return `<div class="oc"><div class="flex items-center gap-3"><span class="oi ${m.c}">${ic(m.i)}</span><div class="flex-1 min-w-0"><div class="font-extrabold">${m.l}</div><div class="text-xs opacity-60">${time(o.ts)}</div></div><div class="text-left"><div class="num text-xl font-extrabold leading-tight">${o.amount?f(o.amount):'—'}</div><div class="text-[11px] opacity-60">ج.م</div></div></div><div class="mt-3">${rows}</div><div class="flex items-center justify-between pt-3 border-t border-[#f0e7da] dark:border-[#3d2128]">${chip(o.status)}</div>${hint}</div>`;
+}
+function homeV(){
+  const u=U(),mine=ords().filter(o=>o.from===me.id||o.target===me.id),cl=!siteOpen(),
+    tr=mine.filter(o=>o.from===me.id&&OPEN(o)),inc=mine.filter(o=>OPEN(o)&&o.from!==me.id);
+  const tile=(i,t,s,on)=>`<button onclick="${on}" class="card flex items-center gap-4 w-full text-right active:scale-[.98] transition"><span class="tic">${ic(i)}</span><span class="flex-1"><b class="text-lg block">${t}</b><span class="text-sm opacity-60">${s}</span></span><span class="opacity-30">${ic('chev')}</span></button>`;
+  const closed=`<div class="card text-center step"><div class="trk-ic no">${ic('lock')}</div><h2 class="text-xl font-extrabold mt-3">الموقع مقفول حالياً</h2><p class="text-sm opacity-70 mt-1">استقبال الطلبات متوقف مؤقتاً، والصفحة هتتحدث لوحدها أول ما يتفتح تاني.</p></div>`;
+  return head('أهلاً بيك')+(u.ajelOn?`<div class="mt-4 bg-white rounded-2xl p-4 text-ink flex items-center justify-between"><div><div class="text-xs opacity-60">رصيد الآجل المستحق عليك</div><div class="num text-3xl font-extrabold">${f(u.used)} <span class="text-sm">ج.م</span></div></div><button class="btn s" ${u.used>0&&!cl?'':'disabled style="opacity:.4"'} onclick="startPay()">سداد</button></div>`:'')+`</div>
+  <div class="px-4 space-y-3">${tr.map(o=>`<div class="card text-center"><div class="flex justify-between items-center mb-4"><b>${o.kind==='repay'?'سداد آجل · ':''}${o.kind==='withdraw'?'طلب سحب':f(o.amount)+' ج.م'}</b>${chip(o.status)}</div>${trk(o)}</div>`).join('')}
+  ${cl?closed:tile('in','توريد لنفسي','ورّد عهدتك في 3 خطوات',"startWiz('self')")+tile('users','توريد لشخص آخر','ورّد لأي شخص، مسجل أو لا',"startWiz('other')")}
+  ${inc.length?`<div class="font-extrabold px-1">طلبات واردة ليك</div>${inc.map(ordCard).join('')}`:''}
+  ${!tr.length&&!inc.length?`<div class="card text-center opacity-70 py-5 text-sm">مفيش طلبات جارية دلوقتي.<br>كل عملياتك السابقة في تاب <b>السجل</b>.</div>`:''}
+  </div>`;
+}
+const startWiz=k=>{if(!siteOpen())return toast('الموقع مقفول حالياً','err');w={k,step:1,amount:'',target:'',tname:'',via:'',wallet:'',method:'',pin:''};view='wiz';render()};
+const startWd=()=>{if(!siteOpen())return toast('الموقع مقفول حالياً','err');wd={step:1,wallet:'',amount:''};view='wd';render()};
+const home=()=>{view='home';render()};
+const back=fn=>`<button class="btn gh mt-2" onclick="${fn}">رجوع</button>`;
+const steps=['المبلغ','طريقة السداد','بيانات التحويل'];
+const prog=n=>`<div class="flex gap-2 mb-5">${steps.map((s,i)=>`<div class="flex-1"><div class="h-1.5 rounded-full ${i<n?'bg-sun':'bg-slate-300 dark:bg-slate-700'}"></div><div class="text-xs mt-1 ${i<n?'font-bold':'opacity-50'}">${s}</div></div>`).join('')}</div>`;
+function wizV(){
+  const u=U(),a=+w.amount,dd=dsc(w.method,fee(w.method,a)),fe=dd.fe;let b='';
+  if(w.step===1)b=`<h2 class="text-xl font-extrabold mb-3">${w.k==='other'?'لمين وكام؟':'كام المبلغ اللي هتورّده؟'}</h2>
+  ${w.k==='other'?`<input class="inp mb-3" placeholder="اسم المستلم" value="${esc(w.tname)}" oninput="w.tname=this.value"><input class="inp num mb-3" placeholder="ID أو رقم موبايل (اختياري)" value="${esc(w.target)}" oninput="w.target=this.value">`:''}
+  <input class="inp num text-center text-4xl font-extrabold" type="number" inputmode="decimal" placeholder="0" value="${esc(w.amount)}" oninput="w.amount=this.value">
+  <div class="text-center text-sm opacity-60 mt-1">ج.م</div><button class="btn mt-4" onclick="s1()">التالي</button>${back('home()')}`;
+  if(w.step===2){
+    const C=FC(),ms=[['insta','bank','انستا باي','رسم '+C.insta+' ج.م'],['wallet','phone','محفظة إلكترونية','رسم '+C.wal+' ج.م (حتى '+f(C.walMax)+')'],['ajel','receipt','آجل','رسم '+C.ajL+' ج.م (حتى '+f(C.ajT)+') · '+C.ajH+' ج.م فوق كده']];
+    b=`<h2 class="text-xl font-extrabold mb-1">اختار طريقة السداد</h2><p class="mb-3 opacity-60">المبلغ <b class="num">${f(a)}</b> ج.م</p><div class="space-y-2">`+ms.map(m=>{
+      const x=dsc(m[0],fee(m[0],a)).fe,why=x===null?(m[0]==='wallet'?'المحفظة لحد '+f(C.walMax)+' ج.م فقط':''):m[0]==='ajel'&&!u.ajelOn?'الآجل مش مفعّل لحسابك':'';
+      return `<button ${why?'disabled':''} onclick="w.method='${m[0]}';w.via=w.method==='wallet'&&!U().fawryOn?'tr':'';w.step=3;render()" class="card w-full flex items-center gap-3 text-right ${why?'opacity-40':'border-2 border-transparent hover:border-sun'}"><span class="tic !w-11 !h-11">${ic(m[1])}</span><span class="flex-1"><b class="block">${m[2]}</b><span class="text-sm opacity-60">${why||m[3]}</span></span>${x!==null&&!why?`<b class="num">+${x}</b>`:''}</button>`}).join('')+`</div>${back('w.step=1;render()')}`;
+  }
+  if(w.step===3){
+    const wal=w.method==='wallet',fw=wal&&w.via==='fawry',num=w.method==='insta'?['رقم الفيزا / انستا باي',S().visa]:wal&&w.via==='tr'?['رقم المحفظة',S().wallet]:null;
+    const sum=`<div class="rounded-2xl bg-sun/10 p-4 mb-3 text-center"><div class="text-sm opacity-70">الإجمالي المطلوب</div><div class="num text-4xl font-extrabold text-[#e04e00]">${f(a+fe)}</div><div class="text-sm opacity-70">${f(a)} + رسم ${fe} ج.م</div>${dd.code?`<div class="text-xs text-emerald-600 font-bold mt-1">خصم ${dd.pct}% بكود ${esc(dd.code)} (الرسم الأصلي ${dd.base})</div>`:''}</div>`;
+    if(wal&&!w.via)b=`<h2 class="text-xl font-extrabold mb-3">المحفظة الإلكترونية</h2>${sum}<div class="space-y-2">`+[['fawry','phone','سحب بفوري','الأدمن يسحب من محفظتك وهيجيلك SMS من فوري'],['tr','in','تحويل','حوّل بنفسك على رقم محفظة الأدمن']].map(x=>`<button onclick="w.via='${x[0]}';render()" class="card w-full flex items-center gap-3 text-right border-2 border-transparent hover:border-sun"><span class="tic !w-11 !h-11">${ic(x[1])}</span><span class="flex-1"><b class="block">${x[2]}</b><span class="text-sm opacity-60">${x[3]}</span></span></button>`).join('')+`</div>${back('w.step=2;render()')}`;
+    else b=`<h2 class="text-xl font-extrabold mb-3">${w.method==='ajel'?'تأكيد الآجل':fw?'بيانات السحب بفوري':'حوّل المبلغ دلوقتي'}</h2>${sum}
+    ${num?`<div class="rounded-2xl border-2 border-dashed border-sun p-4 flex items-center justify-between mb-3"><div><div class="text-xs opacity-60">${num[0]}</div><div class="num text-2xl font-extrabold">${esc(num[1])||'لسه مش متحدد'}</div></div>${num[1]?`<button class="btn s" onclick="copy('${esc(num[1])}')">نسخ</button>`:''}</div><p class="text-sm opacity-70 mb-3">بعد ما تحوّل اضغط "حوّلت، ابعت الطلب".</p>`
+    :fw?`<input class="inp num mb-3" inputmode="tel" maxlength="11" placeholder="رقم محفظتك 01xxxxxxxxx" value="${esc(w.wallet)}" oninput="w.wallet=this.value"><p class="text-sm mb-3 opacity-80">بعد موافقة الأدمن هيجيلك <b>SMS من فوري</b> على الرقم ده. افتح الرسالة واتبع التعليمات.</p>`
+    :`<p class="text-sm mb-3 opacity-80">الآجل هيتسجّل عليك ${f(a+fe)} ج.م لحد ما تسدده.</p>`}
+    ${w.k==='other'?`<p class="text-sm mb-3">التوريد لصالح <b>${esc(w.tname)}</b></p>`:''}
+    ${num||fw||w.method==='ajel'?`<button class="btn" onclick="sendW()">${num?'حوّلت، ابعت الطلب':fw?'ابعت طلب السحب':'تأكيد وإرسال'}</button>`:''}${back(wal&&u.fawryOn?"w.via='';render()":'w.step=2;render()')}`;
+  }
+  if(w.step===4)return head('تم الإرسال')+`</div><div class="px-4"><div class="card text-center step"><h2 class="text-lg font-extrabold mb-4">تم إرسال طلبك للأدمن</h2>${trk(ob(w.oid))}<p class="text-xs opacity-60 mt-4">سيب الصفحة مفتوحة، التحديث بيظهر هنا تلقائي.</p><button class="btn mt-4" onclick="home()">الرئيسية</button></div></div>`;
+  return head(w.k==='other'?'توريد لشخص آخر':'توريد لنفسي')+`</div><div class="px-4"><div class="card step">${prog(w.step)}${b}</div></div>`;
+}
+function s1(){
+  const a=+w.amount;if(!(a>0))return toast('اكتب مبلغ صحيح','err');
+  if(w.k==='other'){w.target=w.target.trim();if(w.target===me.id)return toast('ده الـ ID بتاعك، اختار "توريد لنفسي"','err');if(DB.users[w.target])w.tname=DB.users[w.target].name;if(!w.tname.trim())return toast('اكتب اسم المستلم','err')}
+  w.step=2;render();
+}
+async function sendW(){if(!siteOpen())return toast('الموقع مقفول حالياً','err');
+  const u=U(),a=+w.amount,m=w.method,dd=dsc(m,fee(m,a)),fe=dd.fe,t=w.k==='other'?w.target:me.id;
+  const fw=m==='wallet'&&w.via==='fawry';if(fe===null||(w.k==='other'&&!w.tname.trim()))return toast('بيانات غير صحيحة','err');if(fw&&!u.fawryOn)return toast('السحب بفوري مش مفعّل لحسابك','err');if(fw&&!/^01[0125]\d{8}$/.test(w.wallet))return toast('رقم المحفظة غير صحيح','err');
+  if(m==='ajel'){
+    if(!u.ajelOn)return toast('الآجل مش مفعّل لحسابك','err');
+    await D.runTransaction(P('users/'+me.id),c=>{if(c)c.used=(c.used||0)+a+fe;return c});
+  }else if(!fw&&!(m==='insta'?S().visa:S().wallet))return toast('رقم التحويل لسه مش متحدد','err');
+  const r=D.push(P('orders'));w.oid=r.key;await D.set(r,{kind:'deposit',from:me.id,fromName:u.name,fromOffice:u.office||'',target:t,targetName:w.k==='other'?w.tname.trim().slice(0,40):u.name,amount:a,fee:fe,disc:dd.code||'',method:m,via:fw?'fawry':'',wallet:fw?w.wallet:'',status:'pending',ts:Date.now()});
+  if(dd.code){const dv=(u.disc||{})[dd.code];if(dv&&dv.left>0)dv.left>1?D.update(P('users/'+me.id+'/disc/'+dd.code),{left:dv.left-1}):D.remove(P('users/'+me.id+'/disc/'+dd.code))}
+  ping(S().adminTopic,'🔔 طلب توريد جديد',`${f(a)} ج.م من ${u.name} (${me.id}) — ${MN[m]}`,5);
+  w.step=4;render();
+}
+function wdV(){
+  let b;
+  if(wd.step===1)b=`<h2 class="text-xl font-extrabold mb-1">طلب سحب من محفظة</h2><p class="opacity-70 mb-3 text-sm">اكتب رقم محفظتك، والأدمن هيسحب منها عن طريق فوري.</p>
+  <input class="inp num mb-3" inputmode="tel" maxlength="11" placeholder="رقم المحفظة 01xxxxxxxxx" value="${esc(wd.wallet)}" oninput="wd.wallet=this.value">
+  <input class="inp num mb-3" type="number" inputmode="decimal" placeholder="المبلغ (اختياري)" value="${esc(wd.amount)}" oninput="wd.amount=this.value">
+  <button class="btn" onclick="if(!/^01[0125]\\d{8}$/.test(wd.wallet))return toast('رقم المحفظة غير صحيح','err');wd.step=2;render()">التالي</button>${back('home()')}`;
+  else if(wd.step===2)b=`<h2 class="text-xl font-extrabold mb-3">راجع الطلب</h2><div class="rounded-2xl bg-sun/15 p-4 mb-3"><div class="text-xs opacity-60">رقم المحفظة</div><div class="num text-2xl font-extrabold">${esc(wd.wallet)}</div>${+wd.amount>0?`<div class="mt-1">المبلغ: <b class="num">${f(wd.amount)}</b> ج.م</div>`:''}</div>
+  <p class="text-sm mb-3">⚠️ بعد موافقة الأدمن هيجيلك <b>SMS من فوري</b> على الرقم ده. افتح الرسالة واتبع التعليمات.</p><button class="btn" onclick="sendWd()">ابعت الطلب</button>${back('wd.step=1;render()')}`;
+  else return head('تم الإرسال')+`</div><div class="px-4"><div class="card text-center step"><h2 class="text-lg font-extrabold mb-4">تم إرسال طلب السحب</h2>${trk(ob(wd.oid))}${ob(wd.oid)&&ob(wd.oid).status==='processing'?'<p class="text-sm font-bold text-sky-600 mt-3">افتح رسالة SMS من فوري واتبع التعليمات</p>':''}<p class="text-xs opacity-60 mt-4">سيب الصفحة مفتوحة، التحديث بيظهر هنا تلقائي.</p><button class="btn mt-4" onclick="home()">الرئيسية</button></div></div>`;
+  return head('طلب سحب')+`</div><div class="px-4"><div class="card step">${b}</div></div>`;
+}
+async function sendWd(){if(!siteOpen())return toast('الموقع مقفول حالياً','err');
+  if(ords().some(o=>o.kind==='withdraw'&&o.from===me.id&&(o.status==='pending'||o.status==='processing')))return toast('عندك طلب سحب شغال بالفعل','err');
+  const u=U();const r=D.push(P('orders'));wd.oid=r.key;await D.set(r,{kind:'withdraw',from:me.id,fromName:u.name,fromOffice:u.office||'',wallet:wd.wallet,amount:+wd.amount>0?+wd.amount:0,status:'pending',ts:Date.now()});
+  ping(S().adminTopic,'📲 طلب سحب من محفظة',`${u.name} (${me.id}) — ${wd.wallet}${+wd.amount>0?' — '+f(wd.amount)+' ج.م':''}`,5);
+  wd.step=3;render();
+}
+
+/* ============ خصومات المندوب ============ */
+function discV(){
+  const L=mydisc(),mn={all:'كل الطرق',insta:'انستا باي',wallet:'المحفظة',ajel:'الآجل'};
+  return head('خصوماتي')+`</div><div class="px-4 space-y-3"><div class="card step"><div class="font-extrabold mb-1">عندك كود خصم؟</div><p class="text-sm opacity-60 mb-3">فعّله هنا وهيتطبق تلقائي على رسوم الطريقة المحددة.</p><div class="flex gap-2"><input id="dc" class="inp num" style="direction:ltr;text-transform:uppercase" placeholder="CODE" onkeydown="if(event.key==='Enter')redeem()"><button class="btn !w-auto px-6" onclick="redeem()">تفعيل</button></div></div>
+  <div class="font-extrabold px-1">خصوماتك الحالية</div>${L.length?L.map(d=>`<div class="card flex items-center gap-3"><span class="tic">${ic('tag')}</span><div class="flex-1"><b class="num text-lg">${esc(d.code)}</b><div class="text-sm opacity-70">خصم ${d.pct}% على رسوم ${mn[d.method]||''}</div><div class="text-xs opacity-50">${d.left>0?'متبقي '+d.left+' استخدام':'غير محدود'}</div></div><b class="num text-2xl text-[#ff5a00]">${d.pct}%</b></div>`).join(''):'<div class="card text-center opacity-60 py-6 text-sm">مفيش خصومات مفعّلة لسه.</div>'}</div>`;
+}
+const dnav=c=>`<nav class="fixed bottom-0 inset-x-0 bg-white/90 dark:bg-[#251317]/90 backdrop-blur border-t border-[#eadfce] dark:border-[#3d2128] z-40"><div class="max-w-lg mx-auto grid grid-cols-3 pb-[env(safe-area-inset-bottom)]">${[['home','home','الرئيسية'],['log','list','السجل'],['disc','tag','خصوماتي']].map(n=>`<button onclick="view='${n[0]}';render()" class="py-2 text-xs font-bold ${c===n[0]?'text-[#e04e00]':'opacity-60'}"><div class="flex justify-center mb-0.5">${ic(n[1])}</div>${n[2]}</button>`).join('')}</div></nav>`;
+function logV(){
+  const L=ords().filter(o=>o.from===me.id||o.target===me.id).filter(kfl).slice(0,100);
+  return head('سجل عملياتك')+`</div><div class="px-4">${kfBar()}<div class="text-xs opacity-60 px-1 mb-2">${L.length} عملية</div><div class="space-y-3">${L.map(ordCard).join('')||'<div class="card text-center opacity-60 py-6 text-sm">مفيش عمليات هنا لسه.</div>'}</div></div>`;
+}
+async function redeem(){const c=($('#dc').value||'').trim().toUpperCase(),d=(S().codes||{})[c];if(!c)return toast('اكتب الكود','err');if(!d||d.on===false)return toast('الكود غير صحيح','err');if((U().disc||{})[c])return toast('الكود مفعّل بالفعل','err');await D.set(P('users/'+me.id+'/disc/'+c),{left:+d.uses||0});toast('تم تفعيل الخصم')}
+
+/* ============ سداد الآجل ============ */
+let rp={};
+const startPay=()=>{if(!siteOpen())return toast('الموقع مقفول حالياً','err');rp={amount:'',oid:''};view='pay';render()};
+function payV(){
+  const u=U();let b;
+  if(rp.oid)b=`<h2 class="text-lg font-extrabold mb-4 text-center">تم إرسال طلب السداد</h2><div class="text-center">${trk(ob(rp.oid))}</div><button class="btn mt-4" onclick="home()">الرئيسية</button>`;
+  else b=`<h2 class="text-xl font-extrabold mb-1">سداد الآجل</h2><p class="opacity-70 mb-4 text-sm">المستحق عليك <b class="num">${f(u.used)}</b> ج.م. ادفع كامل المبلغ أو جزء منه.</p>
+  <input class="inp num text-center text-4xl font-extrabold" type="number" inputmode="decimal" placeholder="0" value="${esc(rp.amount)}" oninput="rp.amount=this.value">
+  <div class="grid grid-cols-2 gap-2 mt-3"><button class="btn s gh" onclick="rp.amount=${u.used||0};render()">السداد كامل</button><button class="btn s gh" onclick="rp.amount=${Math.floor((u.used||0)/2)};render()">نصف المبلغ</button></div>
+  <div class="rounded-2xl border-2 border-dashed border-sun p-3 mt-4 text-sm space-y-1"><div class="font-bold">حوّل المبلغ على:</div>${S().visa?`<div>انستا باي: <b class="num">${esc(S().visa)}</b></div>`:''}${S().wallet?`<div>محفظة: <b class="num">${esc(S().wallet)}</b></div>`:''}</div>
+  <button class="btn mt-4" onclick="sendRepay()">حوّلت، ابعت طلب السداد</button>${back('home()')}`;
+  return head('سداد الآجل')+`</div><div class="px-4"><div class="card step">${b}</div></div>`;
+}
+async function sendRepay(){if(!siteOpen())return toast('الموقع مقفول حالياً','err');
+  const u=U(),a=+rp.amount;
+  if(!(a>0))return toast('اكتب المبلغ','err');
+  if(a>(u.used||0))return toast('المبلغ أكبر من المستحق','err');
+  if(ords().some(o=>o.kind==='repay'&&o.from===me.id&&OPEN(o)))return toast('عندك طلب سداد قيد المراجعة','err');
+  const r=D.push(P('orders'));rp.oid=r.key;
+  await D.set(r,{kind:'repay',from:me.id,fromName:u.name,fromOffice:u.office||'',amount:a,status:'pending',ts:Date.now()});
+  ping(S().adminTopic,'💳 طلب سداد آجل',`${u.name} (${me.id}) — ${f(a)} ج.م`,5);render();
+}
+
+/* ============ الأدمن ============ */
+async function aact(id,act){
+  const o=DB.orders[id];if(!o)return;
+  const okA=o.status==='pending'?['done','rejected','sms']:o.status==='processing'?['done','rejected']:[];
+  if(!okA.includes(act))return toast('الإجراء غير متاح','err');
+  if(act==='rejected'&&o.method==='ajel')await D.runTransaction(P('users/'+o.from),c=>{if(c)c.used=Math.max(0,(c.used||0)-o.amount-o.fee);return c});
+  if(act==='done'&&o.kind==='repay')await D.runTransaction(P('users/'+o.from),c=>{if(c)c.used=Math.max(0,(c.used||0)-o.amount);return c});
+  await D.update(P('orders/'+id),{status:act==='sms'?'processing':act});
+}
+function adminOrd(o){
+  const wdw=o.kind==='withdraw',rpy=o.kind==='repay',fw=wdw||o.via==='fawry',open=OPEN(o),m=kmeta(o);
+  let rows='';
+  if(!wdw&&!rpy)rows=kv('الطريقة',MN[o.method]+(o.via==='fawry'?' (سحب بفوري)':''))+kv('الرسوم',`<span class="num">${f(o.fee)} ج.م</span>`)+kv('الإجمالي المطلوب',`<span class="num">${f((o.amount||0)+(o.fee||0))} ج.م</span>`)+(o.disc?kv('كود الخصم',esc(o.disc)):'')+kv('لصالح',o.target===o.from?'نفس المندوب':esc(o.targetName||'—'));
+  else if(rpy)rows=kv('النوع',o.manual?'مسجّل يدوي':'طلب سداد من المندوب');
+  const tgt=!wdw&&!rpy&&o.target&&o.target!==o.from?idBox('ID المستلم',o.target):'';
+  return `<div class="oc ${open?'oc-open':''}"><div class="flex items-center gap-3"><span class="oi ${m.c}">${ic(m.i)}</span><div class="flex-1 min-w-0"><div class="font-extrabold">${m.l}</div><div class="text-xs opacity-60">${time(o.ts)}</div></div><div class="flex flex-col items-end gap-1">${chip(o.status)}${open?`<span class="num text-[11px] font-extrabold bg-sun text-white rounded-full px-2 py-0.5">دور #${qpos(o).n}</span>`:''}</div></div>
+  <div class="amt"><div class="num text-4xl font-extrabold text-[#e04e00]">${o.amount?f(o.amount):'غير محدد'}${o.amount?'<span class="text-base opacity-70"> ج.م</span>':''}</div></div>
+  <div class="flex items-center gap-3 mt-3"><div class="av !w-11 !h-11 !rounded-2xl !bg-[#ff5a00]/15 !text-[#e04e00]">${esc((o.fromName||'؟').trim().charAt(0))}</div><div class="min-w-0"><div class="font-extrabold truncate">${esc(o.fromName)}</div><div class="text-xs opacity-60 truncate">🏢 ${esc(o.fromOffice||'—')}</div></div></div>
+  ${idBox('ID المندوب',o.from)}${fw?cbox('رقم المحفظة',o.wallet,'نسخ رقم المحفظة'):''}${tgt}
+  <div class="mt-3">${rows}</div>
+  ${open?`<div class="grid grid-cols-2 gap-2 mt-3">${fw&&o.status==='pending'?`<button class="btn !py-3 col-span-2" onclick="aact('${o.id}','sms')">بدأت السحب من فوري</button>`:''}<button class="btn gr !py-3" onclick="aact('${o.id}','done')">✔ ${rpy?'قبول السداد':wdw?'تم الاستلام':'تأكيد الاستلام'}</button><button class="btn rd !py-3" onclick="aact('${o.id}','rejected')">رفض</button></div>`:''}</div>`;
+}
+function userCard(x){
+  const on=!!DB.presence[x.id];
+  return `<div class="oc"><div class="flex items-center gap-3"><div class="av !w-12 !h-12 !bg-[#ff5a00]/15 !text-[#e04e00]">${esc((x.name||'؟').trim().charAt(0))}</div><div class="flex-1 min-w-0"><div class="font-extrabold text-lg truncate">${esc(x.name)}</div><div class="text-xs opacity-60 truncate">🏢 ${esc(x.office||'—')}</div></div><span class="px-2.5 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1.5 ${x.banned?'bg-rose-100 text-rose-800 dark:bg-rose-400/15 dark:text-rose-300':on?'bg-emerald-100 text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-300':'bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300'}"><i class="dot"></i>${x.banned?'محظور':on?'متصل':'غير متصل'}</span></div>
+  ${idBox('ID المندوب',x.id)}
+  <div class="mt-2">${kv('الموبايل',`<a class="num underline" href="tel:${esc(x.phone)}">${esc(x.phone)}</a>`)}${kv('تاريخ التسجيل',x.ts?time(x.ts):'—')}${kv('آجل مستحق',`<span class="num ${x.used>0?'text-rose-600':''}">${f(x.used)} ج.م</span>`)}</div>
+  <div class="rounded-2xl bg-slate-50 dark:bg-white/5 px-3 mt-2 divide-y divide-slate-200 dark:divide-white/10">${sw(!x.banned,`uset('${x.id}',{banned:${!x.banned}})`,'الحساب نشط')}${sw(!!x.ajelOn,`uset('${x.id}',{ajelOn:${!x.ajelOn}})`,'الآجل')}${sw(!!x.fawryOn,`uset('${x.id}',{fawryOn:${!x.fawryOn}})`,'السحب بفوري')}</div>
+  ${x.used>0?`<div class="flex gap-2 items-center mt-3"><input id="pa${x.id}" type="number" inputmode="decimal" class="inp num !py-2" placeholder="المبلغ المسدّد"><button class="btn s" onclick="payIn('${x.id}')">تسجيل</button><button class="btn s dk" onclick="payIn('${x.id}',1)">كامل</button></div>`:''}</div>`;
+}
+function adminV(){
+  const all=ords(),isO=o=>o.status==='pending'||o.status==='processing',open=all.filter(isO).sort((a,b)=>a.ts-b.ts),hist=all.filter(o=>!isO(o));
+  const dep=all.filter(o=>o.kind==='deposit'&&o.status==='done'),users=Object.values(DB.users);
+  const onl=users.filter(x=>DB.presence[x.id]).length,newT=users.filter(x=>x.ts>Date.now()-864e5).length,new7=users.filter(x=>x.ts>Date.now()-6048e5).length;
+  const strip=`<div class="grid grid-cols-3 gap-2 mb-3 text-center"><div class="card !p-3"><div class="num text-xl font-extrabold text-emerald-600">${onl}</div><div class="text-xs opacity-60">متصل الآن</div></div><div class="card !p-3"><div class="num text-xl font-extrabold">${users.length}</div><div class="text-xs opacity-60">إجمالي المناديب</div></div><div class="card !p-3"><div class="num text-xl font-extrabold text-amber-600">${newT}</div><div class="text-xs opacity-60">جدد اليوم</div></div></div>`;
+  let b='';
+  if(tab==='orders')b=strip+(open.length?`<div class="font-extrabold mb-2 px-1">طلبات معلقة (${open.length})</div><div class="space-y-3">${open.map(adminOrd).join('')}</div>`:'<div class="card text-center opacity-70 py-6">مفيش طلبات معلقة. هيجيلك إشعار فوري أول ما يوصل طلب.</div>');
+  if(tab==='log'){const L=hist.filter(kfl).slice(0,100);b=kfBar()+`<div class="text-xs opacity-60 px-1 mb-2">${L.length} عملية</div>`+(L.length?`<div class="space-y-3">${L.map(adminOrd).join('')}</div>`:'<div class="card text-center opacity-70 py-6">السجل فاضي.</div>')}
+  if(tab==='users')b=users.length?`<div class="space-y-3">${users.map(userCard).join('')}</div>`:'<div class="card text-center opacity-70 py-6">لسه مفيش مناديب مسجلين.</div>';
+  if(tab==='stats'){const c=(l,v)=>`<div class="card"><div class="text-xs opacity-60">${l}</div><div class="num text-2xl font-extrabold">${v}</div></div>`;b=`<div class="grid grid-cols-2 gap-3">${c('أرباحك من الرسوم',f(dep.reduce((s,o)=>s+o.fee,0))+' ج.م')}${c('إجمالي الموردة',f(dep.reduce((s,o)=>s+o.amount,0))+' ج.م')}${c('عمليات توريد مؤكدة',dep.length)}${c('عمليات سحب تمت',all.filter(o=>o.kind==='withdraw'&&o.status==='done').length)}${c('طلبات معلقة',open.length)}${c('إجمالي المناديب',users.length)}${c('متصل الآن',onl)}${c('جدد اليوم',newT)}${c('جدد آخر 7 أيام',new7)}${c('إجمالي الآجل المستحق',f(users.reduce((s,x)=>s+(x.used||0),0))+' ج.م')}</div>`}
+  if(tab==='prices'){const C=FC(),codes=Object.entries(S().codes||{}),fi=(id,l,v)=>`<label class="block"><span class="text-xs opacity-60">${l}</span><input id="${id}" type="number" class="inp num mt-1" value="${v}"></label>`;
+  b=`<div class="card space-y-3"><div class="font-extrabold">رسوم التوريد (ج.م)</div><div class="grid grid-cols-2 gap-3">${fi('f1','انستا باي',C.insta)}${fi('f2','المحفظة',C.wal)}${fi('f3','حد المحفظة',C.walMax)}${fi('f4','آجل (مبلغ صغير)',C.ajL)}${fi('f5','آجل (مبلغ كبير)',C.ajH)}${fi('f6','حد الآجل الصغير',C.ajT)}</div><button class="btn" onclick="saveFees()">حفظ الأسعار</button></div>
+  <div class="card space-y-3 mt-3"><div class="font-extrabold">إنشاء كود خصم على الرسوم</div><input id="cc" class="inp num" style="direction:ltr;text-transform:uppercase" placeholder="CODE"><div class="grid grid-cols-2 gap-3"><input id="cp" type="number" class="inp num" placeholder="الخصم %"><input id="cu" type="number" class="inp num" placeholder="الاستخدامات (0 = بلا حد)"></div><select id="cm" class="inp"><option value="all">كل الطرق</option><option value="insta">انستا باي</option><option value="wallet">المحفظة</option><option value="ajel">الآجل</option></select><button class="btn dk" onclick="addCode()">إضافة الكود</button></div>
+  ${codes.map(([k,c])=>`<div class="card mt-2 flex items-center justify-between"><div><b class="num">${esc(k)}</b><div class="text-sm opacity-70">${c.pct}% · ${MN[c.method]||'كل الطرق'} · ${c.uses>0?c.uses+' استخدام':'بلا حد'}</div></div><div class="flex items-center gap-3">${sw(c.on!==false,`codeSet('${k}',{on:${c.on===false}})`,'')}<button class="btn s rd" onclick="codeDel('${k}')">حذف</button></div></div>`).join('')}`}
+  if(tab==='set')b=`<div class="card space-y-3"><div class="font-extrabold">أرقام التحويل (تظهر للمناديب فوراً)</div><input id="sv" class="inp num" placeholder="رقم الفيزا / انستا باي" value="${esc(S().visa)}"><input id="sw" class="inp num" placeholder="رقم المحفظة" value="${esc(S().wallet)}"><button class="btn" onclick="saveSet()">حفظ</button></div>
+  <div class="card space-y-3 mt-3"><div class="font-extrabold">كلمة سر الأدمن</div><input id="np" type="password" class="inp" placeholder="كلمة سر جديدة (4 على الأقل)"><button class="btn dk" onclick="savePw()">تغيير</button></div>
+  <button class="btn mt-3" onclick="view='notif';render()">🔔 إعداد إشعارات الأدمن</button>`;
+  const nav=[['orders','inbox','الطلبات',open.length],['log','list','السجل'],['users','users','المناديب'],['prices','tag','الأسعار'],['stats','chart','الإحصاء'],['set','cog','الإعدادات']];
+  return head('لوحة الأدمن')+siteBar()+`</div><div class="px-4">${tab==='orders'?ntBanner():''}${b}</div>
+  <nav class="fixed bottom-0 inset-x-0 bg-white/90 dark:bg-[#251317]/90 backdrop-blur border-t border-[#eadfce] dark:border-[#3d2128] z-40"><div class="max-w-lg mx-auto grid grid-cols-6 pb-[env(safe-area-inset-bottom)]">${nav.map(n=>`<button onclick="tab='${n[0]}';render()" class="py-2 text-[11px] font-bold ${tab===n[0]?'text-[#e04e00]':'opacity-60'}"><div class="flex justify-center mb-0.5"><span class="relative inline-block">${ic(n[1])}${n[3]?`<b class="num absolute -top-1.5 -right-2.5 bg-sun text-white rounded-full text-[10px] leading-none px-1.5 py-0.5">${n[3]}</b>`:''}</span></div>${n[2]}</button>`).join('')}</div></nav>`;
+}
+async function payIn(id,all){const u=DB.users[id];if(!u)return;const a=all?+u.used:+(($('#pa'+id)||{}).value);if(!(a>0))return toast('اكتب المبلغ','err');if(a>(u.used||0))return toast('المبلغ أكبر من المستحق ('+f(u.used)+' ج.م)','err');await D.runTransaction(P('users/'+id),c=>{if(c)c.used=Math.max(0,(c.used||0)-a);return c});await D.set(D.push(P('orders')),{kind:'repay',from:id,fromName:u.name,fromOffice:u.office||'',amount:a,status:'done',manual:true,ts:Date.now()});toast('تم تسجيل سداد '+f(a)+' ج.م')}
+const saveFees=()=>{const g=i=>Math.max(0,+$('#'+i).value||0);D.update(P('settings/fees'),{insta:g('f1'),wal:g('f2'),walMax:g('f3'),ajL:g('f4'),ajH:g('f5'),ajT:g('f6')}).then(()=>toast('تم حفظ الأسعار'))};
+const addCode=()=>{const c=$('#cc').value.trim().toUpperCase(),p=+$('#cp').value;if(!/^[A-Z0-9_-]{3,16}$/.test(c))return toast('الكود 3-16 حرف إنجليزي أو رقم','err');if(!(p>0&&p<=100))return toast('النسبة من 1 لـ 100','err');D.set(P('settings/codes/'+c),{pct:p,method:$('#cm').value,uses:Math.max(0,Math.floor(+$('#cu').value||0)),on:true}).then(()=>toast('تم إضافة الكود'))};
+const codeSet=(k,b)=>D.update(P('settings/codes/'+k),b),codeDel=k=>D.remove(P('settings/codes/'+k)).then(()=>toast('تم الحذف'));
+const uset=(id,b)=>D.update(P('users/'+id),b).then(()=>toast('تم الحفظ'));
+const saveSet=()=>D.update(P('settings'),{visa:$('#sv').value.trim(),wallet:$('#sw').value.trim()}).then(()=>toast('تم الحفظ وظهرت الأرقام للمناديب'));
+function savePw(){const p=$('#np').value;if(p.length<4)return toast('4 حروف على الأقل','err');const h=pwh(ADMIN,p);D.update(P('settings'),{adminHash:h}).then(()=>{me.ph=h;localStorage.setItem('cred',JSON.stringify(me));toast('تم تغيير كلمة السر')})}
+
+function render(){
+  const app=$('#app');
+  if(err&&!me)return app.innerHTML=authV();
+  if(!loaded)return app.innerHTML='<div class="min-h-screen flex items-center justify-center font-bold opacity-70">جاري الاتصال…</div>';
+  if(!me)return app.innerHTML=authV();
+  if(!isA()&&!siteOpen()&&(view==='wiz'||view==='wd'||view==='pay'))view='home';
+  app.innerHTML=view==='notif'?notifV():isA()?adminV():view==='wiz'?wizV():view==='wd'?wdV():view==='pay'?payV():view==='disc'?discV()+dnav('disc'):view==='log'?logV()+dnav('log'):homeV()+dnav('home');
+}
+render();initFB();
+</script>
+</body>
+</html>
