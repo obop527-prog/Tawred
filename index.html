@@ -46,6 +46,32 @@ body{font-family:Cairo,Tahoma,sans-serif;background:#f6efe5;-webkit-tap-highligh
 .sw.site{background:#f87171;width:60px;height:34px;box-shadow:0 0 0 3px #ffffff40}.sw.site i{width:28px;height:28px;top:3px;right:3px}.sw.site.on{background:#22c55e}.sw.site.on i{transform:translateX(-26px)}
 .btn.gr{background:#059669;color:#fff;box-shadow:none}
 .ntc{border-radius:14px;padding:10px 12px;font-size:13px;font-weight:700;margin-top:8px;background:#0ea5e91a;color:#0369a1}.dark .ntc{color:#7dd3fc}
+/* ---- بنر الإعلانات ---- */
+.ads-sc{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}.ads-sc::-webkit-scrollbar{display:none}
+.ad{flex:none;width:calc(100% - 28px);scroll-snap-align:start;min-height:160px;border-radius:24px;padding:16px;display:flex;align-items:stretch;gap:12px;color:#fff;position:relative;overflow:hidden;box-shadow:0 16px 30px -18px #3f1319cc;text-decoration:none;isolation:isolate}
+.ad.one{width:100%}
+.ad::before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(115deg,#ffffff0d 0 14px,transparent 14px 28px)}
+.ad::after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;background:#ffffff1c;left:-70px;bottom:-90px;z-index:-1}
+.ad-main{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:8px}
+.ad-tag{align-self:flex-start;background:#fff;color:#c2410c;border-radius:999px;padding:2px 10px;font-size:11px;font-weight:800}
+.ad-t{font-size:17px;font-weight:800;line-height:1.35}.ad-x{font-size:12.5px;opacity:.92;line-height:1.5}
+.ad-cta{align-self:flex-start;background:#fff;color:#c2410c;border-radius:999px;padding:7px 16px;font-size:13px;font-weight:800;box-shadow:0 6px 14px -8px #0008}
+.ad-pct{flex:none;width:98px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ad-pct b{font-size:46px;line-height:1;font-weight:800;direction:ltr}.ad-pct b small{font-size:22px}
+.ad-pct span{font-size:11px;font-weight:700;opacity:.95;margin-top:2px}
+.ad-code{margin-top:8px;border:1.5px dashed #ffffffcc;border-radius:10px;padding:3px 8px;font-size:12px;font-weight:800;letter-spacing:.08em;direction:ltr;background:#ffffff26}
+.ad-dots{display:flex;justify-content:center;gap:6px;margin-top:8px}.ad-dots i{width:6px;height:6px;border-radius:99px;background:#3f131933;transition:all .25s}.dark .ad-dots i{background:#ffffff33}.ad-dots i.on{width:18px;background:#ff5a00}
+.ad-img{flex:none;width:calc(100% - 28px);scroll-snap-align:start;align-self:flex-start;display:block;border-radius:24px;overflow:hidden;box-shadow:0 16px 30px -18px #3f1319cc;line-height:0}.ad-img.one{width:100%}.ad-img img{width:100%;height:auto;display:block}.ad-d{display:none!important}.dark .ad-d{display:block!important}.dark .ad-l.has2{display:none}
+.offer{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border-radius:18px;border:2px dashed #ff5a0099;background:#ff5a000d;text-align:right;transition:all .15s}.offer.on{border-style:solid;border-color:#059669;background:#10b9811a}
+/* ---- كروت المناديب (مضغوطة) ---- */
+.uc{background:#fff;border:1px solid #eadfce;border-radius:18px;box-shadow:0 1px 2px #0f172a08;overflow:hidden}
+.dark .uc{background:#251317;border-color:#3d2128}
+.uc-h{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;text-align:right}
+.uav{width:38px;height:38px;border-radius:12px;background:#ff5a0026;color:#e04e00;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none}
+.uc .ud{display:none;padding:0 12px 12px;border-top:1px solid #f0e7da}.dark .uc .ud{border-color:#3d2128}
+.uc.open .ud{display:block}.uc .chv{display:flex;transition:transform .2s}.uc .chv svg{width:18px;height:18px}.uc.open .chv{transform:rotate(-90deg)}
+/* ---- الإحصائيات ---- */
+.hero{background:linear-gradient(135deg,#ff6a1a,#e04e00);color:#fff;border-radius:22px;padding:18px;box-shadow:0 14px 28px -16px #c2410c}
 </style>
 </head>
 <body class="text-ink dark:text-slate-100 min-h-screen">
@@ -56,7 +82,7 @@ body{font-family:Cairo,Tahoma,sans-serif;background:#f6efe5;-webkit-tap-highligh
 const CFG={apiKey:"AIzaSyBtAQvHw5bW8Bk8LpsSoguFhl5g5SZKtaI",authDomain:"dffvfv.firebaseapp.com",databaseURL:"https://dffvfv-default-rtdb.europe-west1.firebasedatabase.app",projectId:"dffvfv",storageBucket:"dffvfv.firebasestorage.app",messagingSenderId:"443974849871",appId:"1:443974849871:web:d16ea3d30389fac8efa13a"};
 const ADMIN='7777777',NTFY='https://ntfy.sh/';
 const $=s=>document.querySelector(s);
-let D=null,DB={users:{},orders:{},settings:{},presence:{},pinreq:{}},me=null,loaded=false,err='',view='home',tab='orders',mode='login',w={},wd={},seen={},seenPin={},seenU={},lf='all',lo=true;
+let D=null,DB={users:{},orders:{},settings:{},presence:{},pinreq:{}},me=null,loaded=false,err='',view='home',tab='orders',mode='login',w={},wd={},seen={},seenPin={},seenU={},lf='all',lo=true,sf='all',sfa='',sfb='',sfu='',uq='',ux={},adPause=0;
 try{const c=JSON.parse(localStorage.getItem('cred')||'null');if(c)me=c}catch(e){}
 const IC={home:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>',tag:'<path d="M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0L3 13V3h10l7.6 7.6a2 2 0 010 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',moon:'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',out:'<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>',in:'<path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/>',users:'<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8"/>',phone:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>',chev:'<path d="M15 18l-6-6 6-6"/>',inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.1L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.5-6.9A2 2 0 0016.8 4H7.2a2 2 0 00-1.7 1.1z"/>',chart:'<path d="M3 3v18h18M7 15v3M12 9v9M17 5v13"/>',cog:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',check:'<path d="M20 6L9 17l-5-5"/>',x:'<path d="M18 6L6 18M6 6l12 12"/>',bank:'<path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/>',receipt:'<path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6"/>',copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>',unlock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 017.5-2"/>'};
 const ic=(n,c='')=>`<svg class="${c}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
@@ -68,7 +94,7 @@ const SL={pending:['بانتظار الأدمن','bg-amber-100 text-amber-800 da
 const FD={insta:5,wal:10,walMax:1500,ajL:5,ajH:10,ajT:1000},FC=()=>({...FD,...(S().fees||{})});
 const fee=(m,a)=>{const c=FC();return m==='insta'?+c.insta:m==='wallet'?(a>0&&a<=c.walMax?+c.wal:null):m==='ajel'?(a>0?(a>c.ajT?+c.ajH:+c.ajL):null):null};
 const mydisc=()=>Object.entries((U()||{}).disc||{}).map(([k,v])=>({code:k,...(S().codes||{})[k],left:v.left})).filter(d=>d.pct&&d.on!==false);
-const dsc=(m,b)=>{if(b===null)return{fe:null};let best=null;mydisc().forEach(d=>{if((d.method==='all'||d.method===m)&&(!best||d.pct>best.pct))best=d});return best?{fe:Math.round(b*(1-best.pct/100)),base:b,code:best.code,pct:best.pct}:{fe:b,base:b}};
+const dsc=(m,b)=>{if(b===null)return{fe:null};const d=w.disc&&offers(m).find(o=>o.code===w.disc);return d?{fe:Math.round(b*(1-d.pct/100)),base:b,code:d.code,pct:d.pct}:{fe:b,base:b}};
 const time=t=>new Date(t).toLocaleString('ar-EG',{hour:'2-digit',minute:'2-digit',day:'numeric',month:'short'});
 const hs=s=>{let a=0xdeadbeef,b=0x41c6ce57;for(let i=0,c;i<s.length;i++){c=s.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^(a>>>16),2246822507)^Math.imul(b^(b>>>13),3266489909);b=Math.imul(b^(b>>>16),2246822507)^Math.imul(a^(a>>>13),3266489909);return(4294967296*(2097151&b)+(a>>>0)).toString(36)};
 const pwh=(id,pw)=>hs('dlv|'+id+'|'+pw);
@@ -221,13 +247,13 @@ function homeV(){
   const tile=(i,t,s,on)=>`<button onclick="${on}" class="card flex items-center gap-4 w-full text-right active:scale-[.98] transition"><span class="tic">${ic(i)}</span><span class="flex-1"><b class="text-lg block">${t}</b><span class="text-sm opacity-60">${s}</span></span><span class="opacity-30">${ic('chev')}</span></button>`;
   const closed=`<div class="card text-center step"><div class="trk-ic no">${ic('lock')}</div><h2 class="text-xl font-extrabold mt-3">الموقع مقفول حالياً</h2><p class="text-sm opacity-70 mt-1">استقبال الطلبات متوقف مؤقتاً، والصفحة هتتحدث لوحدها أول ما يتفتح تاني.</p></div>`;
   return head('أهلاً بيك')+(u.ajelOn?`<div class="mt-4 bg-white rounded-2xl p-4 text-ink flex items-center justify-between"><div><div class="text-xs opacity-60">رصيد الآجل المستحق عليك</div><div class="num text-3xl font-extrabold">${f(u.used)} <span class="text-sm">ج.م</span></div></div><button class="btn s" ${u.used>0&&!cl?'':'disabled style="opacity:.4"'} onclick="startPay()">سداد</button></div>`:'')+`</div>
-  <div class="px-4 space-y-3">${tr.map(o=>`<div class="card text-center"><div class="flex justify-between items-center mb-4"><b>${o.kind==='repay'?'سداد آجل · ':''}${o.kind==='withdraw'?'طلب سحب':f(o.amount)+' ج.م'}</b>${chip(o.status)}</div>${trk(o)}</div>`).join('')}
+  <div class="px-4 space-y-3">${adsV()}${tr.map(o=>`<div class="card text-center"><div class="flex justify-between items-center mb-4"><b>${o.kind==='repay'?'سداد آجل · ':''}${o.kind==='withdraw'?'طلب سحب':f(o.amount)+' ج.م'}</b>${chip(o.status)}</div>${trk(o)}</div>`).join('')}
   ${cl?closed:tile('in','توريد لنفسي','ورّد عهدتك في 3 خطوات',"startWiz('self')")+tile('users','توريد لشخص آخر','ورّد لأي شخص، مسجل أو لا',"startWiz('other')")}
   ${inc.length?`<div class="font-extrabold px-1">طلبات واردة ليك</div>${inc.map(ordCard).join('')}`:''}
   ${!tr.length&&!inc.length?`<div class="card text-center opacity-70 py-5 text-sm">مفيش طلبات جارية دلوقتي.<br>كل عملياتك السابقة في تاب <b>السجل</b>.</div>`:''}
   </div>`;
 }
-const startWiz=k=>{if(!siteOpen())return toast('الموقع مقفول حالياً','err');w={k,step:1,amount:'',target:'',tname:'',via:'',wallet:'',method:'',pin:''};view='wiz';render()};
+const startWiz=k=>{if(!siteOpen())return toast('الموقع مقفول حالياً','err');w={k,step:1,amount:'',target:'',tname:'',via:'',wallet:'',method:'',pin:'',disc:''};view='wiz';render()};
 const startWd=()=>{if(!siteOpen())return toast('الموقع مقفول حالياً','err');wd={step:1,wallet:'',amount:''};view='wd';render()};
 const home=()=>{view='home';render()};
 const back=fn=>`<button class="btn gh mt-2" onclick="${fn}">رجوع</button>`;
@@ -243,11 +269,11 @@ function wizV(){
     const C=FC(),ms=[['insta','bank','انستا باي','رسم '+C.insta+' ج.م'],['wallet','phone','محفظة إلكترونية','رسم '+C.wal+' ج.م (حتى '+f(C.walMax)+')'],['ajel','receipt','آجل','رسم '+C.ajL+' ج.م (حتى '+f(C.ajT)+') · '+C.ajH+' ج.م فوق كده']];
     b=`<h2 class="text-xl font-extrabold mb-1">اختار طريقة السداد</h2><p class="mb-3 opacity-60">المبلغ <b class="num">${f(a)}</b> ج.م</p><div class="space-y-2">`+ms.map(m=>{
       const x=dsc(m[0],fee(m[0],a)).fe,why=x===null?(m[0]==='wallet'?'المحفظة لحد '+f(C.walMax)+' ج.م فقط':''):m[0]==='ajel'&&!u.ajelOn?'الآجل مش مفعّل لحسابك':'';
-      return `<button ${why?'disabled':''} onclick="w.method='${m[0]}';w.via=w.method==='wallet'&&!U().fawryOn?'tr':'';w.step=3;render()" class="card w-full flex items-center gap-3 text-right ${why?'opacity-40':'border-2 border-transparent hover:border-sun'}"><span class="tic !w-11 !h-11">${ic(m[1])}</span><span class="flex-1"><b class="block">${m[2]}</b><span class="text-sm opacity-60">${why||m[3]}</span></span>${x!==null&&!why?`<b class="num">+${x}</b>`:''}</button>`}).join('')+`</div>${back('w.step=1;render()')}`;
+      return `<button ${why?'disabled':''} onclick="w.method='${m[0]}';w.disc='';w.via=w.method==='wallet'&&!U().fawryOn?'tr':'';w.step=3;render()" class="card w-full flex items-center gap-3 text-right ${why?'opacity-40':'border-2 border-transparent hover:border-sun'}"><span class="tic !w-11 !h-11">${ic(m[1])}</span><span class="flex-1"><b class="block">${m[2]}</b><span class="text-sm opacity-60">${why||m[3]}</span></span>${x!==null&&!why?`<b class="num">+${x}</b>`:''}</button>`}).join('')+`</div>${back('w.step=1;render()')}`;
   }
   if(w.step===3){
     const wal=w.method==='wallet',fw=wal&&w.via==='fawry',num=w.method==='insta'?['رقم الفيزا / انستا باي',S().visa]:wal&&w.via==='tr'?['رقم المحفظة',S().wallet]:null;
-    const sum=`<div class="rounded-2xl bg-sun/10 p-4 mb-3 text-center"><div class="text-sm opacity-70">الإجمالي المطلوب</div><div class="num text-4xl font-extrabold text-[#e04e00]">${f(a+fe)}</div><div class="text-sm opacity-70">${f(a)} + رسم ${fe} ج.م</div>${dd.code?`<div class="text-xs text-emerald-600 font-bold mt-1">خصم ${dd.pct}% بكود ${esc(dd.code)} (الرسم الأصلي ${dd.base})</div>`:''}</div>`;
+    const sum=`<div class="rounded-2xl bg-sun/10 p-4 mb-3 text-center"><div class="text-sm opacity-70">الإجمالي المطلوب</div><div class="num text-4xl font-extrabold text-[#e04e00]">${f(a+fe)}</div><div class="text-sm opacity-70">${f(a)} + رسم ${fe} ج.م</div>${dd.code?`<div class="text-xs text-emerald-600 font-bold mt-1">خصم ${dd.pct}% بكود ${esc(dd.code)} (الرسم الأصلي ${dd.base})</div>`:''}</div>${offerBox(a)}`;
     if(wal&&!w.via)b=`<h2 class="text-xl font-extrabold mb-3">المحفظة الإلكترونية</h2>${sum}<div class="space-y-2">`+[['fawry','phone','سحب بفوري','الأدمن يسحب من محفظتك وهيجيلك SMS من فوري'],['tr','in','تحويل','حوّل بنفسك على رقم محفظة الأدمن']].map(x=>`<button onclick="w.via='${x[0]}';render()" class="card w-full flex items-center gap-3 text-right border-2 border-transparent hover:border-sun"><span class="tic !w-11 !h-11">${ic(x[1])}</span><span class="flex-1"><b class="block">${x[2]}</b><span class="text-sm opacity-60">${x[3]}</span></span></button>`).join('')+`</div>${back('w.step=2;render()')}`;
     else b=`<h2 class="text-xl font-extrabold mb-3">${w.method==='ajel'?'تأكيد الآجل':fw?'بيانات السحب بفوري':'حوّل المبلغ دلوقتي'}</h2>${sum}
     ${num?`<div class="rounded-2xl border-2 border-dashed border-sun p-4 flex items-center justify-between mb-3"><div><div class="text-xs opacity-60">${num[0]}</div><div class="num text-2xl font-extrabold">${esc(num[1])||'لسه مش متحدد'}</div></div>${num[1]?`<button class="btn s" onclick="copy('${esc(num[1])}')">نسخ</button>`:''}</div><p class="text-sm opacity-70 mb-3">بعد ما تحوّل اضغط "حوّلت، ابعت الطلب".</p>`
@@ -272,7 +298,7 @@ async function sendW(){if(!siteOpen())return toast('الموقع مقفول حا
     await D.runTransaction(P('users/'+me.id),c=>{if(c)c.used=(c.used||0)+a+fe;return c});
   }else if(!fw&&!(m==='insta'?S().visa:S().wallet))return toast('رقم التحويل لسه مش متحدد','err');
   const r=D.push(P('orders'));w.oid=r.key;await D.set(r,{kind:'deposit',from:me.id,fromName:u.name,fromOffice:u.office||'',target:t,targetName:w.k==='other'?w.tname.trim().slice(0,40):u.name,amount:a,fee:fe,disc:dd.code||'',method:m,via:fw?'fawry':'',wallet:fw?w.wallet:'',status:'pending',ts:Date.now()});
-  if(dd.code){const dv=(u.disc||{})[dd.code];if(dv&&dv.left>0)dv.left>1?D.update(P('users/'+me.id+'/disc/'+dd.code),{left:dv.left-1}):D.remove(P('users/'+me.id+'/disc/'+dd.code))}
+  if(dd.code){const dv=(u.disc||{})[dd.code];if(dv&&dv.left>0)dv.left>1?D.update(P('users/'+me.id+'/disc/'+dd.code),{left:dv.left-1}):D.remove(P('users/'+me.id+'/disc/'+dd.code));D.runTransaction(P('users/'+me.id+'/dcnt/'+dd.code),c=>(c||0)+1)}
   ping(S().adminTopic,'🔔 طلب توريد جديد',`${f(a)} ج.م من ${u.name} (${me.id}) — ${MN[m]}`,5);
   w.step=4;render();
 }
@@ -297,7 +323,7 @@ async function sendWd(){if(!siteOpen())return toast('الموقع مقفول ح�
 /* ============ خصومات المندوب ============ */
 function discV(){
   const L=mydisc(),mn={all:'كل الطرق',insta:'انستا باي',wallet:'المحفظة',ajel:'الآجل'};
-  return head('خصوماتي')+`</div><div class="px-4 space-y-3"><div class="card step"><div class="font-extrabold mb-1">عندك كود خصم؟</div><p class="text-sm opacity-60 mb-3">فعّله هنا وهيتطبق تلقائي على رسوم الطريقة المحددة.</p><div class="flex gap-2"><input id="dc" class="inp num" style="direction:ltr;text-transform:uppercase" placeholder="CODE" onkeydown="if(event.key==='Enter')redeem()"><button class="btn !w-auto px-6" onclick="redeem()">تفعيل</button></div></div>
+  return head('خصوماتي')+`</div><div class="px-4 space-y-3"><div class="card step"><div class="font-extrabold mb-1">عندك كود خصم؟</div><p class="text-sm opacity-60 mb-3">فعّله هنا وهيظهرلك كعرض في خطوة التحويل، وانت تختار تستخدمه ولا لأ.</p><div class="flex gap-2"><input id="dc" class="inp num" style="direction:ltr;text-transform:uppercase" placeholder="CODE" onkeydown="if(event.key==='Enter')redeem()"><button class="btn !w-auto px-6" onclick="redeem()">تفعيل</button></div></div>
   <div class="font-extrabold px-1">خصوماتك الحالية</div>${L.length?L.map(d=>`<div class="card flex items-center gap-3"><span class="tic">${ic('tag')}</span><div class="flex-1"><b class="num text-lg">${esc(d.code)}</b><div class="text-sm opacity-70">خصم ${d.pct}% على رسوم ${mn[d.method]||''}</div><div class="text-xs opacity-50">${d.left>0?'متبقي '+d.left+' استخدام':'غير محدود'}</div></div><b class="num text-2xl text-[#ff5a00]">${d.pct}%</b></div>`).join(''):'<div class="card text-center opacity-60 py-6 text-sm">مفيش خصومات مفعّلة لسه.</div>'}</div>`;
 }
 const dnav=c=>`<nav class="fixed bottom-0 inset-x-0 bg-white/90 dark:bg-[#251317]/90 backdrop-blur border-t border-[#eadfce] dark:border-[#3d2128] z-40"><div class="max-w-lg mx-auto grid grid-cols-3 pb-[env(safe-area-inset-bottom)]">${[['home','home','الرئيسية'],['log','list','السجل'],['disc','tag','خصوماتي']].map(n=>`<button onclick="view='${n[0]}';render()" class="py-2 text-xs font-bold ${c===n[0]?'text-[#e04e00]':'opacity-60'}"><div class="flex justify-center mb-0.5">${ic(n[1])}</div>${n[2]}</button>`).join('')}</div></nav>`;
@@ -305,7 +331,7 @@ function logV(){
   const L=ords().filter(o=>o.from===me.id||o.target===me.id).filter(kfl).slice(0,100);
   return head('سجل عملياتك')+`</div><div class="px-4">${kfBar()}<div class="text-xs opacity-60 px-1 mb-2">${L.length} عملية</div><div class="space-y-3">${L.map(ordCard).join('')||'<div class="card text-center opacity-60 py-6 text-sm">مفيش عمليات هنا لسه.</div>'}</div></div>`;
 }
-async function redeem(){const c=($('#dc').value||'').trim().toUpperCase(),d=(S().codes||{})[c];if(!c)return toast('اكتب الكود','err');if(!d||d.on===false)return toast('الكود غير صحيح','err');if((U().disc||{})[c])return toast('الكود مفعّل بالفعل','err');await D.set(P('users/'+me.id+'/disc/'+c),{left:+d.uses||0});toast('تم تفعيل الخصم')}
+async function redeem(){const c=($('#dc').value||'').trim().toUpperCase(),d=(S().codes||{})[c];if(!c)return toast('اكتب الكود','err');if(!d||d.on===false)return toast('الكود غير صحيح','err');if((U().disc||{})[c])return toast('الكود مفعّل بالفعل','err');const n=(U().dcnt||{})[c]||0;if(d.uses>0&&n>=d.uses)return toast('الكود استُخدم بالكامل','err');await D.set(P('users/'+me.id+'/disc/'+c),{left:d.uses>0?d.uses-n:0});toast('تم تفعيل الخصم')}
 
 /* ============ سداد الآجل ============ */
 let rp={};
@@ -353,12 +379,13 @@ function adminOrd(o){
   ${open?`<div class="grid grid-cols-2 gap-2 mt-3">${fw&&o.status==='pending'?`<button class="btn !py-3 col-span-2" onclick="aact('${o.id}','sms')">بدأت السحب من فوري</button>`:''}<button class="btn gr !py-3" onclick="aact('${o.id}','done')">✔ ${rpy?'قبول السداد':wdw?'تم الاستلام':'تأكيد الاستلام'}</button><button class="btn rd !py-3" onclick="aact('${o.id}','rejected')">رفض</button></div>`:''}</div>`;
 }
 function userCard(x){
-  const on=!!DB.presence[x.id];
-  return `<div class="oc"><div class="flex items-center gap-3"><div class="av !w-12 !h-12 !bg-[#ff5a00]/15 !text-[#e04e00]">${esc((x.name||'؟').trim().charAt(0))}</div><div class="flex-1 min-w-0"><div class="font-extrabold text-lg truncate">${esc(x.name)}</div><div class="text-xs opacity-60 truncate">🏢 ${esc(x.office||'—')}</div></div><span class="px-2.5 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1.5 ${x.banned?'bg-rose-100 text-rose-800 dark:bg-rose-400/15 dark:text-rose-300':on?'bg-emerald-100 text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-300':'bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300'}"><i class="dot"></i>${x.banned?'محظور':on?'متصل':'غير متصل'}</span></div>
-  ${idBox('ID المندوب',x.id)}
-  <div class="mt-2">${kv('الموبايل',`<a class="num underline" href="tel:${esc(x.phone)}">${esc(x.phone)}</a>`)}${kv('تاريخ التسجيل',x.ts?time(x.ts):'—')}${kv('آجل مستحق',`<span class="num ${x.used>0?'text-rose-600':''}">${f(x.used)} ج.م</span>`)}</div>
+  const on=!!DB.presence[x.id],
+    st=x.banned?['محظور','bg-rose-100 text-rose-800 dark:bg-rose-400/15 dark:text-rose-300']:on?['متصل','bg-emerald-100 text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-300']:['غير متصل','bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300'],
+    tile=(l,v)=>`<div class="rounded-xl bg-slate-50 dark:bg-white/5 px-3 py-2 min-w-0"><div class="text-[11px] opacity-55">${l}</div><div class="text-sm font-bold truncate">${v}</div></div>`;
+  return `<div class="uc ${ux[x.id]?'open':''}"><button class="uc-h" onclick="utog(this,'${esc(x.id)}')"><div class="uav">${esc((x.name||'؟').trim().charAt(0))}</div><div class="flex-1 min-w-0"><div class="font-extrabold text-[15px] leading-tight truncate">${esc(x.name)}</div><div class="text-xs opacity-60 truncate"><span class="num">${esc(x.id)}</span> · ${esc(x.office||'—')}${x.used>0?` · <b class="text-rose-600">آجل ${f(x.used)}</b>`:''}</div></div><span class="px-2 py-0.5 rounded-full text-[11px] font-bold inline-flex items-center gap-1 ${st[1]}"><i class="dot" style="width:5px;height:5px"></i>${st[0]}</span><span class="chv opacity-40">${ic('chev')}</span></button>
+  <div class="ud"><div class="grid grid-cols-2 gap-2 pt-3">${tile('الـ ID',`<span class="num">${esc(x.id)}</span> <button class="text-xs font-bold text-[#e04e00] underline" onclick="copy('${esc(x.id)}')">نسخ</button>`)}${tile('الموبايل',`<a class="num" href="tel:${esc(x.phone)}">${esc(x.phone)}</a>`)}${tile('تاريخ التسجيل',x.ts?time(x.ts):'—')}${tile('آجل مستحق',`<span class="num ${x.used>0?'text-rose-600':''}">${f(x.used)} ج.م</span>`)}</div>
   <div class="rounded-2xl bg-slate-50 dark:bg-white/5 px-3 mt-2 divide-y divide-slate-200 dark:divide-white/10">${sw(!x.banned,`uset('${x.id}',{banned:${!x.banned}})`,'الحساب نشط')}${sw(!!x.ajelOn,`uset('${x.id}',{ajelOn:${!x.ajelOn}})`,'الآجل')}${sw(!!x.fawryOn,`uset('${x.id}',{fawryOn:${!x.fawryOn}})`,'السحب بفوري')}</div>
-  ${x.used>0?`<div class="flex gap-2 items-center mt-3"><input id="pa${x.id}" type="number" inputmode="decimal" class="inp num !py-2" placeholder="المبلغ المسدّد"><button class="btn s" onclick="payIn('${x.id}')">تسجيل</button><button class="btn s dk" onclick="payIn('${x.id}',1)">كامل</button></div>`:''}</div>`;
+  ${x.used>0?`<div class="flex gap-2 items-center mt-3"><input id="pa${x.id}" type="number" inputmode="decimal" class="inp num !py-2" placeholder="المبلغ المسدّد"><button class="btn s" onclick="payIn('${x.id}')">تسجيل</button><button class="btn s dk" onclick="payIn('${x.id}',1)">كامل</button></div>`:''}</div></div>`;
 }
 function adminV(){
   const all=ords(),isO=o=>o.status==='pending'||o.status==='processing',open=all.filter(isO).sort((a,b)=>a.ts-b.ts),hist=all.filter(o=>!isO(o));
@@ -368,15 +395,15 @@ function adminV(){
   let b='';
   if(tab==='orders')b=strip+(open.length?`<div class="font-extrabold mb-2 px-1">طلبات معلقة (${open.length})</div><div class="space-y-3">${open.map(adminOrd).join('')}</div>`:'<div class="card text-center opacity-70 py-6">مفيش طلبات معلقة. هيجيلك إشعار فوري أول ما يوصل طلب.</div>');
   if(tab==='log'){const L=hist.filter(kfl).slice(0,100);b=kfBar()+`<div class="text-xs opacity-60 px-1 mb-2">${L.length} عملية</div>`+(L.length?`<div class="space-y-3">${L.map(adminOrd).join('')}</div>`:'<div class="card text-center opacity-70 py-6">السجل فاضي.</div>')}
-  if(tab==='users')b=users.length?`<div class="space-y-3">${users.map(userCard).join('')}</div>`:'<div class="card text-center opacity-70 py-6">لسه مفيش مناديب مسجلين.</div>';
-  if(tab==='stats'){const c=(l,v)=>`<div class="card"><div class="text-xs opacity-60">${l}</div><div class="num text-2xl font-extrabold">${v}</div></div>`;b=`<div class="grid grid-cols-2 gap-3">${c('أرباحك من الرسوم',f(dep.reduce((s,o)=>s+o.fee,0))+' ج.م')}${c('إجمالي الموردة',f(dep.reduce((s,o)=>s+o.amount,0))+' ج.م')}${c('عمليات توريد مؤكدة',dep.length)}${c('عمليات سحب تمت',all.filter(o=>o.kind==='withdraw'&&o.status==='done').length)}${c('طلبات معلقة',open.length)}${c('إجمالي المناديب',users.length)}${c('متصل الآن',onl)}${c('جدد اليوم',newT)}${c('جدد آخر 7 أيام',new7)}${c('إجمالي الآجل المستحق',f(users.reduce((s,x)=>s+(x.used||0),0))+' ج.م')}</div>`}
+  if(tab==='users')b=usersV(users);
+  if(tab==='stats')b=statsV(all,open,users);
   if(tab==='prices'){const C=FC(),codes=Object.entries(S().codes||{}),fi=(id,l,v)=>`<label class="block"><span class="text-xs opacity-60">${l}</span><input id="${id}" type="number" class="inp num mt-1" value="${v}"></label>`;
   b=`<div class="card space-y-3"><div class="font-extrabold">رسوم التوريد (ج.م)</div><div class="grid grid-cols-2 gap-3">${fi('f1','انستا باي',C.insta)}${fi('f2','المحفظة',C.wal)}${fi('f3','حد المحفظة',C.walMax)}${fi('f4','آجل (مبلغ صغير)',C.ajL)}${fi('f5','آجل (مبلغ كبير)',C.ajH)}${fi('f6','حد الآجل الصغير',C.ajT)}</div><button class="btn" onclick="saveFees()">حفظ الأسعار</button></div>
   <div class="card space-y-3 mt-3"><div class="font-extrabold">إنشاء كود خصم على الرسوم</div><input id="cc" class="inp num" style="direction:ltr;text-transform:uppercase" placeholder="CODE"><div class="grid grid-cols-2 gap-3"><input id="cp" type="number" class="inp num" placeholder="الخصم %"><input id="cu" type="number" class="inp num" placeholder="الاستخدامات (0 = بلا حد)"></div><select id="cm" class="inp"><option value="all">كل الطرق</option><option value="insta">انستا باي</option><option value="wallet">المحفظة</option><option value="ajel">الآجل</option></select><button class="btn dk" onclick="addCode()">إضافة الكود</button></div>
   ${codes.map(([k,c])=>`<div class="card mt-2 flex items-center justify-between"><div><b class="num">${esc(k)}</b><div class="text-sm opacity-70">${c.pct}% · ${MN[c.method]||'كل الطرق'} · ${c.uses>0?c.uses+' استخدام':'بلا حد'}</div></div><div class="flex items-center gap-3">${sw(c.on!==false,`codeSet('${k}',{on:${c.on===false}})`,'')}<button class="btn s rd" onclick="codeDel('${k}')">حذف</button></div></div>`).join('')}`}
   if(tab==='set')b=`<div class="card space-y-3"><div class="font-extrabold">أرقام التحويل (تظهر للمناديب فوراً)</div><input id="sv" class="inp num" placeholder="رقم الفيزا / انستا باي" value="${esc(S().visa)}"><input id="sw" class="inp num" placeholder="رقم المحفظة" value="${esc(S().wallet)}"><button class="btn" onclick="saveSet()">حفظ</button></div>
   <div class="card space-y-3 mt-3"><div class="font-extrabold">كلمة سر الأدمن</div><input id="np" type="password" class="inp" placeholder="كلمة سر جديدة (4 على الأقل)"><button class="btn dk" onclick="savePw()">تغيير</button></div>
-  <button class="btn mt-3" onclick="view='notif';render()">🔔 إعداد إشعارات الأدمن</button>`;
+  ${adsAdmin()}<button class="btn mt-3" onclick="view='notif';render()">🔔 إعداد إشعارات الأدمن</button>`;
   const nav=[['orders','inbox','الطلبات',open.length],['log','list','السجل'],['users','users','المناديب'],['prices','tag','الأسعار'],['stats','chart','الإحصاء'],['set','cog','الإعدادات']];
   return head('لوحة الأدمن')+siteBar()+`</div><div class="px-4">${tab==='orders'?ntBanner():''}${b}</div>
   <nav class="fixed bottom-0 inset-x-0 bg-white/90 dark:bg-[#251317]/90 backdrop-blur border-t border-[#eadfce] dark:border-[#3d2128] z-40"><div class="max-w-lg mx-auto grid grid-cols-6 pb-[env(safe-area-inset-bottom)]">${nav.map(n=>`<button onclick="tab='${n[0]}';render()" class="py-2 text-[11px] font-bold ${tab===n[0]?'text-[#e04e00]':'opacity-60'}"><div class="flex justify-center mb-0.5"><span class="relative inline-block">${ic(n[1])}${n[3]?`<b class="num absolute -top-1.5 -right-2.5 bg-sun text-white rounded-full text-[10px] leading-none px-1.5 py-0.5">${n[3]}</b>`:''}</span></div>${n[2]}</button>`).join('')}</div></nav>`;
@@ -389,13 +416,89 @@ const uset=(id,b)=>D.update(P('users/'+id),b).then(()=>toast('تم الحفظ'))
 const saveSet=()=>D.update(P('settings'),{visa:$('#sv').value.trim(),wallet:$('#sw').value.trim()}).then(()=>toast('تم الحفظ وظهرت الأرقام للمناديب'));
 function savePw(){const p=$('#np').value;if(p.length<4)return toast('4 حروف على الأقل','err');const h=pwh(ADMIN,p);D.update(P('settings'),{adminHash:h}).then(()=>{me.ph=h;localStorage.setItem('cred',JSON.stringify(me));toast('تم تغيير كلمة السر')})}
 
+/* ============ الإعلانات + عروض الخصم ============ */
+const ADC={sun:['#ff7a1f','#d94400','برتقالي'],brown:['#6b2a38','#3f1319','بني'],green:['#10b981','#047857','أخضر'],violet:['#8b5cf6','#6d28d9','بنفسجي'],sky:['#0ea5e9','#0369a1','أزرق']};
+const okImg=u=>/^https?:\/\/[^\s'"()<>]+$/i.test(u||''),okLink=u=>/^https?:\/\/\S+$/i.test(u||'');
+const adBg=a=>okImg(a.img)?`background:linear-gradient(0deg,#000000bb,#00000033),url(${esc(a.img)}) center/cover`:`background:linear-gradient(135deg,${(ADC[a.color]||ADC.sun)[0]},${(ADC[a.color]||ADC.sun)[1]})`;
+const adList=()=>Object.entries(S().ads||{}).map(([k,a])=>({...a,id:k})).sort((a,b)=>(a.ts||0)-(b.ts||0));
+function adCard(a,one){
+  const c=a.code&&(S().codes||{})[a.code],pr=c&&c.on!==false&&c.pct?c:null,lk=!pr&&okLink(a.link),
+    tag=pr?'div':lk?'a':'div',at=pr?` role="button" onclick="startWiz('self')"`:lk?` href="${esc(a.link)}" target="_blank" rel="noopener"`:'',
+    t=a.title||(pr?`خصم ${pr.pct}% على عمولة التوريد`:''),x=a.text||(pr?'فعّل الخصم من خطوة التحويل قبل ما تبعت الطلب':''),
+    mt=pr&&pr.method&&pr.method!=='all'?MN[pr.method]:'';
+  if(okImg(a.img)){const h2=okImg(a.img2);return `<${tag}${at} class="ad-img${one?' one':''}" style="${pr||lk?'cursor:pointer':''}"><img class="ad-l${h2?' has2':''}" src="${esc(a.img)}" alt="${esc(a.title||'إعلان')}">${h2?`<img class="ad-d" src="${esc(a.img2)}" alt="">`:''}</${tag}>`}
+  return `<${tag}${at} class="ad${one?' one':''}" style="${adBg(a)};${pr||lk?'cursor:pointer':''}"><div class="ad-main">${a.tag||pr?`<span class="ad-tag">${esc(a.tag||'عرض خاص')}</span>`:''}<div>${t?`<b class="ad-t block">${esc(t)}</b>`:''}${x?`<span class="ad-x block mt-1">${esc(x)}</span>`:''}</div>${pr?'<span class="ad-cta">ورّد واستفد من الخصم ‹</span>':lk?'<span class="ad-cta">اعرف المزيد ‹</span>':''}</div>${pr?`<div class="ad-pct"><b class="num">${pr.pct}<small>%</small></b><span>خصم على العمولة</span>${mt?`<span>${mt}</span>`:''}<div class="ad-code">${esc(a.code)}</div></div>`:''}</${tag}>`;
+}
+const adsV=()=>{const L=adList().filter(a=>a.on!==false).slice(0,10);return L.length?`<div><div id="ads" class="ads-sc" onscroll="adDots()" onpointerdown="adPause=Date.now()+8000" ontouchstart="adPause=Date.now()+8000">${L.map(a=>adCard(a,L.length===1)).join('')}</div>${L.length>1?`<div class="ad-dots" id="adots">${L.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`:''}</div>`:''};
+function adIdx(e){const r=e.getBoundingClientRect();let i=0,b=1e9;[...e.children].forEach((c,j)=>{const d=Math.abs(c.getBoundingClientRect().right-r.right);if(d<b){b=d;i=j}});return i}
+function adDots(){const e=$('#ads'),d=$('#adots');if(!e||!d)return;const i=adIdx(e);[...d.children].forEach((x,j)=>x.classList.toggle('on',j===i))}
+setInterval(()=>{const e=$('#ads');if(!e||e.children.length<2||Date.now()<adPause)return;const n=e.children[(adIdx(e)+1)%e.children.length];e.scrollBy({left:n.getBoundingClientRect().right-e.getBoundingClientRect().right,behavior:'smooth'})},4000);
+/* عروض الخصم المتاحة للمندوب في خطوة التحويل (من إعلانات الكود + كوداته المفعّلة) */
+const offers=m=>{const C=S().codes||{},u=U()||{},seen={},out=[];
+  const add=k=>{const c=C[k];if(!c||c.on===false||!c.pct||seen[k])return;seen[k]=1;if((c.method||'all')!=='all'&&c.method!==m)return;
+    const own=(u.disc||{})[k],n=(u.dcnt||{})[k]||0;if(!own&&c.uses>0&&n>=c.uses)return;
+    out.push({code:k,pct:c.pct,left:own?own.left:(c.uses>0?c.uses-n:0)})};
+  Object.keys(u.disc||{}).forEach(add);adList().filter(a=>a.on!==false&&a.code).forEach(a=>add(a.code));return out};
+const pickDisc=c=>{w.disc=w.disc===c?'':c;render()};
+const offerBox=a=>{const L=offers(w.method),bf=fee(w.method,a);if(!L.length||bf===null)return'';
+  return `<div class="mb-3 space-y-2"><div class="font-extrabold text-sm px-1">🎁 عروض خصم متاحة ليك</div>${L.map(o=>{const on=w.disc===o.code,sv=bf-Math.round(bf*(1-o.pct/100));return `<button class="offer ${on?'on':''}" onclick="pickDisc('${esc(o.code)}')"><span class="tic !w-11 !h-11">${ic('tag')}</span><span class="flex-1"><b class="num block">${esc(o.code)}</b><span class="text-xs opacity-70 block">خصم ${o.pct}% على الرسوم · توفّر ${sv} ج.م${o.left>0?' · متبقي '+o.left:''}</span><span class="text-xs font-bold ${on?'text-emerald-600':'text-[#e04e00]'}">${on?'مفعّل على الطلب ده ✅':'اضغط لتفعيل الخصم'}</span></span><span class="sw ${on?'on':''}"><i></i></span></button>`}).join('')}</div>`};
+const adsAdmin=()=>`<div class="card space-y-3 mt-3"><div class="font-extrabold">الإعلانات (بنر المناديب)</div><p class="text-xs opacity-60">اربط الإعلان بكود خصم (أنشئه الأول من تاب الأسعار) والمندوب هيشوف الخصم في خطوة التحويل ويختار يفعّله. إعلان واحد = بنر كامل، أكتر = كروت بتتحرك لوحدها.</p>
+<select id="ad6" class="inp"><option value="">بدون كود خصم</option>${Object.entries(S().codes||{}).map(([k,c])=>`<option value="${esc(k)}">كود ${esc(k)} — ${c.pct}%</option>`).join('')}</select>
+<input id="ad7" class="inp" maxlength="24" placeholder="شارة قصيرة (مثال: لفترة محدودة)"><input id="ad1" class="inp" maxlength="60" placeholder="عنوان الإعلان (اختياري مع الكود)"><input id="ad2" class="inp" maxlength="140" placeholder="نص قصير (اختياري)"><input id="ad3" class="inp num" style="direction:ltr" placeholder="رابط الصورة المباشر https://i.ibb.co/… (بتتعرض زي ما هي)"><input id="ad8" class="inp num" style="direction:ltr" placeholder="صورة الوضع الداكن (اختياري)"><input id="ad4" class="inp num" style="direction:ltr" placeholder="رابط عند الضغط (للإعلان بدون كود)">
+<select id="ad5" class="inp">${Object.entries(ADC).map(([k,c])=>`<option value="${k}">لون: ${c[2]}</option>`).join('')}</select><button class="btn dk" onclick="addAd()">إضافة الإعلان</button>
+${adList().map(a=>`<div class="rounded-2xl border border-[#eadfce] dark:border-[#3d2128] p-2.5 flex items-center gap-3"><div style="width:44px;height:44px;border-radius:12px;flex:none;${adBg(a)}"></div><div class="flex-1 min-w-0"><b class="block truncate text-sm">${esc(a.title||(a.code?'إعلان خصم':'(صورة فقط)'))}</b><span class="text-xs opacity-60 truncate block">${a.code?'كود '+esc(a.code)+' · ':''}${esc(a.text||'')}</span></div>${sw(a.on!==false,`adSet('${a.id}',{on:${a.on===false}})`,'')}<button class="btn s rd" onclick="adDel('${a.id}')">حذف</button></div>`).join('')}</div>`;
+function addAd(){
+  const t=$('#ad1').value.trim(),x=$('#ad2').value.trim(),im=$('#ad3').value.trim(),lk=$('#ad4').value.trim(),cd=$('#ad6').value,tg=$('#ad7').value.trim(),im2=$('#ad8').value.trim();
+  if(!t&&!im&&!cd)return toast('اختار كود خصم أو اكتب عنوان أو حط صورة','err');
+  if((im&&!okImg(im))||(im2&&!okImg(im2)))return toast('رابط الصورة لازم يبدأ بـ https وبدون مسافات','err');
+  if(/^https?:\/\/(www\.)?ibb\.co\//i.test(im+' '+im2))return toast('ده رابط صفحة مش صورة، استخدم الرابط المباشر اللي بيبدأ بـ i.ibb.co','err');
+  if(lk&&!okLink(lk))return toast('رابط الضغط لازم يبدأ بـ https','err');
+  D.set(D.push(P('settings/ads')),{title:t.slice(0,60),text:x.slice(0,140),img:im,img2:im2,link:lk,code:cd,tag:tg,color:$('#ad5').value,on:true,ts:Date.now()}).then(()=>{['ad1','ad2','ad3','ad4','ad7','ad8'].forEach(i=>{const e=$('#'+i);if(e)e.value=''});toast('تم إضافة الإعلان')});
+}
+const adSet=(k,b)=>D.update(P('settings/ads/'+k),b),adDel=k=>{if(confirm('حذف الإعلان؟'))D.remove(P('settings/ads/'+k)).then(()=>toast('تم الحذف'))};
+
+/* ============ فلترة الإحصائيات ============ */
+const SF=[['today','اليوم'],['yest','أمس'],['7','آخر 7 أيام'],['30','آخر 30 يوم'],['all','الكل'],['custom','فترة محددة']];
+function sRange(){
+  const d=new Date(),t0=new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime(),DAY=864e5;
+  if(sf==='today')return[t0,Infinity];if(sf==='yest')return[t0-DAY,t0-1];if(sf==='7')return[t0-6*DAY,Infinity];if(sf==='30')return[t0-29*DAY,Infinity];
+  if(sf==='custom')return[sfa?new Date(sfa+'T00:00:00').getTime():0,sfb?new Date(sfb+'T23:59:59.999').getTime():Infinity];
+  return[0,Infinity];
+}
+function statsV(all,open,users){
+  const[r0,r1]=sRange(),inR=t=>t>=r0&&t<=r1,ro=all.filter(o=>inR(o.ts)&&(!sfu||o.from===sfu)),
+    dep=ro.filter(o=>o.kind==='deposit'&&o.status==='done'),wdn=ro.filter(o=>o.kind==='withdraw'&&o.status==='done'),rpd=ro.filter(o=>o.kind==='repay'&&o.status==='done'),rej=ro.filter(o=>o.status==='rejected'),
+    sum=(a,k)=>a.reduce((s,o)=>s+(+o[k]||0),0),su=sfu?DB.users[sfu]:null,
+    c=(l,v,cls='')=>`<div class="card !p-3.5"><div class="text-xs opacity-60">${l}</div><div class="num text-xl font-extrabold ${cls}">${v}</div></div>`,
+    lbl=(SF.find(x=>x[0]===sf)||[])[1]+(sf==='custom'?(sfa||sfb?` (${sfa||'…'} ← ${sfb||'…'})`:''):'');
+  const bar=`<div class="card !p-3 space-y-2.5 mb-3"><div class="flex gap-2 overflow-x-auto pb-1">${SF.map(k=>`<button onclick="sf='${k[0]}';render()" class="px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap border-2 ${sf===k[0]?'bg-sun text-white border-sun':'border-[#e3d6c6] dark:border-[#4a2830]'}">${k[1]}</button>`).join('')}</div>
+  ${sf==='custom'?`<div class="grid grid-cols-2 gap-2"><label class="block"><span class="text-xs opacity-60">من</span><input type="date" class="inp num !py-2.5 mt-1" value="${esc(sfa)}" onchange="sfa=this.value;render()"></label><label class="block"><span class="text-xs opacity-60">إلى</span><input type="date" class="inp num !py-2.5 mt-1" value="${esc(sfb)}" onchange="sfb=this.value;render()"></label></div>`:''}
+  <select class="inp !py-2.5" onchange="sfu=this.value;render()"><option value="">كل المناديب</option>${users.map(x=>`<option value="${esc(x.id)}" ${sfu===x.id?'selected':''}>${esc(x.name)} — ${esc(x.id)}</option>`).join('')}</select></div>`;
+  const hero=`<div class="hero mb-3"><div class="text-sm opacity-85">أرباحك من الرسوم · ${lbl}${su?' · '+esc(su.name):''}</div><div class="num text-4xl font-extrabold mt-1">${f(sum(dep,'fee'))} <span class="text-lg">ج.م</span></div></div>`;
+  const mb=['insta','wallet','ajel'].map(m=>{const l=dep.filter(o=>o.method===m);return kv(MN[m],`<span class="num">${l.length} عملية · ${f(sum(l,'amount'))} ج.م</span>`)}).join('');
+  const op=open.filter(o=>!sfu||o.from===sfu);
+  return bar+hero+`<div class="grid grid-cols-2 gap-3">${c('إجمالي الموردة',f(sum(dep,'amount'))+' ج.م')}${c('عمليات توريد مؤكدة',dep.length)}${c('متوسط التوريد',f(dep.length?Math.round(sum(dep,'amount')/dep.length):0)+' ج.م')}${c('عمليات سحب تمت',wdn.length)}${c('سداد آجل مستلم',f(sum(rpd,'amount'))+' ج.م')}${c('طلبات مرفوضة',rej.length,rej.length?'text-rose-600':'')}</div>
+  <div class="card mt-3"><div class="font-extrabold mb-1">التوريد حسب الطريقة</div>${mb}</div>
+  <div class="font-extrabold px-1 mt-4 mb-2">الوضع الحالي <span class="text-xs font-normal opacity-60">(لحظي، مش متأثر بالفلتر الزمني)</span></div>
+  <div class="grid grid-cols-2 gap-3">${c('طلبات معلقة',op.length,'text-amber-600')}${c('الآجل المستحق',f(su?su.used:users.reduce((s,x)=>s+(x.used||0),0))+' ج.م')}${su?'':c('متصل الآن',users.filter(x=>DB.presence[x.id]).length,'text-emerald-600')+c('إجمالي المناديب',users.length)+c('مناديب جدد في الفترة',users.filter(x=>inR(x.ts||0)).length)}</div>`;
+}
+
+/* ============ تاب المناديب ============ */
+const uMatch=x=>{const q=uq.trim().toLowerCase();return!q||[x.name,x.office,x.id,x.phone].some(v=>String(v||'').toLowerCase().includes(q))};
+const ulistH=()=>{const L=Object.values(DB.users).filter(uMatch).sort((a,b)=>(b.ts||0)-(a.ts||0));return L.length?L.map(userCard).join(''):'<div class="card text-center opacity-70 py-6 text-sm">مفيش نتائج.</div>'};
+const ulist=()=>{const e=$('#ul');if(e)e.innerHTML=ulistH()};
+const utog=(b,id)=>{const c=b.closest('.uc');c.classList.toggle('open');ux[id]=c.classList.contains('open')?1:0};
+const usersV=us=>{const on=us.filter(x=>DB.presence[x.id]).length;return us.length?`<div class="flex items-center gap-2 mb-3"><input class="inp !py-2.5 flex-1" placeholder="ابحث بالاسم أو الـ ID أو المكتب" value="${esc(uq)}" oninput="uq=this.value;ulist()"><div class="num text-xs font-bold opacity-80 text-center leading-tight" style="min-width:52px"><b class="text-emerald-600 text-base">${on}</b><br>من ${us.length}</div></div><div id="ul" class="space-y-2">${ulistH()}</div>`:'<div class="card text-center opacity-70 py-6">لسه مفيش مناديب مسجلين.</div>'};
+
 function render(){
   const app=$('#app');
   if(err&&!me)return app.innerHTML=authV();
   if(!loaded)return app.innerHTML='<div class="min-h-screen flex items-center justify-center font-bold opacity-70">جاري الاتصال…</div>';
   if(!me)return app.innerHTML=authV();
   if(!isA()&&!siteOpen()&&(view==='wiz'||view==='wd'||view==='pay'))view='home';
+  const sl=($('#ads')||{}).scrollLeft;
   app.innerHTML=view==='notif'?notifV():isA()?adminV():view==='wiz'?wizV():view==='wd'?wdV():view==='pay'?payV():view==='disc'?discV()+dnav('disc'):view==='log'?logV()+dnav('log'):homeV()+dnav('home');
+  const ae=$('#ads');if(ae&&sl)ae.scrollLeft=sl;adDots();
 }
 render();initFB();
 </script>
