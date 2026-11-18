@@ -46,6 +46,25 @@ body{font-family:Cairo,Tahoma,sans-serif;background:#f6efe5;-webkit-tap-highligh
 .sw.site{background:#f87171;width:60px;height:34px;box-shadow:0 0 0 3px #ffffff40}.sw.site i{width:28px;height:28px;top:3px;right:3px}.sw.site.on{background:#22c55e}.sw.site.on i{transform:translateX(-26px)}
 .btn.gr{background:#059669;color:#fff;box-shadow:none}
 .ntc{border-radius:14px;padding:10px 12px;font-size:13px;font-weight:700;margin-top:8px;background:#0ea5e91a;color:#0369a1}.dark .ntc{color:#7dd3fc}
+/* ---- ألوان تطبيقات الدفع (كل تطبيق بلون براندته) ---- */
+.btn.insta{background:linear-gradient(135deg,#8b4bf0,#6d28d9);box-shadow:0 8px 18px -10px #6d28d9cc}
+.btn.vf{background:linear-gradient(135deg,#ff2d2d,#c8102e);box-shadow:0 8px 18px -10px #c8102ecc}
+.btn.et{background:linear-gradient(135deg,#22b566,#0e8a4b);box-shadow:0 8px 18px -10px #0e8a4bcc}
+.btn.fawry{background:linear-gradient(135deg,#ffdc4d,#ffc700);color:#2b2200;box-shadow:0 8px 18px -10px #ffc70099}
+.tic.insta{background:#6d28d926;color:#6d28d9}.dark .tic.insta{background:#a78bfa26;color:#a78bfa}
+.tic.vf{background:#c8102e26;color:#c8102e}.dark .tic.vf{background:#f8717126;color:#f87171}
+.tic.et{background:#0e8a4b26;color:#0e8a4b}.dark .tic.et{background:#4ade8026;color:#4ade80}
+.tic.fawry{background:#ffc70033;color:#8a6d00}.dark .tic.fawry{background:#ffc70033;color:#ffdc4d}
+.adprev{background:#f6efe5;border:1.5px dashed #e3d6c6;border-radius:18px;padding:12px}
+.dark .adprev{background:#170b0e;border-color:#4a2830}
+/* ---- مرآة شاشة المندوب (مراقبة مباشرة) ---- */
+.phoneWrap{border-radius:26px;border:7px solid #14161a;background:#14161a;padding:0;margin-top:12px;overflow:hidden;box-shadow:0 14px 30px -16px #0008}
+.phoneScreen{background:#f6efe5;max-height:480px;overflow-y:auto;overflow-x:hidden;position:relative}
+.dark .phoneScreen{background:#170b0e}
+.phoneInner{width:380px;zoom:.58;pointer-events:none;user-select:none}
+.phoneInner .hdr,.phoneInner nav{border-radius:0}
+.phoneTag{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:6px;padding:5px 10px;background:#14161ae6;color:#fff;font-size:11px;font-weight:800}
+.phoneTag .dot{width:7px;height:7px;background:#22c55e;animation:pl 1s infinite}
 /* ---- بنر الإعلانات ---- */
 .ads-sc{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}.ads-sc::-webkit-scrollbar{display:none}
 .ad{flex:none;width:calc(100% - 28px);scroll-snap-align:start;min-height:160px;border-radius:24px;padding:16px;display:flex;align-items:stretch;gap:12px;color:#fff;position:relative;overflow:hidden;box-shadow:0 16px 30px -18px #3f1319cc;text-decoration:none;isolation:isolate}
@@ -230,11 +249,11 @@ const sw=(on,fn,l)=>`<div class="flex items-center justify-between py-2"><span c
 const siteOpen=()=>S().siteOpen!==false;
 function toggleSite(){const o=siteOpen();if(o&&!confirm('متأكد إنك عايز تقفل الموقع؟ المناديب مش هيقدروا يبعتوا أي طلبات لحد ما تشغّله تاني.'))return;D.update(P('settings'),{siteOpen:!o}).then(()=>toast(o?'تم قفل الموقع 🔒':'تم تشغيل الموقع ✅'))}
 const siteBar=()=>{const o=siteOpen();return `<div class="mt-4 rounded-2xl p-3 flex items-center gap-3 ${o?'bg-white/20':'bg-[#3f1319]'}"><span class="dot" style="width:11px;height:11px;background:${o?'#4ade80':'#f87171'}"></span><div class="flex-1 min-w-0"><div class="font-extrabold text-sm">${o?'الموقع شغّال':'الموقع مقفول'}</div><div class="text-xs text-white/70">${o?'المناديب يقدروا يبعتوا طلبات':'استقبال الطلبات متوقف'}</div></div><button role="switch" aria-checked="${o}" aria-label="تشغيل أو قفل الموقع" onclick="toggleSite()" class="sw site ${o?'on':''}"><i></i></button></div>`};
-const kmeta=o=>o.kind==='repay'?{i:'receipt',l:'سداد آجل',c:'bg-violet-100 text-violet-700 dark:bg-violet-400/15 dark:text-violet-300'}:o.kind==='withdraw'?{i:'phone',l:'طلب سحب من محفظة',c:'bg-sky-100 text-sky-700 dark:bg-sky-400/15 dark:text-sky-300'}:{i:'in',l:'طلب توريد',c:'bg-orange-100 text-orange-700 dark:bg-orange-400/15 dark:text-orange-300'};
+const kmeta=o=>o.kind==='repay'?{i:'receipt',l:'سداد آجل',c:'bg-violet-100 text-violet-700 dark:bg-violet-400/15 dark:text-violet-300'}:o.kind==='withdraw'?{i:'phone',l:'طلب سحب من محفظة',c:'bg-sky-100 text-sky-700 dark:bg-sky-400/15 dark:text-sky-300'}:o.kind==='adj'?{i:'receipt',l:'آجل يدوي من الأدمن',c:'bg-amber-100 text-amber-700 dark:bg-amber-400/15 dark:text-amber-300'}:{i:'in',l:'طلب توريد',c:'bg-orange-100 text-orange-700 dark:bg-orange-400/15 dark:text-orange-300'};
 const kv=(l,v)=>`<div class="kv"><span class="opacity-60">${l}</span><b class="text-left">${v}</b></div>`;
 const cbox=(l,v,b)=>`<div class="idbox"><div class="text-xs opacity-60 mb-0.5">${l}</div><div class="num text-2xl font-extrabold tracking-wider break-all">${esc(v)}</div><button class="cpy" onclick="copy('${esc(v)}')">${ic('copy')}<span>${b}</span></button></div>`;
 const idBox=(l,id)=>cbox(l,id,'نسخ الـ ID');
-const KF=[['all','الكل'],['deposit','توريد'],['withdraw','سحب'],['repay','سداد']];
+const KF=[['all','الكل'],['deposit','توريد'],['withdraw','سحب'],['repay','سداد'],['adj','آجل يدوي']];
 const kfBar=()=>`<div class="flex gap-2 overflow-x-auto pb-1 mb-3">${KF.map(k=>`<button onclick="lf='${k[0]}';render()" class="px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap border-2 ${lf===k[0]?'bg-sun text-white border-sun':'border-[#e3d6c6] dark:border-[#4a2830]'}">${k[1]}</button>`).join('')}</div>`;
 const kfl=o=>lf==='all'||o.kind===lf;
 
@@ -300,7 +319,8 @@ setInterval(()=>{
 /* ============ مراقبة المندوب لحظياً (بالثانية) ============ */
 let actLog=[],actT=null,actSig='',actId='',inpT=null;
 const VN=()=>view==='wiz'?({1:'توريد: بيكتب المبلغ',2:'توريد: بيختار طريقة السداد',3:'توريد: في صفحة بيانات التحويل',4:'توريد: بعت الطلب وبيستنى الأدمن'}[w.step]||'توريد'):view==='wd'?({1:'سحب: بيكتب رقم المحفظة',2:'سحب: بيراجع الطلب',3:'سحب: بعت الطلب'}[wd.step]||'سحب'):view==='pay'?(rp.oid?'سداد آجل: بعت الطلب':'سداد آجل: بيكتب المبلغ'):({home:'الرئيسية',log:'السجل',disc:'الخصومات',notif:'إعداد الإشعارات'}[view]||String(view));
-function flushAct(){clearTimeout(actT);actT=null;if(!D||!actId||!actLog.length)return;const l=actLog[actLog.length-1];D.set(P('activity/'+actId),{scr:l.s,ev:l.e,d:l.d,ts:l.t,log:actLog})}
+function liveState(){const{pin,...ww}=w;return{view,w:ww,wd:{...wd},rp:{...rp}}}
+function flushAct(){clearTimeout(actT);actT=null;if(!D||!actId||!actLog.length)return;const l=actLog[actLog.length-1];D.set(P('activity/'+actId),{scr:l.s,ev:l.e,d:l.d,ts:l.t,log:actLog,st:liveState()})}
 function track(ev,det,imm){
   if(!D||!me||isA()||!U())return;
   if(actId!==me.id){actId=me.id;const o=((DB.activity||{})[me.id]||{}).log;actLog=o?Object.values(o):[]}
@@ -323,11 +343,34 @@ document.addEventListener('input',e=>{
 },true);
 document.addEventListener('visibilitychange',()=>{if(me&&!isA())track(document.hidden?'سابَ التطبيق (في الخلفية)':'رجع للتطبيق','',document.hidden)});
 const lx={};
+const mirrorClean=h=>h
+  .replace(/ (onclick|oninput|onchange|onkeydown|onscroll|onpointerdown|onpointerup|autofocus)="[^"]*"/g,'')
+  .replace(/ id="[^"]*"/g,'')
+  .replace(/<(button|select|textarea)(\s|>)/g,'<$1 disabled tabindex="-1"$2')
+  .replace(/<input /g,'<input disabled tabindex="-1" ')
+  .replace(/<a\b([^>]*)>/g,(m,attrs)=>{
+    attrs=/\sstyle="/.test(attrs)?attrs.replace(/\sstyle="([^"]*)"/,' style="$1;pointer-events:none"'):attrs+' style="pointer-events:none"';
+    return '<a tabindex="-1"'+attrs+'>';
+  });
+function mirrorHTML(x,a){
+  if(!a||!a.st)return'<div class="text-sm opacity-60 text-center py-10">لسه ماسكش التليفون، أول حركة هتظهر هنا.</div>';
+  const sv={view,w,wd,rp,me,tab};
+  let html;
+  try{
+    me={id:x.id};view=a.st.view||'home';w=a.st.w||{};wd=a.st.wd||{};rp=a.st.rp||{};
+    if(!siteOpen()&&(view==='wiz'||view==='wd'||view==='pay'))view='home';
+    html=view==='notif'?notifV():view==='wiz'?wizV():view==='wd'?wdV():view==='pay'?payV():view==='disc'?discV()+dnav('disc'):view==='log'?logV()+dnav('log'):homeV()+dnav('home');
+  }catch(e){html='<div class="text-sm opacity-60 text-center py-10">تعذّر عرض الشاشة دلوقتي.</div>'}
+  finally{view=sv.view;w=sv.w;wd=sv.wd;rp=sv.rp;me=sv.me;tab=sv.tab}
+  return `<div class="phoneWrap"><div class="phoneTag"><span class="dot"></span>بيشوف دلوقتي</div><div class="phoneScreen"><div class="phoneInner">${mirrorClean(html)}</div></div></div>`;
+}
+function liveToggle(id){lx[id]=lx[id]?0:1;render()}
 function liveCard(r){
-  const x=r.x,a=r.a,lg=a&&a.log?Object.values(a.log).slice(-6).reverse():[];
+  const x=r.x,a=r.a,open=!!lx[x.id],lg=a&&a.log?Object.values(a.log).slice(-8).reverse():[];
   return `<div class="oc ${r.on?'oc-open':''}"><div class="flex items-center gap-3"><div class="av !w-11 !h-11 !rounded-2xl !bg-[#ff5a00]/15 !text-[#e04e00]">${esc((x.name||'؟').trim().charAt(0))}</div><div class="flex-1 min-w-0"><div class="font-extrabold truncate">${esc(x.name)}</div><div class="text-xs opacity-60 truncate">🏢 ${esc(x.office||'—')} · <span class="num">${esc(x.id)}</span></div></div><span class="px-2 py-0.5 rounded-full text-[11px] font-bold ${r.on?'bg-emerald-100 text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-300':'bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300'}">${r.on?'متصل':'غير متصل'}</span></div>
-  ${a?`<div class="amt" style="text-align:right"><div class="text-xs opacity-60">دلوقتي بيعمل</div><div class="font-extrabold text-lg">${esc(a.scr)}</div>${a.ev?`<div class="text-sm">${esc(a.ev)}${a.d?': <b>'+esc(a.d)+'</b>':''}</div>`:''}<div class="text-xs opacity-60 mt-1">آخر حركة منذ <b class="ago num" data-ts="${a.ts}">${AG(a.ts)}</b> · <span class="num">${HMS(a.ts)}</span></div></div>`:'<div class="text-sm opacity-60 mt-2">مفيش نشاط متسجل لسه.</div>'}
-  ${lg.length?`<div class="mt-2">${lg.map(e=>`<div class="kv !py-1.5 text-xs"><span class="num opacity-60">${HMS(e.t)}</span><span class="flex-1 text-right mx-2 min-w-0 break-words">${esc(e.s)} — ${esc(e.e)}${e.d?': '+esc(e.d):''}</span></div>`).join('')}</div>`:''}</div>`;
+  ${a?`<div class="text-xs opacity-60 mt-2">${esc(a.scr)}${a.ev?' — '+esc(a.ev)+(a.d?': <b>'+esc(a.d)+'</b>':''):''} · من <b class="ago num" data-ts="${a.ts}">${AG(a.ts)}</b></div>`:'<div class="text-sm opacity-60 mt-2">مفيش نشاط متسجل لسه.</div>'}
+  ${r.on?mirrorHTML(x,a):''}
+  ${lg.length?`<button class="text-xs font-bold opacity-60 mt-2" onclick="liveToggle('${x.id}')">${open?'إخفاء آخر الحركات ▲':'آخر الحركات ▼'}</button>${open?`<div class="mt-1">${lg.map(e=>`<div class="kv !py-1.5 text-xs"><span class="num opacity-60">${HMS(e.t)}</span><span class="flex-1 text-right mx-2 min-w-0 break-words">${esc(e.s)} — ${esc(e.e)}${e.d?': '+esc(e.d):''}</span></div>`).join('')}</div>`:''}`:''}</div>`;
 }
 function liveV(){
   const A=DB.activity||{},now=Date.now(),
@@ -375,6 +418,7 @@ function ordCard(o){
     m.l=mine?'توريد':'توريد وصلك';
     rows=kv('الطريقة',MN[o.method]+(o.via==='fawry'?' (سحب بفوري)':''))+kv(mine?'المستفيد':'من',mine?(o.target!==o.from?esc(o.targetName||o.target):'لنفسي'):esc(o.fromName))+(mine?kv('الرسوم',`<span class="num">${f(o.fee)} ج.م</span>`)+kv('الإجمالي',`<span class="num">${f((o.amount||0)+(o.fee||0))} ج.م</span>`):'');
   }else if(k==='withdraw')rows=kv('رقم المحفظة',`<span class="num">${esc(o.wallet)}</span>`);
+  else if(k==='adj')rows=kv('نوع العملية','إضافة آجل من الأدمن')+(o.note?kv('سبب',esc(o.note)):'');
   else rows=kv('نوع العملية',o.manual?'تسجيل يدوي من الأدمن':'سداد من رصيدك الآجل');
   const hint=(k==='withdraw'||o.via==='fawry')&&o.status==='processing'?'<div class="ntc">📩 افتح رسالة SMS من فوري واتبع التعليمات</div>':'';
   return `<div class="oc"><div class="flex items-center gap-3"><span class="oi ${m.c}">${ic(m.i)}</span><div class="flex-1 min-w-0"><div class="font-extrabold">${m.l}</div><div class="text-xs opacity-60">${time(o.ts)}</div></div><div class="text-left"><div class="num text-xl font-extrabold leading-tight">${o.amount?f(o.amount):'—'}</div><div class="text-[11px] opacity-60">ج.م</div></div></div><div class="mt-3">${rows}</div><div class="flex items-center justify-between pt-3 border-t border-[#f0e7da] dark:border-[#3d2128]">${chip(o.status)}</div>${hint}</div>`;
@@ -407,12 +451,12 @@ function wizV(){
     const C=FC(),ms=[['insta','bank','انستا باي','رسم '+C.insta+' ج.م'],['wallet','phone','محفظة إلكترونية','رسم '+C.wal+' ج.م (حتى '+f(C.walMax)+')'],['ajel','receipt','آجل','رسم '+C.ajL+' ج.م (حتى '+f(C.ajT)+') · '+C.ajH+' ج.م فوق كده']];
     b=`<h2 class="text-xl font-extrabold mb-1">اختار طريقة السداد</h2><p class="mb-3 opacity-60">المبلغ <b class="num">${f(a)}</b> ج.م</p><div class="space-y-2">`+ms.map(m=>{
       const x=dsc(m[0],fee(m[0],a)).fe,why=x===null?(m[0]==='wallet'?'المحفظة لحد '+f(C.walMax)+' ج.م فقط':''):m[0]==='ajel'&&!u.ajelOn?'الآجل مش مفعّل لحسابك':'';
-      return `<button ${why?'disabled':''} onclick="w.method='${m[0]}';w.disc='';w.via=w.method==='wallet'&&!U().fawryOn?'tr':'';w.step=3;render()" class="card w-full flex items-center gap-3 text-right ${why?'opacity-40':'border-2 border-transparent hover:border-sun'}"><span class="tic !w-11 !h-11">${ic(m[1])}</span><span class="flex-1"><b class="block">${m[2]}</b><span class="text-sm opacity-60">${why||m[3]}</span></span>${x!==null&&!why?`<b class="num">+${x}</b>`:''}</button>`}).join('')+`</div>${back('w.step=1;render()')}`;
+      return `<button ${why?'disabled':''} onclick="w.method='${m[0]}';w.disc='';w.via=w.method==='wallet'&&!U().fawryOn?'tr':'';w.step=3;render()" class="card w-full flex items-center gap-3 text-right ${why?'opacity-40':'border-2 border-transparent hover:border-sun'}"><span class="tic !w-11 !h-11 ${m[0]==='insta'?'insta':''}">${ic(m[1])}</span><span class="flex-1"><b class="block">${m[2]}</b><span class="text-sm opacity-60">${why||m[3]}</span></span>${x!==null&&!why?`<b class="num">+${x}</b>`:''}</button>`}).join('')+`</div>${back('w.step=1;render()')}`;
   }
   if(w.step===3){
     const wal=w.method==='wallet',fw=wal&&w.via==='fawry',num=w.method==='insta'?['رقم الفيزا / انستا باي',S().visa]:wal&&w.via==='tr'?['رقم المحفظة',WAL()]:null;
     const sum=`<div class="rounded-2xl bg-sun/10 p-4 mb-3 text-center"><div class="text-sm opacity-70">الإجمالي المطلوب</div><div class="num text-4xl font-extrabold text-[#e04e00]">${f(a+fe)}</div><div class="text-sm opacity-70">${f(a)} + رسم ${fe} ج.م</div>${dd.code?`<div class="text-xs text-emerald-600 font-bold mt-1">خصم ${dd.pct}% بكود ${esc(dd.code)} (الرسم الأصلي ${dd.base})</div>`:''}</div>${offerBox(a)}`;
-    if(wal&&!w.via)b=`<h2 class="text-xl font-extrabold mb-3">المحفظة الإلكترونية</h2>${sum}<div class="space-y-2">`+[['fawry','phone','سحب بفوري','الأدمن يسحب من محفظتك وهيجيلك SMS من فوري'],['tr','in','تحويل','حوّل بنفسك على رقم محفظة الأدمن']].map(x=>`<button onclick="w.via='${x[0]}';render()" class="card w-full flex items-center gap-3 text-right border-2 border-transparent hover:border-sun"><span class="tic !w-11 !h-11">${ic(x[1])}</span><span class="flex-1"><b class="block">${x[2]}</b><span class="text-sm opacity-60">${x[3]}</span></span></button>`).join('')+`</div>${back('w.step=2;render()')}`;
+    if(wal&&!w.via)b=`<h2 class="text-xl font-extrabold mb-3">المحفظة الإلكترونية</h2>${sum}<div class="space-y-2">`+[['fawry','phone','سحب بفوري','الأدمن يسحب من محفظتك وهيجيلك SMS من فوري'],['tr','in','تحويل','حوّل بنفسك على رقم محفظة الأدمن']].map(x=>`<button onclick="w.via='${x[0]}';render()" class="card w-full flex items-center gap-3 text-right border-2 border-transparent hover:border-sun"><span class="tic !w-11 !h-11 ${x[0]==='fawry'?'fawry':''}">${ic(x[1])}</span><span class="flex-1"><b class="block">${x[2]}</b><span class="text-sm opacity-60">${x[3]}</span></span></button>`).join('')+`</div>${back('w.step=2;render()')}`;
     else b=`<h2 class="text-xl font-extrabold mb-3">${w.method==='ajel'?'تأكيد الآجل':fw?'بيانات السحب بفوري':'حوّل المبلغ دلوقتي'}</h2>${sum}
     ${num?`<div class="rounded-2xl border-2 border-dashed border-sun p-4 flex items-center justify-between mb-3"><div><div class="text-xs opacity-60">${num[0]}</div><div class="num text-2xl font-extrabold">${esc(num[1])||'لسه مش متحدد'}</div></div>${num[1]?`<button class="btn s" onclick="copy('${esc(num[1])}')">نسخ</button>`:''}</div>${tfPanel()}${shotBox()}<p class="text-sm opacity-70 mb-3">بعد ما تحوّل اضغط "حوّلت، ابعت الطلب".</p>`
     :fw?`<input id="npFw" data-np="int" data-max="11" readonly inputmode="none" class="inp num mb-3" maxlength="11" placeholder="رقم محفظتك 01xxxxxxxxx" value="${esc(w.wallet)}" oninput="w.wallet=this.value"><p class="text-sm mb-3 opacity-80">بعد موافقة الأدمن هيجيلك <b>SMS من فوري</b> على الرقم ده. افتح الرسالة واتبع التعليمات.</p>`
@@ -441,16 +485,16 @@ function tfDial(){const pin=String(w.pin||'').replace(/\D/g,''),ok=pin.length>=4
   if(a){a.href=c?'tel:'+c.replace(/#/g,'%23'):'#';a.style.opacity=c?1:.45;a.style.pointerEvents=c?'auto':'none'}
   if(pv)pv.textContent=tfCode(ok?'••••':'PIN')}
 function tfPin(){const pin=String(w.pin||'').replace(/\D/g,''),ok=pin.length>=4,c=ok?tfCode(pin):'';
-  return `<input id="tpin" data-np="int" data-max="8" readonly type="password" inputmode="none" autocomplete="off" maxlength="8" class="inp num mb-2" placeholder="كلمة سر المحفظة (PIN)" value="${esc(w.pin)}" oninput="w.pin=this.value;tfDial()"><div id="cprev" class="num text-xs opacity-70 break-all mb-2" style="direction:ltr;text-align:left">${esc(tfCode(ok?'••••':'PIN'))}</div><a id="dial" class="btn" href="${c?'tel:'+esc(c.replace(/#/g,'%23')):'#'}" style="${c?'':'opacity:.45;pointer-events:none'}">📞 اتصل بالكود وحوّل</a><p class="text-xs opacity-60 mt-2">الكود بيتفتح في الاتصال على موبايلك مباشرة. كلمة السر مبتتحفظش ومبتتبعتش لأي حد. اضغط اتصال في الآخر.</p>`}
+  return `<input id="tpin" data-np="int" data-max="8" readonly type="password" inputmode="none" autocomplete="off" maxlength="8" class="inp num mb-2" placeholder="كلمة سر المحفظة (PIN)" value="${esc(w.pin)}" oninput="w.pin=this.value;tfDial()"><div id="cprev" class="num text-xs opacity-70 break-all mb-2" style="direction:ltr;text-align:left">${esc(tfCode(ok?'••••':'PIN'))}</div><a id="dial" class="btn et" href="${c?'tel:'+esc(c.replace(/#/g,'%23')):'#'}" style="${c?'':'opacity:.45;pointer-events:none'}">📞 اتصل بالكود وحوّل</a><p class="text-xs opacity-60 mt-2">الكود بيتفتح في الاتصال على موبايلك مباشرة. كلمة السر مبتتحفظش ومبتتبعتش لأي حد. اضغط اتصال في الآخر.</p>`}
 function tfBody(){const p=pfx(w.from);
   if(!okPh(w.from))return `<p class="text-sm opacity-70">اكتب رقم المحفظة اللي هتحوّل منها (11 رقم) وهيظهرلك أسرع طريقة.</p>`;
-  if(p==='011')return `<a class="btn dk" href="https://flous.page.link/zZoz" target="_blank" rel="noopener">📱 افتح محفظة اتصالات كاش</a><div class="text-center text-xs opacity-60 my-2">أو بالكود المباشر</div>${tfPin()}`;
-  if(p==='010'){const c=tfCode('');return c?`<div class="text-sm opacity-80 mb-2">فودافون كاش · كود التحويل المباشر</div><div class="num text-xs opacity-70 break-all mb-2" style="direction:ltr;text-align:left">${esc(c)}</div><a class="btn" href="tel:${esc(c.replace(/#/g,'%23'))}">📞 اتصل بالكود وحوّل</a><p class="text-xs opacity-60 mt-2">هيطلب منك كلمة السر على الموبايل نفسه بعد الاتصال، مش في الموقع.</p>`:'<p class="text-sm opacity-70">رقم المحفظة لسه مش متحدد.</p>'}
+  if(p==='011')return `<a class="btn et" href="https://flous.page.link/zZoz" target="_blank" rel="noopener">📱 افتح محفظة اتصالات كاش</a><div class="text-center text-xs opacity-60 my-2">أو بالكود المباشر</div>${tfPin()}`;
+  if(p==='010'){const c=tfCode('');return c?`<div class="text-sm opacity-80 mb-2">فودافون كاش · كود التحويل المباشر</div><div class="num text-xs opacity-70 break-all mb-2" style="direction:ltr;text-align:left">${esc(c)}</div><a class="btn vf" href="tel:${esc(c.replace(/#/g,'%23'))}">📞 اتصل بالكود وحوّل</a><p class="text-xs opacity-60 mt-2">هيطلب منك كلمة السر على الموبايل نفسه بعد الاتصال، مش في الموقع.</p>`:'<p class="text-sm opacity-70">رقم المحفظة لسه مش متحدد.</p>'}
   const d=String(WAL()||'');return d?`<div class="rounded-2xl border-2 border-dashed border-sun p-4 text-center"><div class="text-xs opacity-60 mb-1">حوّل على رقم المحفظة</div><div class="num text-3xl font-extrabold tracking-wider break-all">${esc(d)}</div><button class="btn mt-3" style="font-size:20px;padding:18px" onclick="copy('${esc(d)}')">نسخ الرقم</button></div>`:'<p class="text-sm opacity-70">رقم المحفظة لسه مش متحدد.</p>'}
 const tfx=()=>{const e=$('#tfx');if(e)e.innerHTML=tfBody();npSync()};
 function saveFrom(){const n=String(w.from||'').trim();if(!okPh(n))return toast('رقم غير صحيح','err');D.update(P('users/'+me.id),{tfrom:n}).then(()=>toast('تم حفظ الرقم، مش هتكتبه تاني'))}
 function tfInsta(){return `${okImg(S().visaQr)?`<div class="text-center"><img src="${esc(S().visaQr)}" alt="QR" style="max-width:190px;margin:auto;border-radius:12px"><div class="text-xs opacity-60 mt-1">أو امسح الـ QR من انستا باي</div></div>`:''}
-  ${isAnd?`<a class="btn dk" href="intent://#Intent;package=com.egyptianbanks.instapay;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.egyptianbanks.instapay;end">📱 افتح تطبيق انستا باي</a>`:''}
+  ${isAnd?`<a class="btn insta" href="intent://#Intent;package=com.egyptianbanks.instapay;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.egyptianbanks.instapay;end">📱 افتح تطبيق انستا باي</a>`:''}
   <details class="text-sm"><summary class="font-bold cursor-pointer py-1">إزاي أحوّل؟ (خطوات)</summary><ol class="list-decimal pr-5 mt-2 space-y-1"><li>انسخ الرقم من فوق.</li><li>افتح انستا باي واختار <b>تحويل</b> (لبطاقة أو لعنوان/رقم حسب نوع الرقم).</li><li>الصق الرقم واكتب المبلغ <b class="num">${f(tfTot())}</b>.</li><li>أكّد بكلمة السر، وارجع هنا واضغط "حوّلت، ابعت الطلب".</li></ol></details>`}
 function tfPanel(){
   if(w.from===undefined)w.from=(U().tfrom||U().phone||'');
@@ -546,10 +590,11 @@ async function aact(id,act){
   await D.update(P('orders/'+id),{status:act==='sms'?'processing':act});
 }
 function adminOrd(o){
-  const wdw=o.kind==='withdraw',rpy=o.kind==='repay',fw=wdw||o.via==='fawry',open=OPEN(o),m=kmeta(o);
+  const wdw=o.kind==='withdraw',rpy=o.kind==='repay',adj=o.kind==='adj',fw=wdw||o.via==='fawry',open=OPEN(o),m=kmeta(o);
   let rows='';
-  if(!wdw&&!rpy)rows=kv('الطريقة',MN[o.method]+(o.via==='fawry'?' (سحب بفوري)':''))+kv('الرسوم',`<span class="num">${f(o.fee)} ج.م</span>`)+kv('الإجمالي المطلوب',`<span class="num">${f((o.amount||0)+(o.fee||0))} ج.م</span>`)+(o.disc?kv('كود الخصم',esc(o.disc)):'')+kv('لصالح',o.target===o.from?'نفس المندوب':esc(o.targetName||'—'));
+  if(!wdw&&!rpy&&!adj)rows=kv('الطريقة',MN[o.method]+(o.via==='fawry'?' (سحب بفوري)':''))+kv('الرسوم',`<span class="num">${f(o.fee)} ج.م</span>`)+kv('الإجمالي المطلوب',`<span class="num">${f((o.amount||0)+(o.fee||0))} ج.م</span>`)+(o.disc?kv('كود الخصم',esc(o.disc)):'')+kv('لصالح',o.target===o.from?'نفس المندوب':esc(o.targetName||'—'));
   else if(rpy)rows=kv('النوع',o.manual?'مسجّل يدوي':'طلب سداد من المندوب');
+  else if(adj)rows=kv('النوع','إضافة آجل يدوي من الأدمن')+(o.note?kv('سبب',esc(o.note)):'');
   const tgt=!wdw&&!rpy&&o.target&&o.target!==o.from?idBox('ID المستلم',o.target):'';
   return `<div class="oc ${open?'oc-open':''}">${open&&o.cmp&&!o.cmpAck?'<div class="rounded-xl bg-rose-600 text-white font-extrabold text-sm p-2 mb-2 text-center">🚨 شكوى: المندوب بيقول متوردش منذ <span class="ago num" data-ts="'+o.cmp+'">'+AG(o.cmp)+'</span></div>':''}<div class="flex items-center gap-3"><span class="oi ${m.c}">${ic(m.i)}</span><div class="flex-1 min-w-0"><div class="font-extrabold">${m.l}</div><div class="text-xs opacity-60">${time(o.ts)}</div></div><div class="flex flex-col items-end gap-1">${chip(o.status)}${open?`<span class="num text-[11px] font-extrabold bg-sun text-white rounded-full px-2 py-0.5">دور #${qpos(o).n}</span>`:''}</div></div>
   <div class="amt"><div class="num text-4xl font-extrabold text-[#e04e00]">${o.amount?f(o.amount):'غير محدد'}${o.amount?'<span class="text-base opacity-70"> ج.م</span>':''}</div></div>
@@ -565,7 +610,40 @@ function userCard(x){
   return `<div class="uc ${ux[x.id]?'open':''}"><button class="uc-h" onclick="utog(this,'${esc(x.id)}')"><div class="uav">${esc((x.name||'؟').trim().charAt(0))}</div><div class="flex-1 min-w-0"><div class="font-extrabold text-[15px] leading-tight truncate">${esc(x.name)}</div><div class="text-xs opacity-60 truncate"><span class="num">${esc(x.id)}</span> · ${esc(x.office||'—')}${x.used>0?` · <b class="text-rose-600">آجل ${f(x.used)}</b>`:''}</div></div><span class="px-2 py-0.5 rounded-full text-[11px] font-bold inline-flex items-center gap-1 ${st[1]}"><i class="dot" style="width:5px;height:5px"></i>${st[0]}</span><span class="chv opacity-40">${ic('chev')}</span></button>
   <div class="ud"><div class="grid grid-cols-2 gap-2 pt-3">${tile('الـ ID',`<span class="num">${esc(x.id)}</span> <button class="text-xs font-bold text-[#e04e00] underline" onclick="copy('${esc(x.id)}')">نسخ</button>`)}${tile('الموبايل',`<a class="num" href="tel:${esc(x.phone)}">${esc(x.phone)}</a>`)}${tile('تاريخ التسجيل',x.ts?time(x.ts):'—')}${tile('آجل مستحق',`<span class="num ${x.used>0?'text-rose-600':''}">${f(x.used)} ج.م</span>`)}</div>
   <div class="rounded-2xl bg-slate-50 dark:bg-white/5 px-3 mt-2 divide-y divide-slate-200 dark:divide-white/10">${sw(!x.banned,`uset('${x.id}',{banned:${!x.banned}})`,'الحساب نشط')}${sw(!!x.ajelOn,`uset('${x.id}',{ajelOn:${!x.ajelOn}})`,'الآجل')}${sw(!!x.fawryOn,`uset('${x.id}',{fawryOn:${!x.fawryOn}})`,'السحب بفوري')}${sw(shotNeed(x),`uset('${x.id}',{shot:${!shotNeed(x)}})`,'يلزمه سكرين تحويل')}</div>
-  ${x.used>0?`<div class="flex gap-2 items-center mt-3"><input id="pa${x.id}" type="number" inputmode="decimal" class="inp num !py-2" placeholder="المبلغ المسدّد"><button class="btn s" onclick="payIn('${x.id}')">تسجيل</button><button class="btn s dk" onclick="payIn('${x.id}',1)">كامل</button></div>`:''}</div></div>`;
+  ${x.used>0?`<div class="flex gap-2 items-center mt-3"><input id="pa${x.id}" type="number" inputmode="decimal" class="inp num !py-2" placeholder="المبلغ المسدّد"><button class="btn s" onclick="payIn('${x.id}')">تسجيل</button><button class="btn s dk" onclick="payIn('${x.id}',1)">كامل</button></div>`:''}
+  <div class="rounded-2xl bg-slate-50 dark:bg-white/5 p-3 mt-3 space-y-2"><div class="text-xs font-extrabold opacity-70">✏️ تعديل بيانات المندوب</div>
+  <input id="en${x.id}" class="inp !py-2" placeholder="الاسم" value="${esc(x.name)}">
+  <input id="eo${x.id}" class="inp !py-2" placeholder="اسم المكتب" value="${esc(x.office)}">
+  <input id="ep${x.id}" class="inp num !py-2" placeholder="رقم الموبايل" value="${esc(x.phone)}">
+  <button class="btn s dk" onclick="uedit('${x.id}')">حفظ التعديلات</button></div>
+  <div class="rounded-2xl border-2 border-dashed border-amber-400/70 p-3 mt-2 space-y-2"><div class="text-xs font-extrabold opacity-70">➕ تسجيل آجل يدوي (يظهرله كعملية خارجية في السجل)</div>
+  <div class="flex gap-2"><input id="adjA${x.id}" type="number" inputmode="decimal" class="inp num !py-2" style="flex:0 0 40%" placeholder="المبلغ"><input id="adjN${x.id}" class="inp !py-2 flex-1" placeholder="سبب/ملاحظة (اختياري)"></div>
+  <button class="btn s" onclick="addAdj('${x.id}')">تسجيل كآجل عليه</button></div>
+  <button class="btn rd mt-3" onclick="udel('${x.id}')">🗑 حذف الحساب نهائيًا</button></div></div>`;
+}
+async function uedit(id){
+  const g=i=>(($('#'+i+id)||{}).value||'').trim(),nm=g('en'),of=g('eo'),ph=g('ep');
+  if(!nm)return toast('اكتب الاسم','err');
+  if(!of)return toast('اكتب اسم المكتب','err');
+  if(!/^01[0125]\d{8}$/.test(ph))return toast('رقم الموبايل غير صحيح','err');
+  uset(id,{name:nm.slice(0,40),office:of.slice(0,40),phone:ph});
+}
+async function addAdj(id){
+  const u=DB.users[id];if(!u)return;
+  const a=+(($('#adjA'+id)||{}).value),note=(($('#adjN'+id)||{}).value||'').trim().slice(0,60);
+  if(!(a>0))return toast('اكتب مبلغ صحيح','err');
+  if(!confirm(`تأكيد تسجيل ${f(a)} ج.م آجل على ${u.name} (${id})؟`))return;
+  await D.runTransaction(P('users/'+id),c=>{if(c)c.used=(c.used||0)+a;return c});
+  await D.set(D.push(P('orders')),{kind:'adj',from:id,fromName:u.name,fromOffice:u.office||'',amount:a,note,status:'done',manual:true,ts:Date.now()});
+  const e1=$('#adjA'+id),e2=$('#adjN'+id);if(e1)e1.value='';if(e2)e2.value='';
+  toast('تم تسجيل '+f(a)+' ج.م آجل على '+u.name);
+}
+function udel(id){
+  const u=DB.users[id];if(!u)return;
+  if(u.used>0&&!confirm(`⚠️ عنده آجل مستحق ${f(u.used)} ج.م لسه متسددش. متأكد إنك عايز تحذف الحساب برضو؟`))return;
+  if(!confirm(`تأكيد نهائي: حذف حساب ${u.name} (${id})؟ مش هيقدر يدخل تاني، لكن سجل عملياته القديم هيفضل موجود في السجل.`))return;
+  D.remove(P('users/'+id));D.remove(P('presence/'+id));D.remove(P('activity/'+id));
+  toast('تم حذف الحساب');
 }
 function adminV(){
   const all=ords(),isO=o=>o.status==='pending'||o.status==='processing',open=all.filter(isO).sort((a,b)=>a.ts-b.ts),hist=all.filter(o=>!isO(o));
@@ -624,7 +702,8 @@ const offers=m=>{const C=S().codes||{},u=U()||{},seen={},out=[];
 const pickDisc=c=>{w.disc=w.disc===c?'':c;render()};
 const offerBox=a=>{const L=offers(w.method),bf=fee(w.method,a);if(!L.length||bf===null)return'';
   return `<div class="mb-3 space-y-2"><div class="font-extrabold text-sm px-1">🎁 عروض خصم متاحة ليك</div>${L.map(o=>{const on=w.disc===o.code,sv=bf-Math.round(bf*(1-o.pct/100));return `<button class="offer ${on?'on':''}" onclick="pickDisc('${esc(o.code)}')"><span class="tic !w-11 !h-11">${ic('tag')}</span><span class="flex-1"><b class="num block">${esc(o.code)}</b><span class="text-xs opacity-70 block">خصم ${o.pct}% على الرسوم · توفّر ${sv} ج.م${o.left>0?' · متبقي '+o.left:''}</span><span class="text-xs font-bold ${on?'text-emerald-600':'text-[#e04e00]'}">${on?'مفعّل على الطلب ده ✅':'اضغط لتفعيل الخصم'}</span></span><span class="sw ${on?'on':''}"><i></i></span></button>`}).join('')}</div>`};
-const adsAdmin=()=>`<div class="card space-y-3 mt-3"><div class="font-extrabold">الإعلانات (بنر المناديب)</div><p class="text-xs opacity-60">اربط الإعلان بكود خصم (أنشئه الأول من تاب الأسعار) والمندوب هيشوف الخصم في خطوة التحويل ويختار يفعّله. إعلان واحد = بنر كامل، أكتر = كروت بتتحرك لوحدها.</p>
+const adsAdmin=()=>`<div class="card space-y-2 mt-3"><div class="font-extrabold">👁️ معاينة: شكل البنر عند المندوب دلوقتي</div><p class="text-xs opacity-60">ده نفس البنر اللي هيشوفه المندوب في الرئيسية، بيتحدّث أول ما تحفظ.</p><div class="adprev">${mirrorClean(adsV()||'<div class="text-sm opacity-60 text-center py-6">مفيش إعلانات شغالة دلوقتي، المكان هيبقى فاضي عند المندوب.</div>')}</div></div>
+<div class="card space-y-3 mt-3"><div class="font-extrabold">الإعلانات (بنر المناديب)</div><p class="text-xs opacity-60">اربط الإعلان بكود خصم (أنشئه الأول من تاب الأسعار) والمندوب هيشوف الخصم في خطوة التحويل ويختار يفعّله. إعلان واحد = بنر كامل، أكتر = كروت بتتحرك لوحدها.</p>
 <select id="ad6" class="inp"><option value="">بدون كود خصم</option>${Object.entries(S().codes||{}).map(([k,c])=>`<option value="${esc(k)}">كود ${esc(k)} — ${c.pct}%</option>`).join('')}</select>
 <input id="ad7" class="inp" maxlength="24" placeholder="شارة قصيرة (مثال: لفترة محدودة)"><input id="ad1" class="inp" maxlength="60" placeholder="عنوان الإعلان (اختياري مع الكود)"><input id="ad2" class="inp" maxlength="140" placeholder="نص قصير (اختياري)"><input id="ad3" class="inp num" style="direction:ltr" placeholder="رابط الصورة المباشر https://i.ibb.co/… (بتتعرض زي ما هي)"><input id="ad8" class="inp num" style="direction:ltr" placeholder="صورة الوضع الداكن (اختياري)"><input id="ad4" class="inp num" style="direction:ltr" placeholder="رابط عند الضغط (للإعلان بدون كود)">
 <select id="ad5" class="inp">${Object.entries(ADC).map(([k,c])=>`<option value="${k}">لون: ${c[2]}</option>`).join('')}</select><button class="btn dk" onclick="addAd()">إضافة الإعلان</button>
