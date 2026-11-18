@@ -357,7 +357,7 @@ function npKey(k){
   let v=el.value||'';const int=el.dataset.np==='int',max=+el.dataset.max||9;
   if(k==='b')v=v.slice(0,-1);
   else if(k==='.'){if(int||v.includes('.'))return;v=(v||'0')+'.'}
-  else{if(v.replace('.','').length>=max)return;if(v==='0')v='';v+=k}
+  else{if(v.replace('.','').length>=max)return;if(!int&&v==='0')v='';v+=k}
   el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));
   if(int&&v.length>=max){const els=[...document.querySelectorAll('#app [data-np]')],i=els.indexOf(el);if(els[i+1]){npId=els[i+1].id;npSync()}}
   try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}
