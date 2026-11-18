@@ -72,19 +72,38 @@ body{font-family:Cairo,Tahoma,sans-serif;background:#f6efe5;-webkit-tap-highligh
 .uc.open .ud{display:block}.uc .chv{display:flex;transition:transform .2s}.uc .chv svg{width:18px;height:18px}.uc.open .chv{transform:rotate(-90deg)}
 /* ---- الإحصائيات ---- */
 .hero{background:linear-gradient(135deg,#ff6a1a,#e04e00);color:#fff;border-radius:22px;padding:18px;box-shadow:0 14px 28px -16px #c2410c}
+
+/* ---- كيبورد الأرقام الثابت ---- */
+#npad{position:fixed;bottom:0;left:0;right:0;z-index:45;display:none;background:#f6efe5;border-top:1px solid #eadfce;padding:8px 10px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -10px 30px -12px #3f131966}
+.dark #npad{background:#251317;border-color:#3d2128}
+#npad.on{display:block}
+#npad .g{max-width:32rem;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;direction:ltr}
+.nk{height:50px;border-radius:16px;background:#fff;border:1px solid #eadfce;font-size:24px;font-weight:800;touch-action:manipulation;user-select:none;-webkit-user-select:none;color:#14161a}
+.dark .nk{background:#170b0e;border-color:#4a2830;color:#f1f5f9}
+.nk:active{transform:scale(.95);background:#ff5a0026}
+.nk.go{grid-column:1/-1;background:#ff5a00;color:#fff;font-size:18px;border:0;height:48px}
+body.np #app{padding-bottom:340px}
+@media(max-height:700px){.nk{height:42px;font-size:21px}.nk.go{height:42px}body.np #app{padding-bottom:290px}}
+.inp.npa{border-color:#ff5a00;box-shadow:0 0 0 4px #ff5a0030}
+.inp[data-np]{caret-color:transparent}
+/* ---- شاشة الشكوى الرنّانة ---- */
+#ringbox{position:fixed;inset:0;z-index:70;background:#9f1239;color:#fff;overflow:auto;padding:calc(env(safe-area-inset-top) + 20px) 16px 28px;animation:ringbg 1s infinite}
+@keyframes ringbg{0%,100%{background:#9f1239}50%{background:#e11d48}}
+@keyframes pl{0%,100%{opacity:1}50%{opacity:.25}}
+.rg-card{background:#fff;color:#14161a;border-radius:22px;padding:16px;margin-top:12px}
 </style>
 </head>
 <body class="text-ink dark:text-slate-100 min-h-screen">
 <div id="app" class="max-w-lg mx-auto pb-24"></div>
-<div id="toast" class="fixed top-3 inset-x-3 z-50 flex flex-col items-center gap-2 pointer-events-none"></div>
+<div id="toast" class="fixed top-3 inset-x-3 z-50 flex flex-col items-center gap-2 pointer-events-none"></div><div id="npad"><div class="g"><button type="button" class="nk" onclick="npKey('1')">1</button><button type="button" class="nk" onclick="npKey('2')">2</button><button type="button" class="nk" onclick="npKey('3')">3</button><button type="button" class="nk" onclick="npKey('4')">4</button><button type="button" class="nk" onclick="npKey('5')">5</button><button type="button" class="nk" onclick="npKey('6')">6</button><button type="button" class="nk" onclick="npKey('7')">7</button><button type="button" class="nk" onclick="npKey('8')">8</button><button type="button" class="nk" onclick="npKey('9')">9</button><button type="button" id="npdot" class="nk" onclick="npKey('.')">.</button><button type="button" class="nk" onclick="npKey('0')">0</button><button type="button" class="nk" onclick="npKey('b')">⌫</button><button type="button" id="npgo" class="nk go" onclick="npGo()">تم</button></div></div><div id="ringbox" class="hidden"></div>
 <script>
 /* ============ إعدادات Firebase (بتاعتك) ============ */
 const CFG={apiKey:"AIzaSyBtAQvHw5bW8Bk8LpsSoguFhl5g5SZKtaI",authDomain:"dffvfv.firebaseapp.com",databaseURL:"https://dffvfv-default-rtdb.europe-west1.firebasedatabase.app",projectId:"dffvfv",storageBucket:"dffvfv.firebasestorage.app",messagingSenderId:"443974849871",appId:"1:443974849871:web:d16ea3d30389fac8efa13a"};
-const ADMIN='7777777',NTFY='https://ntfy.sh/';
+const WAL=()=>S().wallet||'01104645477',ADMIN='7777777',NTFY='https://ntfy.sh/';
 const $=s=>document.querySelector(s);
-let D=null,DB={users:{},orders:{},settings:{},presence:{},pinreq:{}},me=null,loaded=false,err='',view='home',tab='orders',mode='login',w={},wd={},seen={},seenPin={},seenU={},lf='all',lo=true,sf='all',sfa='',sfb='',sfu='',uq='',ux={},adPause=0;
+let D=null,DB={users:{},orders:{},settings:{},presence:{},pinreq:{},activity:{}},lastSig='',npId='',me=null,loaded=false,err='',view='home',tab='orders',mode='login',w={},wd={},seen={},seenPin={},seenU={},seenP={},lf='all',lo=true,sf='all',sfa='',sfb='',sfu='',uq='',ux={},adPause=0;
 try{const c=JSON.parse(localStorage.getItem('cred')||'null');if(c)me=c}catch(e){}
-const IC={home:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>',tag:'<path d="M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0L3 13V3h10l7.6 7.6a2 2 0 010 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',moon:'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',out:'<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>',in:'<path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/>',users:'<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8"/>',phone:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>',chev:'<path d="M15 18l-6-6 6-6"/>',inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.1L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.5-6.9A2 2 0 0016.8 4H7.2a2 2 0 00-1.7 1.1z"/>',chart:'<path d="M3 3v18h18M7 15v3M12 9v9M17 5v13"/>',cog:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',check:'<path d="M20 6L9 17l-5-5"/>',x:'<path d="M18 6L6 18M6 6l12 12"/>',bank:'<path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/>',receipt:'<path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6"/>',copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>',unlock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 017.5-2"/>'};
+const IC={eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',home:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>',tag:'<path d="M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0L3 13V3h10l7.6 7.6a2 2 0 010 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',moon:'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',out:'<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>',in:'<path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/>',users:'<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8"/>',phone:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>',chev:'<path d="M15 18l-6-6 6-6"/>',inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.1L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.5-6.9A2 2 0 0016.8 4H7.2a2 2 0 00-1.7 1.1z"/>',chart:'<path d="M3 3v18h18M7 15v3M12 9v9M17 5v13"/>',cog:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',check:'<path d="M20 6L9 17l-5-5"/>',x:'<path d="M18 6L6 18M6 6l12 12"/>',bank:'<path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/>',receipt:'<path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6"/>',copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>',unlock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 017.5-2"/>'};
 const ic=(n,c='')=>`<svg class="${c}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
 const LOGO=(z=44)=>`<svg width="${z}" height="${z}" viewBox="0 0 48 48"><rect width="48" height="48" rx="16" fill="#f6efe5"/><path d="M14 19h20l-1.6 16a3 3 0 01-3 2.7H18.6a3 3 0 01-3-2.7z" fill="#ff5a00"/><path d="M19 22v-3a5 5 0 0110 0v3" fill="none" stroke="#ff5a00" stroke-width="3" stroke-linecap="round"/><path d="M20 29.5l3 3 5.5-6" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -107,7 +126,7 @@ function toast(m,t){const d=document.createElement('div');d.className='pointer-e
 function copy(t){const ok=()=>toast('تم النسخ');try{navigator.clipboard.writeText(t).then(ok,fb)}catch(e){fb()}function fb(){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();try{document.execCommand('copy')}catch(e){}x.remove();ok()}}
 
 /* ============ الإشعارات الحقيقية عبر ntfy (شغالة والتطبيق مقفول) ============ */
-const ping=(topic,title,message,p)=>{if(!topic)return Promise.resolve(false);return fetch(NTFY,{method:'POST',body:JSON.stringify({topic,title,message,priority:p||4,tags:['moneybag']})}).then(r=>r.ok).catch(()=>false)};
+const ping=(topic,title,message,p,tg)=>{if(!topic)return Promise.resolve(false);return fetch(NTFY,{method:'POST',body:JSON.stringify({topic,title,message,priority:p||4,tags:tg||['moneybag']})}).then(r=>r.ok).catch(()=>false)};
 async function testPing(){const t=myTopic();if(!t)return toast('مفيش قناة لسه، اضغط "غيّر القناة"','err');toast('جاري الإرسال…');const ok=await ping(t,'إشعار تجريبي ✅','لو شايف الرسالة دي يبقى الإشعارات شغالة',4);ok?toast('ntfy استلم الرسالة ✅ لو مجتش على موبايلك راجع اشتراكك في التطبيق'):toast('فشل الإرسال لـ ntfy.sh ❌ النت أو الشبكة بتحجبه','err')}
 async function newTopic(){const t=rnd();if(isA())await D.update(P('settings'),{adminTopic:t});else await D.update(P('users/'+me.id),{topic:t});localStorage.removeItem('nt_'+me.id);toast('تم تغيير القناة، اشترك في الاسم الجديد');render()}
 const myTopic=()=>isA()?S().adminTopic:(U()||{}).topic;
@@ -131,20 +150,22 @@ async function initFB(){
   try{
     const A=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'),R=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js');
     D=Object.assign({db:R.getDatabase(A.initializeApp(CFG))},R);
-    D.onValue(D.ref(D.db,'dlv'),s=>{const v=s.val()||{};DB={users:v.users||{},orders:v.orders||{},settings:v.settings||{},presence:v.presence||{},pinreq:v.pinreq||{}};if(!loaded){loaded=true;checkCred()}onData()},e=>{err='تعذّر الاتصال بقاعدة البيانات. تأكد إن قواعد Realtime Database بتسمح بالقراءة والكتابة.';render()});
+    D.onValue(D.ref(D.db,'dlv'),s=>{const v=s.val()||{};const nv={users:v.users||{},orders:v.orders||{},settings:v.settings||{},presence:v.presence||{},pinreq:v.pinreq||{},activity:v.activity||{}},sg=JSON.stringify([nv.users,nv.orders,nv.settings,nv.presence,nv.pinreq]),only=loaded&&sg===lastSig;lastSig=sg;DB=nv;if(!loaded){loaded=true;checkCred()}if(only){onAct();return}onData()},e=>{err='تعذّر الاتصال بقاعدة البيانات. تأكد إن قواعد Realtime Database بتسمح بالقراءة والكتابة.';render()});
     D.onValue(D.ref(D.db,'.info/connected'),s=>{if(s.val())markOnline()});
   }catch(e){err='تعذّر تحميل Firebase. تأكد من الإنترنت.';render()}
 }
 const P=p=>D.ref(D.db,'dlv/'+p);
-function markOnline(){if(!D||!me||isA())return;const r=P('presence/'+me.id);D.set(r,Date.now());D.onDisconnect(r).remove()}
+function markOnline(){if(!D||!me||isA())return;const r=P('presence/'+me.id);D.set(r,Date.now());D.onDisconnect(r).remove();
+  try{const u=U(),t=S().adminTopic;if(u&&t){const k='lp_'+me.id,l=+localStorage.getItem(k)||0;if(Date.now()-l>9e5){localStorage.setItem(k,Date.now());ping(t,'🟢 مندوب أونلاين',u.name+(u.office?' — '+u.office:''),3)}}}catch(e){}}
 function checkCred(){
   if(!me)return;
   const ok=isA()?me.ph===(S().adminHash||pwh(ADMIN,'admin123')):DB.users[me.id]&&!DB.users[me.id].banned;
   if(!ok){me=null;localStorage.removeItem('cred');return}
   snapSeen();markOnline();
 }
-function snapSeen(){seenU={};Object.keys(DB.users).forEach(k=>seenU[k]=1);seen={};ords().forEach(o=>seen[o.id]=o.status);seenPin={};Object.entries(DB.pinreq||{}).forEach(([k,r])=>seenPin[k+'_'+r.ts]=1)}
-function onData(){
+function snapSeen(){seenU={};Object.keys(DB.users).forEach(k=>seenU[k]=1);seen={};ords().forEach(o=>seen[o.id]=o.status);seenPin={};seenP={};Object.keys(DB.presence||{}).forEach(k=>seenP[k]=1);Object.entries(DB.pinreq||{}).forEach(([k,r])=>seenPin[k+'_'+r.ts]=1)}
+function onAct(){if(isA()&&me&&tab==='live'&&view!=='notif'&&!/INPUT|SELECT/.test(document.activeElement.tagName))render()}
+function onData(){if(isA())ringUI();
   if(isA()){const n=ords().filter(OPEN).length;document.title=(n?'('+n+') ':'')+'طلبات'}
   if(me&&!isA()&&DB.users[me.id]&&DB.users[me.id].banned){logout();toast('تم حظر الحساب','err');return}
   if(me){
@@ -154,6 +175,7 @@ function onData(){
     });
   }
   if(isA())Object.values(DB.users).forEach(x=>{if(!seenU[x.id]){seenU[x.id]=1;alertNow('مندوب جديد 👤',x.name+(x.office?' — '+x.office:''))}});
+  if(isA()){const pr=DB.presence||{};Object.keys(seenP).forEach(k=>{if(!pr[k])delete seenP[k]});Object.keys(pr).forEach(k=>{if(!seenP[k]){seenP[k]=1;const x=DB.users[k];if(x)alertNow('🟢 مندوب أونلاين',x.name+(x.office?' — '+x.office:''))}})}
   const so=siteOpen(),ch=so!==lo;lo=so;
   const typing=/INPUT|SELECT/.test(document.activeElement.tagName);
   if(isA()){if(!typing)render()}else if(!me||ch||view==='home'||view==='log'||(view==='wiz'&&w.step===4)||(view==='wd'&&wd.step===3)||(view==='pay'&&rp.oid)||(view==='disc'&&!typing))render();
@@ -164,10 +186,10 @@ function authV(){
   const reg=mode==='reg';
   return `<div class="min-h-screen flex flex-col"><div class="hdr text-white px-6 pt-16 pb-14"><div class="flex items-center gap-3 mb-3">${LOGO(56)}<h1 class="wm" style="font-size:36px;padding:2px 18px 5px">طلبات</h1></div><p class="inline-block mt-2 bg-[#f6efe5] text-[#3f1319] rounded-full px-4 py-1.5 text-sm font-extrabold">توريد المناديب · ${reg?'اعمل حسابك في دقيقة':'ادخل بالـ ID بتاعك'}</p></div>
   <div class="px-5 -mt-6"><div class="card space-y-3 step">${err?`<p class="text-rose-600 font-bold text-sm">${err}</p>`:''}${!siteOpen()?'<div class="rounded-2xl bg-rose-100 text-rose-800 font-bold text-sm p-3">🔒 الموقع مقفول حالياً، الدخول للأدمن فقط</div>':''}
-  ${reg?'<input id="nm" class="inp" placeholder="الاسم"><input id="of" class="inp" placeholder="اسم المكتب"><input id="ph" class="inp num" inputmode="tel" maxlength="11" placeholder="رقم الموبايل 01xxxxxxxxx">':''}
-  <input id="id" class="inp num" inputmode="numeric" maxlength="7" placeholder="الـ ID (7 أرقام)" ${reg?'':`oninput="$('#apw').classList.toggle('hidden',this.value!=='${ADMIN}')" onkeydown="if(event.key==='Enter')doAuth()"`}>
-  ${reg?'<input id="id2" class="inp num" inputmode="numeric" maxlength="7" placeholder="أكّد الـ ID (اكتبه تاني)">':`<div id="apw" class="hidden"><input id="pw" type="password" class="inp" placeholder="كلمة سر الأدمن" onkeydown="if(event.key==='Enter')doAuth()"></div>`}
-  <button class="btn" onclick="doAuth()">${reg?'إنشاء الحساب':'دخول'}</button>
+  ${reg?'<input id="nm" class="inp" placeholder="الاسم"><input id="of" class="inp" placeholder="اسم المكتب"><input id="ph" data-np="int" data-max="11" readonly inputmode="none" class="inp num" maxlength="11" placeholder="رقم الموبايل 01xxxxxxxxx">':''}
+  <input id="id" data-np="int" data-max="7" readonly inputmode="none" class="inp num" maxlength="7" placeholder="الـ ID (7 أرقام)" ${reg?'':`oninput="$('#apw').classList.toggle('hidden',this.value!=='${ADMIN}')" onkeydown="if(event.key==='Enter')doAuth()"`}>
+  ${reg?'<input id="id2" data-np="int" data-max="7" readonly inputmode="none" class="inp num" maxlength="7" placeholder="أكّد الـ ID (اكتبه تاني)">':`<div id="apw" class="hidden"><input id="pw" type="password" class="inp" placeholder="كلمة سر الأدمن" onkeydown="if(event.key==='Enter')doAuth()"></div>`}
+  <button class="btn" data-npgo onclick="doAuth()">${reg?'إنشاء الحساب':'دخول'}</button>
   <button class="w-full text-sm font-bold opacity-70" onclick="mode='${reg?'login':'reg'}';render()">${reg?'عندي حساب':'مندوب جديد؟ سجّل هنا'}</button></div>
   <button class="mx-auto block mt-4 text-sm opacity-60" onclick="dark()">🌓 الوضع الداكن</button></div></div>`;
 }
@@ -199,7 +221,7 @@ async function doAuth(){
   }
   localStorage.setItem('cred',JSON.stringify(me));view='home';tab='orders';err='';snapSeen();markOnline();render();
 }
-function logout(){if(D&&me&&!isA())D.remove(P('presence/'+me.id));me=null;localStorage.removeItem('cred');view='home';render()}
+function logout(){if(me&&!isA())track('سجّل خروج','',1);actSig='';if(D&&me&&!isA())D.remove(P('presence/'+me.id));me=null;localStorage.removeItem('cred');view='home';render()}
 
 /* ============ مشترك ============ */
 const head=sub=>`<div class="hdr text-white px-5 pb-8 mb-4" style="padding-top:calc(env(safe-area-inset-top) + 24px)"><div class="flex justify-between items-center"><div class="flex items-center gap-2.5">${LOGO(40)}<span class="wm">طلبات</span></div><div class="flex gap-2"><button class="ib" onclick="dark()" aria-label="الوضع">${ic('moon')}</button><button class="ib" onclick="logout()" aria-label="خروج">${ic('out')}</button></div></div><div class="mt-5 flex items-center gap-3"><div class="av">${esc((isA()?'أ':U().name).trim().charAt(0))}</div><div><div class="text-white/80 text-xs">${sub}</div><div class="text-lg font-extrabold leading-tight">${esc(isA()?'الأدمن':U().name)}</div></div><div class="num text-xs bg-white/20 rounded-full px-2.5 py-1" style="margin-inline-start:auto">ID ${me.id}</div></div>`;
@@ -225,9 +247,125 @@ function trk(o){
   if(!OPEN(o)){const ok=o.status==='done';return `<div class="py-2"><div class="trk-ic ${ok?'ok':'no'}">${ic(ok?'check':'x')}</div><div class="text-xl font-extrabold mt-3">${ok?'تم تأكيد طلبك':'تم رفض الطلب'}</div><div class="text-sm opacity-60 mt-1">${ok?'العملية اتسجلت بنجاح':'تواصل مع الأدمن لو محتاج توضيح'}</div></div>`}
   const q=qpos(o),c=cd(o.ts),pr=o.status==='processing';
   return `<div><div class="text-sm opacity-60 mb-1">${pr?'الأدمن شغال على طلبك الآن':'الوقت المتوقع للمراجعة'}</div><div class="num text-5xl font-extrabold tracking-wider cd" data-ts="${o.ts}">${c.txt}</div><div class="h-1.5 rounded-full bg-slate-200 dark:bg-slate-700 mt-3 overflow-hidden"><div class="h-full bg-sun rounded-full cdb" style="width:${c.p}%"></div></div>
-  <div class="mt-4 rounded-2xl bg-slate-100 dark:bg-white/5 p-3 flex items-center justify-between"><div class="text-right"><div class="text-xs opacity-60">ترتيب دورك</div><div class="font-extrabold">${q.n===1?'أنت التالي':'رقم '+q.n+' من '+q.t}</div>${q.n>1?`<div class="text-xs opacity-60">قدامك ${q.n-1} ${q.n-1===1?'طلب':'طلبات'}</div>`:''}</div><div class="num text-3xl font-extrabold text-[#ff5a00]">#${q.n}</div></div></div>`;
+  <div class="mt-4 rounded-2xl bg-slate-100 dark:bg-white/5 p-3 flex items-center justify-between"><div class="text-right"><div class="text-xs opacity-60">ترتيب دورك</div><div class="font-extrabold">${q.n===1?'أنت التالي':'رقم '+q.n+' من '+q.t}</div>${q.n>1?`<div class="text-xs opacity-60">قدامك ${q.n-1} ${q.n-1===1?'طلب':'طلبات'}</div>`:''}</div><div class="num text-3xl font-extrabold text-[#ff5a00]">#${q.n}</div></div>${cmpBox(o)}</div>`;
 }
 setInterval(()=>document.querySelectorAll('.cd').forEach(e=>{const c=cd(+e.dataset.ts);e.textContent=c.txt;const b=e.parentNode.querySelector('.cdb');if(b)b.style.width=c.p+'%'}),1000);
+
+
+/* ============ شكوى "متوردش" + رنّة الأدمن ============ */
+const cmpBox=o=>{
+  if(o.cmp&&!o.cmpAck)return `<div class="ntc mt-3" style="background:#e11d481f;color:#be123c">🚨 شكوى "متوردش" وصلت للأدمن وبترن عليه دلوقتي</div>`;
+  const at=Math.max(o.ts,o.cmpAck||0)+WAIT;
+  return `${o.cmpAck?'<div class="ntc mt-3">✅ الأدمن شاف شكواك</div>':''}<button class="btn rd mt-3 cmpb ${Date.now()<at?'hidden':''}" data-at="${at}" onclick="sendCmp('${o.id}')">🚨 متوردش</button>`;
+};
+async function sendCmp(id){
+  const o=ob(id);if(!o||!OPEN(o))return;
+  if(o.cmp&&!o.cmpAck)return toast('الشكوى متبعتة بالفعل','err');
+  if(!confirm('تبعت شكوى للأدمن إن الطلب متوردش؟ هيرن عليه فوراً.'))return;
+  const u=U();
+  await D.update(P('orders/'+id),{cmp:Date.now(),cmpAck:null,cmpN:(o.cmpN||0)+1});
+  track('بعت شكوى متوردش',o.amount?f(o.amount)+' ج.م':'',1);
+  ping(S().adminTopic,'🚨 شكوى: متوردش',`${u.name} (${me.id}) — ${o.amount?f(o.amount)+' ج.م — ':''}عدّى 5 دقايق ومفيش رد`,5,['rotating_light','warning']);
+  toast('اتبعتت الشكوى للأدمن 🔔');
+}
+const ackC=id=>D.update(P('orders/'+id),{cmpAck:Date.now()}).then(()=>toast('تم إيقاف الرنين'));
+const goOrd=()=>{tab='orders';ringStop();const b=$('#ringbox');b.classList.add('hidden');ringSig='';render()};
+let AC=null,ringT=null,ringSig='';
+function unlockAudio(){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume()}catch(e){}}
+['pointerdown','touchstart','keydown'].forEach(e=>addEventListener(e,unlockAudio,{passive:true}));
+function beep(){
+  try{if(AC){const t=AC.currentTime;[0,.28,.56].forEach((d,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type='square';o.frequency.value=i%2?880:1175;g.gain.setValueAtTime(.0001,t+d);g.gain.exponentialRampToValueAtTime(.4,t+d+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d+.22);o.connect(g);g.connect(AC.destination);o.start(t+d);o.stop(t+d+.25)})}}catch(e){}
+  try{navigator.vibrate&&navigator.vibrate([300,150,300,150,300])}catch(e){}
+}
+const ringStart=()=>{if(ringT)return;beep();ringT=setInterval(beep,1800)};
+const ringStop=()=>{clearInterval(ringT);ringT=null};
+function ringUI(){
+  const bx=$('#ringbox'),L=isA()?ords().filter(o=>OPEN(o)&&o.cmp&&!o.cmpAck):[],sg=L.map(o=>o.id+o.cmp).join();
+  if(!L.length){if(ringSig||ringT){ringSig='';bx.classList.add('hidden');bx.innerHTML='';ringStop()}return}
+  if(sg!==ringSig){
+    ringSig=sg;bx.classList.remove('hidden');
+    bx.innerHTML=`<div class="max-w-lg mx-auto"><div class="text-center"><div style="font-size:54px">🚨</div><div class="text-2xl font-extrabold">شكوى: المندوب بيقول متوردش</div><div class="text-sm opacity-80 mt-1">اضغط أي مكان لتفعيل الصوت لو مسمعتش رنّة</div></div>`+
+    L.map(o=>{const x=DB.users[o.from]||{};return `<div class="rg-card"><div class="flex justify-between items-center"><div><div class="font-extrabold text-lg">${esc(o.fromName)}</div><div class="text-xs opacity-60">🏢 ${esc(o.fromOffice||'—')} · <span class="num">${esc(o.from)}</span></div></div><div class="num text-2xl font-extrabold text-[#e04e00]">${o.amount?f(o.amount)+' ج.م':'—'}</div></div><div class="text-sm mt-2 opacity-70">${kmeta(o).l} · اتبعتت من <b class="ago num" data-ts="${o.ts}">${AG(o.ts)}</b> · الشكوى من <b class="ago num" data-ts="${o.cmp}">${AG(o.cmp)}</b></div>
+    <div class="grid grid-cols-2 gap-2 mt-3"><button class="btn gr !py-3 col-span-2" onclick="ackC('${o.id}')">✔ شفت الشكوى (وقف الرنين)</button>${x.phone?`<a class="btn dk !py-3" href="tel:${esc(x.phone)}">📞 اتصل</a>`:''}<button class="btn gh !py-3" onclick="goOrd()">افتح الطلبات</button></div></div>`}).join('')+`</div>`;
+  }
+  ringStart();
+}
+const AG=ts=>{const s=Math.max(0,Math.floor((Date.now()-ts)/1000));return s<60?s+' ث':s<3600?Math.floor(s/60)+' د '+s%60+' ث':Math.floor(s/3600)+' س '+Math.floor(s%3600/60)+' د'};
+const HMS=t=>new Date(t).toLocaleTimeString('en-GB');
+setInterval(()=>{
+  document.querySelectorAll('.cmpb').forEach(e=>e.classList.toggle('hidden',Date.now()<+e.dataset.at));
+  document.querySelectorAll('.ago').forEach(e=>e.textContent=AG(+e.dataset.ts));
+},1000);
+
+/* ============ مراقبة المندوب لحظياً (بالثانية) ============ */
+let actLog=[],actT=null,actSig='',actId='',inpT=null;
+const VN=()=>view==='wiz'?({1:'توريد: بيكتب المبلغ',2:'توريد: بيختار طريقة السداد',3:'توريد: في صفحة بيانات التحويل',4:'توريد: بعت الطلب وبيستنى الأدمن'}[w.step]||'توريد'):view==='wd'?({1:'سحب: بيكتب رقم المحفظة',2:'سحب: بيراجع الطلب',3:'سحب: بعت الطلب'}[wd.step]||'سحب'):view==='pay'?(rp.oid?'سداد آجل: بعت الطلب':'سداد آجل: بيكتب المبلغ'):({home:'الرئيسية',log:'السجل',disc:'الخصومات',notif:'إعداد الإشعارات'}[view]||String(view));
+function flushAct(){clearTimeout(actT);actT=null;if(!D||!actId||!actLog.length)return;const l=actLog[actLog.length-1];D.set(P('activity/'+actId),{scr:l.s,ev:l.e,d:l.d,ts:l.t,log:actLog})}
+function track(ev,det,imm){
+  if(!D||!me||isA()||!U())return;
+  if(actId!==me.id){actId=me.id;const o=((DB.activity||{})[me.id]||{}).log;actLog=o?Object.values(o):[]}
+  actLog.push({t:Date.now(),s:VN(),e:ev||'',d:String(det||'').slice(0,60)});if(actLog.length>25)actLog.shift();
+  if(imm)flushAct();else{clearTimeout(actT);actT=setTimeout(flushAct,200)}
+}
+function trkScr(){
+  if(!me||isA()||!loaded||!U())return;
+  const sg=view+'|'+(view==='wiz'?w.step+'|'+(w.method||'')+(w.via||''):view==='wd'?wd.step:view==='pay'?!!rp.oid:'');
+  if(sg===actSig)return;actSig=sg;
+  track('فتح الشاشة',view==='wiz'?(w.amount?f(w.amount)+' ج.م':'')+(w.method?' · '+MN[w.method]:''):'');
+}
+document.addEventListener('click',e=>{
+  if(!me||isA())return;const t=e.target.closest&&e.target.closest('button,a,summary,label');if(!t||t.closest('#npad'))return;
+  const x=(t.textContent||'').replace(/\s+/g,' ').trim()||t.getAttribute('aria-label')||'';if(x)track('ضغط','«'+x.slice(0,34)+'»');
+},true);
+document.addEventListener('input',e=>{
+  const t=e.target;if(!me||isA()||!t||t.type==='password'||t.id==='tpin'||t.type==='file')return;
+  const lb=(t.getAttribute('placeholder')||t.id||'حقل').slice(0,28);clearTimeout(inpT);inpT=setTimeout(()=>track('كتب',lb+': '+String(t.value).slice(0,30)),500);
+},true);
+document.addEventListener('visibilitychange',()=>{if(me&&!isA())track(document.hidden?'سابَ التطبيق (في الخلفية)':'رجع للتطبيق','',document.hidden)});
+const lx={};
+function liveCard(r){
+  const x=r.x,a=r.a,lg=a&&a.log?Object.values(a.log).slice(-6).reverse():[];
+  return `<div class="oc ${r.on?'oc-open':''}"><div class="flex items-center gap-3"><div class="av !w-11 !h-11 !rounded-2xl !bg-[#ff5a00]/15 !text-[#e04e00]">${esc((x.name||'؟').trim().charAt(0))}</div><div class="flex-1 min-w-0"><div class="font-extrabold truncate">${esc(x.name)}</div><div class="text-xs opacity-60 truncate">🏢 ${esc(x.office||'—')} · <span class="num">${esc(x.id)}</span></div></div><span class="px-2 py-0.5 rounded-full text-[11px] font-bold ${r.on?'bg-emerald-100 text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-300':'bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300'}">${r.on?'متصل':'غير متصل'}</span></div>
+  ${a?`<div class="amt" style="text-align:right"><div class="text-xs opacity-60">دلوقتي بيعمل</div><div class="font-extrabold text-lg">${esc(a.scr)}</div>${a.ev?`<div class="text-sm">${esc(a.ev)}${a.d?': <b>'+esc(a.d)+'</b>':''}</div>`:''}<div class="text-xs opacity-60 mt-1">آخر حركة منذ <b class="ago num" data-ts="${a.ts}">${AG(a.ts)}</b> · <span class="num">${HMS(a.ts)}</span></div></div>`:'<div class="text-sm opacity-60 mt-2">مفيش نشاط متسجل لسه.</div>'}
+  ${lg.length?`<div class="mt-2">${lg.map(e=>`<div class="kv !py-1.5 text-xs"><span class="num opacity-60">${HMS(e.t)}</span><span class="flex-1 text-right mx-2 min-w-0 break-words">${esc(e.s)} — ${esc(e.e)}${e.d?': '+esc(e.d):''}</span></div>`).join('')}</div>`:''}</div>`;
+}
+function liveV(){
+  const A=DB.activity||{},now=Date.now(),
+    L=Object.values(DB.users).map(x=>({x,a:A[x.id]||null,on:!!DB.presence[x.id]})).filter(r=>r.on||(r.a&&now-r.a.ts<36e5)).sort((p,q)=>(q.on-p.on)||((q.a?q.a.ts:0)-(p.a?p.a.ts:0)));
+  return `<div class="card !p-3 mb-3 flex items-center gap-2"><span class="dot" style="width:10px;height:10px;background:#22c55e;animation:pl 1s infinite"></span><b class="text-sm">مراقبة مباشرة، بتتحدث لحظياً</b><span class="num text-xs opacity-60" style="margin-inline-start:auto">${L.filter(r=>r.on).length} متصل</span></div>`+
+    (L.length?`<div class="space-y-3">${L.map(liveCard).join('')}</div>`:'<div class="card text-center opacity-70 py-6 text-sm">مفيش مناديب شغالين دلوقتي.</div>');
+}
+
+/* ============ كيبورد الأرقام الثابت ============ */
+let npShown='';
+function npSync(){
+  const pad=$('#npad');if(!pad)return;
+  const els=[...document.querySelectorAll('#app [data-np]')],ae=document.activeElement,
+    typing=ae&&/INPUT|SELECT|TEXTAREA/.test(ae.tagName)&&!ae.hasAttribute('data-np'),
+    on=els.length>0&&!typing&&!(me&&isA());
+  pad.classList.toggle('on',on);document.body.classList.toggle('np',on);
+  if(!on)return;
+  if(!els.some(e=>e.id===npId))npId=els[0].id;
+  els.forEach(e=>e.classList.toggle('npa',e.id===npId));
+  if(npId!==npShown){npShown=npId;const c0=els.find(e=>e.id===npId);setTimeout(()=>c0&&c0.scrollIntoView({block:'center',behavior:'smooth'}),60)}
+  const cur=els.find(e=>e.id===npId),go=$('#app [data-npgo]'),g=$('#npgo');
+  $('#npdot').style.visibility=cur&&cur.dataset.np==='int'?'hidden':'visible';
+  g.style.display=go?'':'none';if(go)g.textContent=go.textContent.trim();
+}
+function npKey(k){
+  const el=$('#'+npId);if(!el)return;
+  let v=el.value||'';const int=el.dataset.np==='int',max=+el.dataset.max||9;
+  if(k==='b')v=v.slice(0,-1);
+  else if(k==='.'){if(int||v.includes('.'))return;v=(v||'0')+'.'}
+  else{if(v.replace('.','').length>=max)return;if(v==='0')v='';v+=k}
+  el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));
+  if(int&&v.length>=max){const els=[...document.querySelectorAll('#app [data-np]')],i=els.indexOf(el);if(els[i+1]){npId=els[i+1].id;npSync()}}
+  try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}
+}
+const npGo=()=>{const g=$('#app [data-npgo]');if(g)g.click()};
+document.addEventListener('pointerdown',e=>{const t=e.target.closest&&e.target.closest('[data-np]');if(t){npId=t.id;npSync()}});
+document.addEventListener('focusin',e=>{const t=e.target;if(t&&t.hasAttribute&&t.hasAttribute('data-np'))npId=t.id;npSync()});
+document.addEventListener('focusout',()=>setTimeout(npSync,80));
 
 /* ============ المندوب ============ */
 const avail=u=>u.ajelOn?Math.max(0,(u.limit||0)-(u.used||0)):0;
@@ -262,9 +400,9 @@ const prog=n=>`<div class="flex gap-2 mb-5">${steps.map((s,i)=>`<div class="flex
 function wizV(){
   const u=U(),a=+w.amount,dd=dsc(w.method,fee(w.method,a)),fe=dd.fe;let b='';
   if(w.step===1)b=`<h2 class="text-xl font-extrabold mb-3">${w.k==='other'?'لمين وكام؟':'كام المبلغ اللي هتورّده؟'}</h2>
-  ${w.k==='other'?`<input class="inp mb-3" placeholder="اسم المستلم" value="${esc(w.tname)}" oninput="w.tname=this.value"><input class="inp num mb-3" placeholder="ID أو رقم موبايل (اختياري)" value="${esc(w.target)}" oninput="w.target=this.value">`:''}
-  <input class="inp num text-center text-4xl font-extrabold" type="number" inputmode="decimal" placeholder="0" value="${esc(w.amount)}" oninput="w.amount=this.value">
-  <div class="text-center text-sm opacity-60 mt-1">ج.م</div><button class="btn mt-4" onclick="s1()">التالي</button>${back('home()')}`;
+  ${w.k==='other'?`<input class="inp mb-3" placeholder="اسم المستلم" value="${esc(w.tname)}" oninput="w.tname=this.value"><input id="npT" data-np="int" data-max="7" readonly inputmode="none" class="inp num mb-3" placeholder="ID المستلم (7 أرقام)" value="${esc(w.target)}" oninput="w.target=this.value">`:''}
+  <input id="npA" data-np="dec" data-max="9" readonly class="inp num text-center text-4xl font-extrabold" type="text" inputmode="none" placeholder="0" value="${esc(w.amount)}" oninput="w.amount=this.value">
+  <div class="text-center text-sm opacity-60 mt-1">ج.م</div><button class="btn mt-4" data-npgo onclick="s1()">التالي</button>${back('home()')}`;
   if(w.step===2){
     const C=FC(),ms=[['insta','bank','انستا باي','رسم '+C.insta+' ج.م'],['wallet','phone','محفظة إلكترونية','رسم '+C.wal+' ج.م (حتى '+f(C.walMax)+')'],['ajel','receipt','آجل','رسم '+C.ajL+' ج.م (حتى '+f(C.ajT)+') · '+C.ajH+' ج.م فوق كده']];
     b=`<h2 class="text-xl font-extrabold mb-1">اختار طريقة السداد</h2><p class="mb-3 opacity-60">المبلغ <b class="num">${f(a)}</b> ج.م</p><div class="space-y-2">`+ms.map(m=>{
@@ -272,32 +410,74 @@ function wizV(){
       return `<button ${why?'disabled':''} onclick="w.method='${m[0]}';w.disc='';w.via=w.method==='wallet'&&!U().fawryOn?'tr':'';w.step=3;render()" class="card w-full flex items-center gap-3 text-right ${why?'opacity-40':'border-2 border-transparent hover:border-sun'}"><span class="tic !w-11 !h-11">${ic(m[1])}</span><span class="flex-1"><b class="block">${m[2]}</b><span class="text-sm opacity-60">${why||m[3]}</span></span>${x!==null&&!why?`<b class="num">+${x}</b>`:''}</button>`}).join('')+`</div>${back('w.step=1;render()')}`;
   }
   if(w.step===3){
-    const wal=w.method==='wallet',fw=wal&&w.via==='fawry',num=w.method==='insta'?['رقم الفيزا / انستا باي',S().visa]:wal&&w.via==='tr'?['رقم المحفظة',S().wallet]:null;
+    const wal=w.method==='wallet',fw=wal&&w.via==='fawry',num=w.method==='insta'?['رقم الفيزا / انستا باي',S().visa]:wal&&w.via==='tr'?['رقم المحفظة',WAL()]:null;
     const sum=`<div class="rounded-2xl bg-sun/10 p-4 mb-3 text-center"><div class="text-sm opacity-70">الإجمالي المطلوب</div><div class="num text-4xl font-extrabold text-[#e04e00]">${f(a+fe)}</div><div class="text-sm opacity-70">${f(a)} + رسم ${fe} ج.م</div>${dd.code?`<div class="text-xs text-emerald-600 font-bold mt-1">خصم ${dd.pct}% بكود ${esc(dd.code)} (الرسم الأصلي ${dd.base})</div>`:''}</div>${offerBox(a)}`;
     if(wal&&!w.via)b=`<h2 class="text-xl font-extrabold mb-3">المحفظة الإلكترونية</h2>${sum}<div class="space-y-2">`+[['fawry','phone','سحب بفوري','الأدمن يسحب من محفظتك وهيجيلك SMS من فوري'],['tr','in','تحويل','حوّل بنفسك على رقم محفظة الأدمن']].map(x=>`<button onclick="w.via='${x[0]}';render()" class="card w-full flex items-center gap-3 text-right border-2 border-transparent hover:border-sun"><span class="tic !w-11 !h-11">${ic(x[1])}</span><span class="flex-1"><b class="block">${x[2]}</b><span class="text-sm opacity-60">${x[3]}</span></span></button>`).join('')+`</div>${back('w.step=2;render()')}`;
     else b=`<h2 class="text-xl font-extrabold mb-3">${w.method==='ajel'?'تأكيد الآجل':fw?'بيانات السحب بفوري':'حوّل المبلغ دلوقتي'}</h2>${sum}
-    ${num?`<div class="rounded-2xl border-2 border-dashed border-sun p-4 flex items-center justify-between mb-3"><div><div class="text-xs opacity-60">${num[0]}</div><div class="num text-2xl font-extrabold">${esc(num[1])||'لسه مش متحدد'}</div></div>${num[1]?`<button class="btn s" onclick="copy('${esc(num[1])}')">نسخ</button>`:''}</div><p class="text-sm opacity-70 mb-3">بعد ما تحوّل اضغط "حوّلت، ابعت الطلب".</p>`
-    :fw?`<input class="inp num mb-3" inputmode="tel" maxlength="11" placeholder="رقم محفظتك 01xxxxxxxxx" value="${esc(w.wallet)}" oninput="w.wallet=this.value"><p class="text-sm mb-3 opacity-80">بعد موافقة الأدمن هيجيلك <b>SMS من فوري</b> على الرقم ده. افتح الرسالة واتبع التعليمات.</p>`
+    ${num?`<div class="rounded-2xl border-2 border-dashed border-sun p-4 flex items-center justify-between mb-3"><div><div class="text-xs opacity-60">${num[0]}</div><div class="num text-2xl font-extrabold">${esc(num[1])||'لسه مش متحدد'}</div></div>${num[1]?`<button class="btn s" onclick="copy('${esc(num[1])}')">نسخ</button>`:''}</div>${tfPanel()}${shotBox()}<p class="text-sm opacity-70 mb-3">بعد ما تحوّل اضغط "حوّلت، ابعت الطلب".</p>`
+    :fw?`<input id="npFw" data-np="int" data-max="11" readonly inputmode="none" class="inp num mb-3" maxlength="11" placeholder="رقم محفظتك 01xxxxxxxxx" value="${esc(w.wallet)}" oninput="w.wallet=this.value"><p class="text-sm mb-3 opacity-80">بعد موافقة الأدمن هيجيلك <b>SMS من فوري</b> على الرقم ده. افتح الرسالة واتبع التعليمات.</p>`
     :`<p class="text-sm mb-3 opacity-80">الآجل هيتسجّل عليك ${f(a+fe)} ج.م لحد ما تسدده.</p>`}
     ${w.k==='other'?`<p class="text-sm mb-3">التوريد لصالح <b>${esc(w.tname)}</b></p>`:''}
-    ${num||fw||w.method==='ajel'?`<button class="btn" onclick="sendW()">${num?'حوّلت، ابعت الطلب':fw?'ابعت طلب السحب':'تأكيد وإرسال'}</button>`:''}${back(wal&&u.fawryOn?"w.via='';render()":'w.step=2;render()')}`;
+    ${num||fw||w.method==='ajel'?`<button class="btn" ${num&&shotNeed(u)&&!w.shot?'disabled style="opacity:.45"':''} data-npgo onclick="sendW()">${num?'حوّلت، ابعت الطلب':fw?'ابعت طلب السحب':'تأكيد وإرسال'}</button>`:''}${back(wal&&u.fawryOn?"w.via='';render()":'w.step=2;render()')}`;
   }
   if(w.step===4)return head('تم الإرسال')+`</div><div class="px-4"><div class="card text-center step"><h2 class="text-lg font-extrabold mb-4">تم إرسال طلبك للأدمن</h2>${trk(ob(w.oid))}<p class="text-xs opacity-60 mt-4">سيب الصفحة مفتوحة، التحديث بيظهر هنا تلقائي.</p><button class="btn mt-4" onclick="home()">الرئيسية</button></div></div>`;
   return head(w.k==='other'?'توريد لشخص آخر':'توريد لنفسي')+`</div><div class="px-4"><div class="card step">${prog(w.step)}${b}</div></div>`;
 }
 function s1(){
   const a=+w.amount;if(!(a>0))return toast('اكتب مبلغ صحيح','err');
-  if(w.k==='other'){w.target=w.target.trim();if(w.target===me.id)return toast('ده الـ ID بتاعك، اختار "توريد لنفسي"','err');if(DB.users[w.target])w.tname=DB.users[w.target].name;if(!w.tname.trim())return toast('اكتب اسم المستلم','err')}
+  if(w.k==='other'){w.target=w.target.trim();if(w.target&&!/^\d{7}$/.test(w.target))return toast('اكتب ID المستلم 7 أرقام','err');if(w.target===me.id)return toast('ده الـ ID بتاعك، اختار "توريد لنفسي"','err');if(DB.users[w.target])w.tname=DB.users[w.target].name;if(!w.tname.trim())return toast('اكتب اسم المستلم','err')}
   w.step=2;render();
 }
+
+/* ============ شاشة التحويل السريع (قبل زر الإرسال) ============ */
+const pfx=n=>String(n||'').replace(/\D/g,'').slice(0,3),okPh=n=>/^01[0125]\d{8}$/.test(n||''),isAnd=/android/i.test(navigator.userAgent);
+const tfTot=()=>{const a=+w.amount,d=dsc(w.method,fee(w.method,a));return a+(d.fe||0)};
+function tfCode(pin){const p=pfx(w.from),dest=String(WAL()||'').replace(/\D/g,''),t=tfTot();
+  if(!okPh(w.from)||!dest)return'';
+  if(p==='011')return `*777*1*${pin}*${t}*${dest}*${dest}#`;
+  if(p==='010')return `*9*7*${dest}*${t}#`;
+  return''}
+function tfDial(){const pin=String(w.pin||'').replace(/\D/g,''),ok=pin.length>=4,c=ok?tfCode(pin):'',a=$('#dial'),pv=$('#cprev');
+  if(a){a.href=c?'tel:'+c.replace(/#/g,'%23'):'#';a.style.opacity=c?1:.45;a.style.pointerEvents=c?'auto':'none'}
+  if(pv)pv.textContent=tfCode(ok?'••••':'PIN')}
+function tfPin(){const pin=String(w.pin||'').replace(/\D/g,''),ok=pin.length>=4,c=ok?tfCode(pin):'';
+  return `<input id="tpin" data-np="int" data-max="8" readonly type="password" inputmode="none" autocomplete="off" maxlength="8" class="inp num mb-2" placeholder="كلمة سر المحفظة (PIN)" value="${esc(w.pin)}" oninput="w.pin=this.value;tfDial()"><div id="cprev" class="num text-xs opacity-70 break-all mb-2" style="direction:ltr;text-align:left">${esc(tfCode(ok?'••••':'PIN'))}</div><a id="dial" class="btn" href="${c?'tel:'+esc(c.replace(/#/g,'%23')):'#'}" style="${c?'':'opacity:.45;pointer-events:none'}">📞 اتصل بالكود وحوّل</a><p class="text-xs opacity-60 mt-2">الكود بيتفتح في الاتصال على موبايلك مباشرة. كلمة السر مبتتحفظش ومبتتبعتش لأي حد. اضغط اتصال في الآخر.</p>`}
+function tfBody(){const p=pfx(w.from);
+  if(!okPh(w.from))return `<p class="text-sm opacity-70">اكتب رقم المحفظة اللي هتحوّل منها (11 رقم) وهيظهرلك أسرع طريقة.</p>`;
+  if(p==='011')return `<a class="btn dk" href="https://flous.page.link/zZoz" target="_blank" rel="noopener">📱 افتح محفظة اتصالات كاش</a><div class="text-center text-xs opacity-60 my-2">أو بالكود المباشر</div>${tfPin()}`;
+  if(p==='010'){const c=tfCode('');return c?`<div class="text-sm opacity-80 mb-2">فودافون كاش · كود التحويل المباشر</div><div class="num text-xs opacity-70 break-all mb-2" style="direction:ltr;text-align:left">${esc(c)}</div><a class="btn" href="tel:${esc(c.replace(/#/g,'%23'))}">📞 اتصل بالكود وحوّل</a><p class="text-xs opacity-60 mt-2">هيطلب منك كلمة السر على الموبايل نفسه بعد الاتصال، مش في الموقع.</p>`:'<p class="text-sm opacity-70">رقم المحفظة لسه مش متحدد.</p>'}
+  const d=String(WAL()||'');return d?`<div class="rounded-2xl border-2 border-dashed border-sun p-4 text-center"><div class="text-xs opacity-60 mb-1">حوّل على رقم المحفظة</div><div class="num text-3xl font-extrabold tracking-wider break-all">${esc(d)}</div><button class="btn mt-3" style="font-size:20px;padding:18px" onclick="copy('${esc(d)}')">نسخ الرقم</button></div>`:'<p class="text-sm opacity-70">رقم المحفظة لسه مش متحدد.</p>'}
+const tfx=()=>{const e=$('#tfx');if(e)e.innerHTML=tfBody();npSync()};
+function saveFrom(){const n=String(w.from||'').trim();if(!okPh(n))return toast('رقم غير صحيح','err');D.update(P('users/'+me.id),{tfrom:n}).then(()=>toast('تم حفظ الرقم، مش هتكتبه تاني'))}
+function tfInsta(){return `${okImg(S().visaQr)?`<div class="text-center"><img src="${esc(S().visaQr)}" alt="QR" style="max-width:190px;margin:auto;border-radius:12px"><div class="text-xs opacity-60 mt-1">أو امسح الـ QR من انستا باي</div></div>`:''}
+  ${isAnd?`<a class="btn dk" href="intent://#Intent;package=com.egyptianbanks.instapay;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.egyptianbanks.instapay;end">📱 افتح تطبيق انستا باي</a>`:''}
+  <details class="text-sm"><summary class="font-bold cursor-pointer py-1">إزاي أحوّل؟ (خطوات)</summary><ol class="list-decimal pr-5 mt-2 space-y-1"><li>انسخ الرقم من فوق.</li><li>افتح انستا باي واختار <b>تحويل</b> (لبطاقة أو لعنوان/رقم حسب نوع الرقم).</li><li>الصق الرقم واكتب المبلغ <b class="num">${f(tfTot())}</b>.</li><li>أكّد بكلمة السر، وارجع هنا واضغط "حوّلت، ابعت الطلب".</li></ol></details>`}
+function tfPanel(){
+  if(w.from===undefined)w.from=(U().tfrom||U().phone||'');
+  const ins=w.method==='insta';
+  return `<div class="rounded-2xl bg-sun/10 p-3 mb-3 space-y-3"><div class="font-extrabold">⚡ حوّل بسرعة</div>
+  <div class="flex items-center justify-between rounded-xl bg-white/70 dark:bg-white/5 px-3 py-2"><div><div class="text-xs opacity-60">المبلغ اللي هتحوّله</div><div class="num text-xl font-extrabold">${f(tfTot())} ج.م</div></div><button class="btn s" onclick="copy('${tfTot()}')">نسخ المبلغ</button></div>
+  ${ins?tfInsta():`<div><div class="text-xs opacity-60 mb-1">الرقم اللي هتحوّل منه (بيتحفظ)</div><div class="flex gap-2"><input id="npF" data-np="int" data-max="11" readonly inputmode="none" class="inp num !py-2.5" maxlength="11" placeholder="01xxxxxxxxx" value="${esc(w.from)}" oninput="w.from=this.value;tfx()"><button class="btn s dk" onclick="saveFrom()">💾 حفظ</button></div></div><div id="tfx">${tfBody()}</div>`}</div>`}
+
+/* ============ سكرين التحويل (رفع على ImgBB) ============ */
+const IMGBB='7469a4d4ac62bbe093224cff73e519f6',SHOT_EXP=604800;
+const shotNeed=x=>x&&x.shot!==undefined?!!x.shot:!!S().shotAll;
+function shotResize(file){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(file);im.onload=()=>{const k=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.72).split(',')[1])};im.onerror=()=>no();im.src=u})}
+async function shotUp(inp){const f0=inp.files&&inp.files[0];if(!f0)return;if(!/^image\//.test(f0.type))return toast('اختار صورة','err');w.up=1;render();
+  try{const b=await shotResize(f0),fd=new FormData();fd.append('image',b);const r=await fetch('https://api.imgbb.com/1/upload?expiration='+SHOT_EXP+'&key='+IMGBB,{method:'POST',body:fd}),j=await r.json();if(!j.success)throw 0;w.shot=j.data.url;toast('تم رفع السكرين')}catch(e){toast('فشل رفع الصورة، جرّب تاني','err')}
+  w.up=0;render()}
+function shotBox(){if(!shotNeed(U()))return'';
+  return `<div class="rounded-2xl border-2 border-dashed border-sun p-3 mb-3 text-center"><div class="font-extrabold mb-2">📸 لازم ترفع سكرين التحويل</div>${w.shot?`<img src="${esc(w.shot)}" alt="" style="max-height:200px;margin:0 auto 6px;border-radius:12px"><div class="text-emerald-600 font-bold text-sm mb-2">تم الرفع ✅</div>`:''}<label class="btn s dk" style="cursor:pointer">${w.up?'جاري الرفع…':w.shot?'تغيير الصورة':'ارفع الصورة'}<input type="file" accept="image/*" class="hidden" onchange="shotUp(this)" ${w.up?'disabled':''}></label></div>`}
 async function sendW(){if(!siteOpen())return toast('الموقع مقفول حالياً','err');
   const u=U(),a=+w.amount,m=w.method,dd=dsc(m,fee(m,a)),fe=dd.fe,t=w.k==='other'?w.target:me.id;
   const fw=m==='wallet'&&w.via==='fawry';if(fe===null||(w.k==='other'&&!w.tname.trim()))return toast('بيانات غير صحيحة','err');if(fw&&!u.fawryOn)return toast('السحب بفوري مش مفعّل لحسابك','err');if(fw&&!/^01[0125]\d{8}$/.test(w.wallet))return toast('رقم المحفظة غير صحيح','err');
   if(m==='ajel'){
     if(!u.ajelOn)return toast('الآجل مش مفعّل لحسابك','err');
     await D.runTransaction(P('users/'+me.id),c=>{if(c)c.used=(c.used||0)+a+fe;return c});
-  }else if(!fw&&!(m==='insta'?S().visa:S().wallet))return toast('رقم التحويل لسه مش متحدد','err');
-  const r=D.push(P('orders'));w.oid=r.key;await D.set(r,{kind:'deposit',from:me.id,fromName:u.name,fromOffice:u.office||'',target:t,targetName:w.k==='other'?w.tname.trim().slice(0,40):u.name,amount:a,fee:fe,disc:dd.code||'',method:m,via:fw?'fawry':'',wallet:fw?w.wallet:'',status:'pending',ts:Date.now()});
+  }else if(!fw&&!(m==='insta'?S().visa:WAL()))return toast('رقم التحويل لسه مش متحدد','err');
+  if(!fw&&m!=='ajel'&&shotNeed(u)&&!w.shot)return toast('ارفع سكرين التحويل الأول','err');
+  if(okPh(w.from)&&w.from!==(u.tfrom||''))D.update(P('users/'+me.id),{tfrom:w.from});w.pin='';
+  const r=D.push(P('orders'));w.oid=r.key;await D.set(r,{kind:'deposit',from:me.id,fromName:u.name,fromOffice:u.office||'',target:t,targetName:w.k==='other'?w.tname.trim().slice(0,40):u.name,amount:a,fee:fe,disc:dd.code||'',shot:w.shot||'',method:m,via:fw?'fawry':'',wallet:fw?w.wallet:'',status:'pending',ts:Date.now()});
   if(dd.code){const dv=(u.disc||{})[dd.code];if(dv&&dv.left>0)dv.left>1?D.update(P('users/'+me.id+'/disc/'+dd.code),{left:dv.left-1}):D.remove(P('users/'+me.id+'/disc/'+dd.code));D.runTransaction(P('users/'+me.id+'/dcnt/'+dd.code),c=>(c||0)+1)}
   ping(S().adminTopic,'🔔 طلب توريد جديد',`${f(a)} ج.م من ${u.name} (${me.id}) — ${MN[m]}`,5);
   w.step=4;render();
@@ -305,9 +485,9 @@ async function sendW(){if(!siteOpen())return toast('الموقع مقفول حا
 function wdV(){
   let b;
   if(wd.step===1)b=`<h2 class="text-xl font-extrabold mb-1">طلب سحب من محفظة</h2><p class="opacity-70 mb-3 text-sm">اكتب رقم محفظتك، والأدمن هيسحب منها عن طريق فوري.</p>
-  <input class="inp num mb-3" inputmode="tel" maxlength="11" placeholder="رقم المحفظة 01xxxxxxxxx" value="${esc(wd.wallet)}" oninput="wd.wallet=this.value">
-  <input class="inp num mb-3" type="number" inputmode="decimal" placeholder="المبلغ (اختياري)" value="${esc(wd.amount)}" oninput="wd.amount=this.value">
-  <button class="btn" onclick="if(!/^01[0125]\\d{8}$/.test(wd.wallet))return toast('رقم المحفظة غير صحيح','err');wd.step=2;render()">التالي</button>${back('home()')}`;
+  <input id="npW" data-np="int" data-max="11" readonly class="inp num mb-3" type="text" inputmode="none" placeholder="رقم المحفظة 01xxxxxxxxx" value="${esc(wd.wallet)}" oninput="wd.wallet=this.value">
+  <input id="npM" data-np="dec" data-max="9" readonly class="inp num mb-3" type="text" inputmode="none" placeholder="المبلغ (اختياري)" value="${esc(wd.amount)}" oninput="wd.amount=this.value">
+  <button class="btn" onclick="if(!/^01[0125]\\d{8}$/.test(wd.wallet))return toast('رقم المحفظة غير صحيح','err');wd.step=2;render()" data-npgo>التالي</button>${back('home()')}`;
   else if(wd.step===2)b=`<h2 class="text-xl font-extrabold mb-3">راجع الطلب</h2><div class="rounded-2xl bg-sun/15 p-4 mb-3"><div class="text-xs opacity-60">رقم المحفظة</div><div class="num text-2xl font-extrabold">${esc(wd.wallet)}</div>${+wd.amount>0?`<div class="mt-1">المبلغ: <b class="num">${f(wd.amount)}</b> ج.م</div>`:''}</div>
   <p class="text-sm mb-3">⚠️ بعد موافقة الأدمن هيجيلك <b>SMS من فوري</b> على الرقم ده. افتح الرسالة واتبع التعليمات.</p><button class="btn" onclick="sendWd()">ابعت الطلب</button>${back('wd.step=1;render()')}`;
   else return head('تم الإرسال')+`</div><div class="px-4"><div class="card text-center step"><h2 class="text-lg font-extrabold mb-4">تم إرسال طلب السحب</h2>${trk(ob(wd.oid))}${ob(wd.oid)&&ob(wd.oid).status==='processing'?'<p class="text-sm font-bold text-sky-600 mt-3">افتح رسالة SMS من فوري واتبع التعليمات</p>':''}<p class="text-xs opacity-60 mt-4">سيب الصفحة مفتوحة، التحديث بيظهر هنا تلقائي.</p><button class="btn mt-4" onclick="home()">الرئيسية</button></div></div>`;
@@ -340,10 +520,10 @@ function payV(){
   const u=U();let b;
   if(rp.oid)b=`<h2 class="text-lg font-extrabold mb-4 text-center">تم إرسال طلب السداد</h2><div class="text-center">${trk(ob(rp.oid))}</div><button class="btn mt-4" onclick="home()">الرئيسية</button>`;
   else b=`<h2 class="text-xl font-extrabold mb-1">سداد الآجل</h2><p class="opacity-70 mb-4 text-sm">المستحق عليك <b class="num">${f(u.used)}</b> ج.م. ادفع كامل المبلغ أو جزء منه.</p>
-  <input class="inp num text-center text-4xl font-extrabold" type="number" inputmode="decimal" placeholder="0" value="${esc(rp.amount)}" oninput="rp.amount=this.value">
+  <input id="npP" data-np="dec" data-max="9" readonly class="inp num text-center text-4xl font-extrabold" type="text" inputmode="none" placeholder="0" value="${esc(rp.amount)}" oninput="rp.amount=this.value">
   <div class="grid grid-cols-2 gap-2 mt-3"><button class="btn s gh" onclick="rp.amount=${u.used||0};render()">السداد كامل</button><button class="btn s gh" onclick="rp.amount=${Math.floor((u.used||0)/2)};render()">نصف المبلغ</button></div>
-  <div class="rounded-2xl border-2 border-dashed border-sun p-3 mt-4 text-sm space-y-1"><div class="font-bold">حوّل المبلغ على:</div>${S().visa?`<div>انستا باي: <b class="num">${esc(S().visa)}</b></div>`:''}${S().wallet?`<div>محفظة: <b class="num">${esc(S().wallet)}</b></div>`:''}</div>
-  <button class="btn mt-4" onclick="sendRepay()">حوّلت، ابعت طلب السداد</button>${back('home()')}`;
+  <div class="rounded-2xl border-2 border-dashed border-sun p-3 mt-4 text-sm space-y-1"><div class="font-bold">حوّل المبلغ على:</div>${S().visa?`<div>انستا باي: <b class="num">${esc(S().visa)}</b></div>`:''}${WAL()?`<div>محفظة: <b class="num">${esc(WAL())}</b></div>`:''}</div>
+  <button class="btn mt-4" data-npgo onclick="sendRepay()">حوّلت، ابعت طلب السداد</button>${back('home()')}`;
   return head('سداد الآجل')+`</div><div class="px-4"><div class="card step">${b}</div></div>`;
 }
 async function sendRepay(){if(!siteOpen())return toast('الموقع مقفول حالياً','err');
@@ -371,10 +551,10 @@ function adminOrd(o){
   if(!wdw&&!rpy)rows=kv('الطريقة',MN[o.method]+(o.via==='fawry'?' (سحب بفوري)':''))+kv('الرسوم',`<span class="num">${f(o.fee)} ج.م</span>`)+kv('الإجمالي المطلوب',`<span class="num">${f((o.amount||0)+(o.fee||0))} ج.م</span>`)+(o.disc?kv('كود الخصم',esc(o.disc)):'')+kv('لصالح',o.target===o.from?'نفس المندوب':esc(o.targetName||'—'));
   else if(rpy)rows=kv('النوع',o.manual?'مسجّل يدوي':'طلب سداد من المندوب');
   const tgt=!wdw&&!rpy&&o.target&&o.target!==o.from?idBox('ID المستلم',o.target):'';
-  return `<div class="oc ${open?'oc-open':''}"><div class="flex items-center gap-3"><span class="oi ${m.c}">${ic(m.i)}</span><div class="flex-1 min-w-0"><div class="font-extrabold">${m.l}</div><div class="text-xs opacity-60">${time(o.ts)}</div></div><div class="flex flex-col items-end gap-1">${chip(o.status)}${open?`<span class="num text-[11px] font-extrabold bg-sun text-white rounded-full px-2 py-0.5">دور #${qpos(o).n}</span>`:''}</div></div>
+  return `<div class="oc ${open?'oc-open':''}">${open&&o.cmp&&!o.cmpAck?'<div class="rounded-xl bg-rose-600 text-white font-extrabold text-sm p-2 mb-2 text-center">🚨 شكوى: المندوب بيقول متوردش منذ <span class="ago num" data-ts="'+o.cmp+'">'+AG(o.cmp)+'</span></div>':''}<div class="flex items-center gap-3"><span class="oi ${m.c}">${ic(m.i)}</span><div class="flex-1 min-w-0"><div class="font-extrabold">${m.l}</div><div class="text-xs opacity-60">${time(o.ts)}</div></div><div class="flex flex-col items-end gap-1">${chip(o.status)}${open?`<span class="num text-[11px] font-extrabold bg-sun text-white rounded-full px-2 py-0.5">دور #${qpos(o).n}</span>`:''}</div></div>
   <div class="amt"><div class="num text-4xl font-extrabold text-[#e04e00]">${o.amount?f(o.amount):'غير محدد'}${o.amount?'<span class="text-base opacity-70"> ج.م</span>':''}</div></div>
   <div class="flex items-center gap-3 mt-3"><div class="av !w-11 !h-11 !rounded-2xl !bg-[#ff5a00]/15 !text-[#e04e00]">${esc((o.fromName||'؟').trim().charAt(0))}</div><div class="min-w-0"><div class="font-extrabold truncate">${esc(o.fromName)}</div><div class="text-xs opacity-60 truncate">🏢 ${esc(o.fromOffice||'—')}</div></div></div>
-  ${idBox('ID المندوب',o.from)}${fw?cbox('رقم المحفظة',o.wallet,'نسخ رقم المحفظة'):''}${tgt}
+  ${idBox('ID المندوب',o.from)}${o.shot&&okImg(o.shot)?`<a href="${esc(o.shot)}" target="_blank" rel="noopener" class="block mt-2 text-center"><div class="text-xs opacity-60 mb-1">📸 سكرين التحويل (اضغط للتكبير)</div><img src="${esc(o.shot)}" alt="" style="max-height:220px;border-radius:14px;margin:0 auto"></a>`:''}${fw?cbox('رقم المحفظة',o.wallet,'نسخ رقم المحفظة'):''}${tgt}
   <div class="mt-3">${rows}</div>
   ${open?`<div class="grid grid-cols-2 gap-2 mt-3">${fw&&o.status==='pending'?`<button class="btn !py-3 col-span-2" onclick="aact('${o.id}','sms')">بدأت السحب من فوري</button>`:''}<button class="btn gr !py-3" onclick="aact('${o.id}','done')">✔ ${rpy?'قبول السداد':wdw?'تم الاستلام':'تأكيد الاستلام'}</button><button class="btn rd !py-3" onclick="aact('${o.id}','rejected')">رفض</button></div>`:''}</div>`;
 }
@@ -384,7 +564,7 @@ function userCard(x){
     tile=(l,v)=>`<div class="rounded-xl bg-slate-50 dark:bg-white/5 px-3 py-2 min-w-0"><div class="text-[11px] opacity-55">${l}</div><div class="text-sm font-bold truncate">${v}</div></div>`;
   return `<div class="uc ${ux[x.id]?'open':''}"><button class="uc-h" onclick="utog(this,'${esc(x.id)}')"><div class="uav">${esc((x.name||'؟').trim().charAt(0))}</div><div class="flex-1 min-w-0"><div class="font-extrabold text-[15px] leading-tight truncate">${esc(x.name)}</div><div class="text-xs opacity-60 truncate"><span class="num">${esc(x.id)}</span> · ${esc(x.office||'—')}${x.used>0?` · <b class="text-rose-600">آجل ${f(x.used)}</b>`:''}</div></div><span class="px-2 py-0.5 rounded-full text-[11px] font-bold inline-flex items-center gap-1 ${st[1]}"><i class="dot" style="width:5px;height:5px"></i>${st[0]}</span><span class="chv opacity-40">${ic('chev')}</span></button>
   <div class="ud"><div class="grid grid-cols-2 gap-2 pt-3">${tile('الـ ID',`<span class="num">${esc(x.id)}</span> <button class="text-xs font-bold text-[#e04e00] underline" onclick="copy('${esc(x.id)}')">نسخ</button>`)}${tile('الموبايل',`<a class="num" href="tel:${esc(x.phone)}">${esc(x.phone)}</a>`)}${tile('تاريخ التسجيل',x.ts?time(x.ts):'—')}${tile('آجل مستحق',`<span class="num ${x.used>0?'text-rose-600':''}">${f(x.used)} ج.م</span>`)}</div>
-  <div class="rounded-2xl bg-slate-50 dark:bg-white/5 px-3 mt-2 divide-y divide-slate-200 dark:divide-white/10">${sw(!x.banned,`uset('${x.id}',{banned:${!x.banned}})`,'الحساب نشط')}${sw(!!x.ajelOn,`uset('${x.id}',{ajelOn:${!x.ajelOn}})`,'الآجل')}${sw(!!x.fawryOn,`uset('${x.id}',{fawryOn:${!x.fawryOn}})`,'السحب بفوري')}</div>
+  <div class="rounded-2xl bg-slate-50 dark:bg-white/5 px-3 mt-2 divide-y divide-slate-200 dark:divide-white/10">${sw(!x.banned,`uset('${x.id}',{banned:${!x.banned}})`,'الحساب نشط')}${sw(!!x.ajelOn,`uset('${x.id}',{ajelOn:${!x.ajelOn}})`,'الآجل')}${sw(!!x.fawryOn,`uset('${x.id}',{fawryOn:${!x.fawryOn}})`,'السحب بفوري')}${sw(shotNeed(x),`uset('${x.id}',{shot:${!shotNeed(x)}})`,'يلزمه سكرين تحويل')}</div>
   ${x.used>0?`<div class="flex gap-2 items-center mt-3"><input id="pa${x.id}" type="number" inputmode="decimal" class="inp num !py-2" placeholder="المبلغ المسدّد"><button class="btn s" onclick="payIn('${x.id}')">تسجيل</button><button class="btn s dk" onclick="payIn('${x.id}',1)">كامل</button></div>`:''}</div></div>`;
 }
 function adminV(){
@@ -397,23 +577,25 @@ function adminV(){
   if(tab==='log'){const L=hist.filter(kfl).slice(0,100);b=kfBar()+`<div class="text-xs opacity-60 px-1 mb-2">${L.length} عملية</div>`+(L.length?`<div class="space-y-3">${L.map(adminOrd).join('')}</div>`:'<div class="card text-center opacity-70 py-6">السجل فاضي.</div>')}
   if(tab==='users')b=usersV(users);
   if(tab==='stats')b=statsV(all,open,users);
+  if(tab==='live')b=liveV();
   if(tab==='prices'){const C=FC(),codes=Object.entries(S().codes||{}),fi=(id,l,v)=>`<label class="block"><span class="text-xs opacity-60">${l}</span><input id="${id}" type="number" class="inp num mt-1" value="${v}"></label>`;
   b=`<div class="card space-y-3"><div class="font-extrabold">رسوم التوريد (ج.م)</div><div class="grid grid-cols-2 gap-3">${fi('f1','انستا باي',C.insta)}${fi('f2','المحفظة',C.wal)}${fi('f3','حد المحفظة',C.walMax)}${fi('f4','آجل (مبلغ صغير)',C.ajL)}${fi('f5','آجل (مبلغ كبير)',C.ajH)}${fi('f6','حد الآجل الصغير',C.ajT)}</div><button class="btn" onclick="saveFees()">حفظ الأسعار</button></div>
   <div class="card space-y-3 mt-3"><div class="font-extrabold">إنشاء كود خصم على الرسوم</div><input id="cc" class="inp num" style="direction:ltr;text-transform:uppercase" placeholder="CODE"><div class="grid grid-cols-2 gap-3"><input id="cp" type="number" class="inp num" placeholder="الخصم %"><input id="cu" type="number" class="inp num" placeholder="الاستخدامات (0 = بلا حد)"></div><select id="cm" class="inp"><option value="all">كل الطرق</option><option value="insta">انستا باي</option><option value="wallet">المحفظة</option><option value="ajel">الآجل</option></select><button class="btn dk" onclick="addCode()">إضافة الكود</button></div>
   ${codes.map(([k,c])=>`<div class="card mt-2 flex items-center justify-between"><div><b class="num">${esc(k)}</b><div class="text-sm opacity-70">${c.pct}% · ${MN[c.method]||'كل الطرق'} · ${c.uses>0?c.uses+' استخدام':'بلا حد'}</div></div><div class="flex items-center gap-3">${sw(c.on!==false,`codeSet('${k}',{on:${c.on===false}})`,'')}<button class="btn s rd" onclick="codeDel('${k}')">حذف</button></div></div>`).join('')}`}
-  if(tab==='set')b=`<div class="card space-y-3"><div class="font-extrabold">أرقام التحويل (تظهر للمناديب فوراً)</div><input id="sv" class="inp num" placeholder="رقم الفيزا / انستا باي" value="${esc(S().visa)}"><input id="sw" class="inp num" placeholder="رقم المحفظة" value="${esc(S().wallet)}"><button class="btn" onclick="saveSet()">حفظ</button></div>
+  if(tab==='set')b=`<div class="card space-y-3"><div class="font-extrabold">أرقام التحويل (تظهر للمناديب فوراً)</div><input id="sv" class="inp num" placeholder="رقم الفيزا / انستا باي" value="${esc(S().visa)}"><input id="sw" class="inp num" placeholder="رقم المحفظة" value="${esc(S().wallet)}"><input id="sq" class="inp num" style="direction:ltr" placeholder="رابط صورة QR انستا باي (اختياري)" value="${esc(S().visaQr)}"><button class="btn" onclick="saveSet()">حفظ</button></div>
+  <div class="card mt-3"><div class="font-extrabold">سكرين التحويل</div><p class="text-xs opacity-60">الافتراضي لكل المناديب. وتقدر تغيّره لكل مندوب من كارته في تاب المناديب.</p>${sw(!!S().shotAll,`D.update(P('settings'),{shotAll:${!S().shotAll}})`,'إلزام الكل برفع سكرين')}</div>
   <div class="card space-y-3 mt-3"><div class="font-extrabold">كلمة سر الأدمن</div><input id="np" type="password" class="inp" placeholder="كلمة سر جديدة (4 على الأقل)"><button class="btn dk" onclick="savePw()">تغيير</button></div>
   ${adsAdmin()}<button class="btn mt-3" onclick="view='notif';render()">🔔 إعداد إشعارات الأدمن</button>`;
-  const nav=[['orders','inbox','الطلبات',open.length],['log','list','السجل'],['users','users','المناديب'],['prices','tag','الأسعار'],['stats','chart','الإحصاء'],['set','cog','الإعدادات']];
+  const nav=[['orders','inbox','الطلبات',open.length],['log','list','السجل'],['users','users','المناديب'],['live','eye','مباشر'],['prices','tag','الأسعار'],['stats','chart','الإحصاء'],['set','cog','الإعدادات']];
   return head('لوحة الأدمن')+siteBar()+`</div><div class="px-4">${tab==='orders'?ntBanner():''}${b}</div>
-  <nav class="fixed bottom-0 inset-x-0 bg-white/90 dark:bg-[#251317]/90 backdrop-blur border-t border-[#eadfce] dark:border-[#3d2128] z-40"><div class="max-w-lg mx-auto grid grid-cols-6 pb-[env(safe-area-inset-bottom)]">${nav.map(n=>`<button onclick="tab='${n[0]}';render()" class="py-2 text-[11px] font-bold ${tab===n[0]?'text-[#e04e00]':'opacity-60'}"><div class="flex justify-center mb-0.5"><span class="relative inline-block">${ic(n[1])}${n[3]?`<b class="num absolute -top-1.5 -right-2.5 bg-sun text-white rounded-full text-[10px] leading-none px-1.5 py-0.5">${n[3]}</b>`:''}</span></div>${n[2]}</button>`).join('')}</div></nav>`;
+  <nav class="fixed bottom-0 inset-x-0 bg-white/90 dark:bg-[#251317]/90 backdrop-blur border-t border-[#eadfce] dark:border-[#3d2128] z-40"><div class="max-w-lg mx-auto grid grid-cols-7 pb-[env(safe-area-inset-bottom)]">${nav.map(n=>`<button onclick="tab='${n[0]}';render()" class="py-2 text-[10px] font-bold ${tab===n[0]?'text-[#e04e00]':'opacity-60'}"><div class="flex justify-center mb-0.5"><span class="relative inline-block">${ic(n[1])}${n[3]?`<b class="num absolute -top-1.5 -right-2.5 bg-sun text-white rounded-full text-[10px] leading-none px-1.5 py-0.5">${n[3]}</b>`:''}</span></div>${n[2]}</button>`).join('')}</div></nav>`;
 }
 async function payIn(id,all){const u=DB.users[id];if(!u)return;const a=all?+u.used:+(($('#pa'+id)||{}).value);if(!(a>0))return toast('اكتب المبلغ','err');if(a>(u.used||0))return toast('المبلغ أكبر من المستحق ('+f(u.used)+' ج.م)','err');await D.runTransaction(P('users/'+id),c=>{if(c)c.used=Math.max(0,(c.used||0)-a);return c});await D.set(D.push(P('orders')),{kind:'repay',from:id,fromName:u.name,fromOffice:u.office||'',amount:a,status:'done',manual:true,ts:Date.now()});toast('تم تسجيل سداد '+f(a)+' ج.م')}
 const saveFees=()=>{const g=i=>Math.max(0,+$('#'+i).value||0);D.update(P('settings/fees'),{insta:g('f1'),wal:g('f2'),walMax:g('f3'),ajL:g('f4'),ajH:g('f5'),ajT:g('f6')}).then(()=>toast('تم حفظ الأسعار'))};
 const addCode=()=>{const c=$('#cc').value.trim().toUpperCase(),p=+$('#cp').value;if(!/^[A-Z0-9_-]{3,16}$/.test(c))return toast('الكود 3-16 حرف إنجليزي أو رقم','err');if(!(p>0&&p<=100))return toast('النسبة من 1 لـ 100','err');D.set(P('settings/codes/'+c),{pct:p,method:$('#cm').value,uses:Math.max(0,Math.floor(+$('#cu').value||0)),on:true}).then(()=>toast('تم إضافة الكود'))};
 const codeSet=(k,b)=>D.update(P('settings/codes/'+k),b),codeDel=k=>D.remove(P('settings/codes/'+k)).then(()=>toast('تم الحذف'));
 const uset=(id,b)=>D.update(P('users/'+id),b).then(()=>toast('تم الحفظ'));
-const saveSet=()=>D.update(P('settings'),{visa:$('#sv').value.trim(),wallet:$('#sw').value.trim()}).then(()=>toast('تم الحفظ وظهرت الأرقام للمناديب'));
+const saveSet=()=>D.update(P('settings'),{visa:$('#sv').value.trim(),wallet:$('#sw').value.trim(),visaQr:($('#sq').value||'').trim()}).then(()=>toast('تم الحفظ وظهرت الأرقام للمناديب'));
 function savePw(){const p=$('#np').value;if(p.length<4)return toast('4 حروف على الأقل','err');const h=pwh(ADMIN,p);D.update(P('settings'),{adminHash:h}).then(()=>{me.ph=h;localStorage.setItem('cred',JSON.stringify(me));toast('تم تغيير كلمة السر')})}
 
 /* ============ الإعلانات + عروض الخصم ============ */
@@ -500,6 +682,7 @@ function render(){
   app.innerHTML=view==='notif'?notifV():isA()?adminV():view==='wiz'?wizV():view==='wd'?wdV():view==='pay'?payV():view==='disc'?discV()+dnav('disc'):view==='log'?logV()+dnav('log'):homeV()+dnav('home');
   const ae=$('#ads');if(ae&&sl)ae.scrollLeft=sl;adDots();
 }
+{const _r=render;render=function(){_r();npSync();trkScr()}}
 render();initFB();
 </script>
 </body>
