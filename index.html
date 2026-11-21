@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ff5a00"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='14' fill='%23ff5a00'/%3E%3Cpath d='M14 19h20l-1.6 16a3 3 0 01-3 2.7H18.6a3 3 0 01-3-2.7z' fill='%23fff'/%3E%3C/svg%3E">
 <title>طلبات | توريد المناديب</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{ink:'#14161a',sun:'#ff5a00'}}}}</script>
 <style>
@@ -110,19 +110,47 @@ body.np #app{padding-bottom:340px}
 @keyframes ringbg{0%,100%{background:#9f1239}50%{background:#e11d48}}
 @keyframes pl{0%,100%{opacity:1}50%{opacity:.25}}
 .rg-card{background:#fff;color:#14161a;border-radius:22px;padding:16px;margin-top:12px}
+
+/* ===== redesign v2 ===== */
+:root{--br:#ece3d6}
+body{font-size:15px;line-height:1.6;background:#f7f3ec}.dark body{background:#150a0d}
+.hdr{border-radius:0 0 28px 28px}
+.card,.oc,.uc{background:#fff;border:1px solid var(--br);border-radius:20px;box-shadow:0 1px 2px #1c19170a,0 10px 26px -18px #1c191744}
+.card,.oc{padding:16px}.dark .card,.dark .oc,.dark .uc{background:#221216;border-color:#3a2027;box-shadow:none}
+.oc-open{border:1.5px solid #ff5a00}
+.inp{height:52px;padding:0 16px;border-radius:14px;border:1.5px solid #e6dccd;font-size:16px;font-weight:600}
+.inp.text-4xl{height:72px}select.inp{padding-inline:10px}
+.btn{border-radius:14px;padding:0 20px;min-height:50px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;box-shadow:0 6px 14px -9px #e04e00aa}
+.btn.s{min-height:40px;padding:0 16px;font-size:14px;border-radius:12px;display:inline-flex;width:auto}
+.btn.gh,.btn.dk,.btn.rd,.btn.gr{box-shadow:none}
+.tic{border-radius:14px}.sw{width:46px;height:27px}.sw i{width:21px;height:21px}.sw.on i{transform:translateX(-19px)}
+.kv{padding:10px 0}
+.uc{overflow:hidden;padding:0}.uc-h{padding:14px 16px;gap:12px}.uav{width:44px;height:44px;border-radius:14px;font-size:19px}
+.ustats{display:grid;grid-template-columns:1.25fr 1fr 1fr;border-top:1px solid #f0e7da;background:#fbf8f3}
+.dark .ustats{background:#1c0f13;border-color:#3d2128}
+.ustats>div{padding:9px 12px;min-width:0;display:flex;flex-direction:column;font-size:12.5px}
+.ustats>div+div{border-inline-start:1px solid #f0e7da}.dark .ustats>div+div{border-color:#3d2128}
+.ustats span{font-size:11px;opacity:.55}.ustats b,.ustats a{font-weight:700}
+.uc .ud{padding:0 16px 16px}.uc.open .ud{border-top:1px solid #f0e7da}
+nav{box-shadow:0 -8px 22px -14px #0004}nav button{padding:7px 0 6px}
+.navon>div{background:#ff5a0022;border-radius:12px;width:42px;margin-inline:auto;padding:2px 0}
+#npad{padding:8px 12px calc(8px + env(safe-area-inset-bottom));border-radius:20px 20px 0 0}
+.nk{height:46px;font-size:22px;border-radius:14px}.nk.go{height:46px;font-size:17px}
+body.np #app{padding-bottom:calc(var(--nph,280px) + 24px)}body.np nav{display:none}
+@media(max-height:700px){.nk,.nk.go{height:40px;font-size:20px}}
 </style>
 </head>
 <body class="text-ink dark:text-slate-100 min-h-screen">
 <div id="app" class="max-w-lg mx-auto pb-24"></div>
-<div id="toast" class="fixed top-3 inset-x-3 z-50 flex flex-col items-center gap-2 pointer-events-none"></div><div id="npad"><div class="g"><button type="button" class="nk" onclick="npKey('1')">1</button><button type="button" class="nk" onclick="npKey('2')">2</button><button type="button" class="nk" onclick="npKey('3')">3</button><button type="button" class="nk" onclick="npKey('4')">4</button><button type="button" class="nk" onclick="npKey('5')">5</button><button type="button" class="nk" onclick="npKey('6')">6</button><button type="button" class="nk" onclick="npKey('7')">7</button><button type="button" class="nk" onclick="npKey('8')">8</button><button type="button" class="nk" onclick="npKey('9')">9</button><button type="button" id="npdot" class="nk" onclick="npKey('.')">.</button><button type="button" class="nk" onclick="npKey('0')">0</button><button type="button" class="nk" onclick="npKey('b')">⌫</button><button type="button" id="npgo" class="nk go" onclick="npGo()">تم</button></div></div><div id="ringbox" class="hidden"></div>
+<div id="toast" class="fixed top-3 inset-x-3 z-50 flex flex-col items-center gap-2 pointer-events-none"></div><div id="npad"><div class="g"><button type="button" class="nk" onclick="npKey('1')">1</button><button type="button" class="nk" onclick="npKey('2')">2</button><button type="button" class="nk" onclick="npKey('3')">3</button><button type="button" class="nk" onclick="npKey('4')">4</button><button type="button" class="nk" onclick="npKey('5')">5</button><button type="button" class="nk" onclick="npKey('6')">6</button><button type="button" class="nk" onclick="npKey('7')">7</button><button type="button" class="nk" onclick="npKey('8')">8</button><button type="button" class="nk" onclick="npKey('9')">9</button><button type="button" id="npdot" class="nk sec" onclick="npKey(this.dataset.k||'.')">.</button><button type="button" class="nk" onclick="npKey('0')">0</button><button type="button" class="nk" onclick="npKey('b')">⌫</button><button type="button" id="npgo" class="nk go" onclick="npGo()">تم</button></div></div><div id="ringbox" class="hidden"></div>
 <script>
 /* ============ إعدادات Firebase (بتاعتك) ============ */
 const CFG={apiKey:"AIzaSyBtAQvHw5bW8Bk8LpsSoguFhl5g5SZKtaI",authDomain:"dffvfv.firebaseapp.com",databaseURL:"https://dffvfv-default-rtdb.europe-west1.firebasedatabase.app",projectId:"dffvfv",storageBucket:"dffvfv.firebasestorage.app",messagingSenderId:"443974849871",appId:"1:443974849871:web:d16ea3d30389fac8efa13a"};
 const WAL=()=>S().wallet||'01104645477',ADMIN='7777777',NTFY='https://ntfy.sh/';
 const $=s=>document.querySelector(s);
-let D=null,DB={users:{},orders:{},settings:{},presence:{},pinreq:{},activity:{}},lastSig='',npId='',me=null,loaded=false,err='',view='home',tab='orders',mode='login',w={},wd={},seen={},seenPin={},seenU={},seenP={},lf='all',lo=true,sf='all',sfa='',sfb='',sfu='',uq='',ux={},adPause=0;
+let D=null,DB={users:{},orders:{},settings:{},presence:{},pinreq:{},activity:{}},lastSig='',npId='',me=null,loaded=false,err='',view='home',tab='orders',mode='login',w={},wd={},seen={},seenPin={},seenU={},seenP={},lf='all',lo=true,sf='all',sfa='',sfb='',sfu='',uq='',ux={},adPause=0,dg={pct:'',uses:'',m:'all',code:'',sel:{},q:''},sp={open:0,q:''},adf={t:'',x:'',lk:'',cd:'',tg:'',co:'sun',img:'',img2:'',up:''};
 try{const c=JSON.parse(localStorage.getItem('cred')||'null');if(c)me=c}catch(e){}
-const IC={eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',home:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>',tag:'<path d="M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0L3 13V3h10l7.6 7.6a2 2 0 010 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',moon:'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',out:'<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>',in:'<path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/>',users:'<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8"/>',phone:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>',chev:'<path d="M15 18l-6-6 6-6"/>',inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.1L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.5-6.9A2 2 0 0016.8 4H7.2a2 2 0 00-1.7 1.1z"/>',chart:'<path d="M3 3v18h18M7 15v3M12 9v9M17 5v13"/>',cog:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',check:'<path d="M20 6L9 17l-5-5"/>',x:'<path d="M18 6L6 18M6 6l12 12"/>',bank:'<path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/>',receipt:'<path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6"/>',copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>',unlock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 017.5-2"/>'};
+const IC={key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',home:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>',tag:'<path d="M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0L3 13V3h10l7.6 7.6a2 2 0 010 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',moon:'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>',out:'<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>',in:'<path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/>',users:'<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.9M16 3.1a4 4 0 010 7.8"/>',phone:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>',chev:'<path d="M15 18l-6-6 6-6"/>',inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.1L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.5-6.9A2 2 0 0016.8 4H7.2a2 2 0 00-1.7 1.1z"/>',chart:'<path d="M3 3v18h18M7 15v3M12 9v9M17 5v13"/>',cog:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',check:'<path d="M20 6L9 17l-5-5"/>',x:'<path d="M18 6L6 18M6 6l12 12"/>',bank:'<path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18"/>',receipt:'<path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6"/>',copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>',unlock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 017.5-2"/>'};
 const ic=(n,c='')=>`<svg class="${c}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
 const LOGO=(z=44)=>`<svg width="${z}" height="${z}" viewBox="0 0 48 48"><rect width="48" height="48" rx="16" fill="#f6efe5"/><path d="M14 19h20l-1.6 16a3 3 0 01-3 2.7H18.6a3 3 0 01-3-2.7z" fill="#ff5a00"/><path d="M19 22v-3a5 5 0 0110 0v3" fill="none" stroke="#ff5a00" stroke-width="3" stroke-linecap="round"/><path d="M20 29.5l3 3 5.5-6" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -130,7 +158,12 @@ const f=n=>Number(n||0).toLocaleString('en');
 const MN={insta:'انستا باي',wallet:'محفظة إلكترونية',ajel:'آجل'};
 const SL={pending:['بانتظار الأدمن','bg-amber-100 text-amber-800 dark:bg-amber-400/15 dark:text-amber-300'],processing:['فوري بعت SMS','bg-sky-100 text-sky-800 dark:bg-sky-400/15 dark:text-sky-300'],done:['تم ✅','bg-emerald-100 text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-300'],rejected:['مرفوض','bg-rose-100 text-rose-800 dark:bg-rose-400/15 dark:text-rose-300']};
 const FD={insta:5,wal:10,walMax:1500,ajL:5,ajH:10,ajT:1000},FC=()=>({...FD,...(S().fees||{})});
-const fee=(m,a)=>{const c=FC();return m==='insta'?+c.insta:m==='wallet'?(a>0&&a<=c.walMax?+c.wal:null):m==='ajel'?(a>0?(a>c.ajT?+c.ajH:+c.ajL):null):null};
+const FM={insta:'انستا باي',wallet:'محفظة إلكترونية',ajel:'آجل'};
+const FTD=()=>{const c=FC();return{insta:[{f:0,v:+c.insta,p:0}],wallet:[{f:0,t:+c.walMax,v:+c.wal,p:0}],ajel:[{f:0,t:+c.ajT,v:+c.ajL,p:0},{f:+c.ajT,v:+c.ajH,p:0}]}};
+const FT=m=>{const d=FTD(),sv=((S().fees||{}).tiers||{})[m];let L=sv?(Array.isArray(sv)?sv:Object.values(sv)):d[m];L=(L||[]).filter(x=>x&&x.v!=null).map(x=>({f:+x.f||0,t:x.t==null||x.t===''?null:+x.t,v:+x.v||0,p:x.p?1:0}));return L.length?L.sort((a,b)=>a.f-b.f):(d[m]||[])};
+const tierOf=(m,a)=>a>0?FT(m).find(x=>a>=x.f&&(x.t==null||a<=x.t)):null;
+const tierTxt=m=>{const L=FT(m),v=x=>x.v+(x.p?'%':' ج.م');return L.length===1&&!L[0].f&&L[0].t==null?'رسم '+v(L[0]):L.map(x=>(x.t==null?'من '+f(x.f)+' فأكتر':'من '+f(x.f)+' إلى '+f(x.t))+': '+v(x)).join(' · ')};
+const fee=(m,a)=>{const x=tierOf(m,+a);return x?(x.p?Math.round(a*x.v)/100:x.v):null};
 const mydisc=()=>Object.entries((U()||{}).disc||{}).map(([k,v])=>({code:k,...(S().codes||{})[k],left:v.left})).filter(d=>d.pct&&d.on!==false);
 const dsc=(m,b)=>{if(b===null)return{fe:null};const d=w.disc&&offers(m).find(o=>o.code===w.disc);return d?{fe:Math.round(b*(1-d.pct/100)),base:b,code:d.code,pct:d.pct}:{fe:b,base:b}};
 const time=t=>new Date(t).toLocaleString('ar-EG',{hour:'2-digit',minute:'2-digit',day:'numeric',month:'short'});
@@ -146,6 +179,7 @@ function copy(t){const ok=()=>toast('تم النسخ');try{navigator.clipboard.w
 
 /* ============ الإشعارات الحقيقية عبر ntfy (شغالة والتطبيق مقفول) ============ */
 const ping=(topic,title,message,p,tg)=>{if(!topic)return Promise.resolve(false);return fetch(NTFY,{method:'POST',body:JSON.stringify({topic,title,message,priority:p||4,tags:tg||['moneybag']})}).then(r=>r.ok).catch(()=>false)};
+
 async function testPing(){const t=myTopic();if(!t)return toast('مفيش قناة لسه، اضغط "غيّر القناة"','err');toast('جاري الإرسال…');const ok=await ping(t,'إشعار تجريبي ✅','لو شايف الرسالة دي يبقى الإشعارات شغالة',4);ok?toast('ntfy استلم الرسالة ✅ لو مجتش على موبايلك راجع اشتراكك في التطبيق'):toast('فشل الإرسال لـ ntfy.sh ❌ النت أو الشبكة بتحجبه','err')}
 async function newTopic(){const t=rnd();if(isA())await D.update(P('settings'),{adminTopic:t});else await D.update(P('users/'+me.id),{topic:t});localStorage.removeItem('nt_'+me.id);toast('تم تغيير القناة، اشترك في الاسم الجديد');render()}
 const myTopic=()=>isA()?S().adminTopic:(U()||{}).topic;
@@ -209,7 +243,9 @@ function authV(){
   <input id="id" data-np="int" data-max="7" readonly inputmode="none" class="inp num" maxlength="7" placeholder="الـ ID (7 أرقام)" ${reg?'':`oninput="$('#apw').classList.toggle('hidden',this.value!=='${ADMIN}')" onkeydown="if(event.key==='Enter')doAuth()"`}>
   ${reg?'<input id="id2" data-np="int" data-max="7" readonly inputmode="none" class="inp num" maxlength="7" placeholder="أكّد الـ ID (اكتبه تاني)">':`<div id="apw" class="hidden"><input id="pw" type="password" class="inp" placeholder="كلمة سر الأدمن" onkeydown="if(event.key==='Enter')doAuth()"></div>`}
   <button class="btn" data-npgo onclick="doAuth()">${reg?'إنشاء الحساب':'دخول'}</button>
-  <button class="w-full text-sm font-bold opacity-70" onclick="mode='${reg?'login':'reg'}';render()">${reg?'عندي حساب':'مندوب جديد؟ سجّل هنا'}</button></div>
+  <button class="w-full text-sm font-bold opacity-70" onclick="mode='${reg?'login':'reg'}';render()">${reg?'عندي حساب':'مندوب جديد؟ سجّل هنا'}</button>
+  <div class="pwdiv"><span>أو</span></div>
+  <button class="pwbtn" onclick="openPw()">${ic('key')}<span>استخراج كلمة مرور طلبات</span></button></div>
   <button class="mx-auto block mt-4 text-sm opacity-60" onclick="dark()">🌓 الوضع الداكن</button></div></div>`;
 }
 async function doAuth(){
@@ -386,19 +422,19 @@ function npSync(){
   const els=[...document.querySelectorAll('#app [data-np]')],ae=document.activeElement,
     typing=ae&&/INPUT|SELECT|TEXTAREA/.test(ae.tagName)&&!ae.hasAttribute('data-np'),
     on=els.length>0&&!typing&&!(me&&isA());
-  pad.classList.toggle('on',on);document.body.classList.toggle('np',on);
+  pad.classList.toggle('on',on);document.body.classList.toggle('np',on);if(on)document.documentElement.style.setProperty('--nph',pad.offsetHeight+'px');
   if(!on)return;
   if(!els.some(e=>e.id===npId))npId=els[0].id;
   els.forEach(e=>e.classList.toggle('npa',e.id===npId));
   if(npId!==npShown){npShown=npId;const c0=els.find(e=>e.id===npId);setTimeout(()=>c0&&c0.scrollIntoView({block:'center',behavior:'smooth'}),60)}
   const cur=els.find(e=>e.id===npId),go=$('#app [data-npgo]'),g=$('#npgo');
-  $('#npdot').style.visibility=cur&&cur.dataset.np==='int'?'hidden':'visible';
+  {const d=$('#npdot'),it=cur&&cur.dataset.np==='int';d.textContent=it?'مسح':'.';d.dataset.k=it?'c':'.';d.style.fontSize=it?'16px':''}
   g.style.display=go?'':'none';if(go)g.textContent=go.textContent.trim();
 }
 function npKey(k){
   const el=$('#'+npId);if(!el)return;
   let v=el.value||'';const int=el.dataset.np==='int',max=+el.dataset.max||9;
-  if(k==='b')v=v.slice(0,-1);
+  if(k==='b')v=v.slice(0,-1);else if(k==='c')v='';
   else if(k==='.'){if(int||v.includes('.'))return;v=(v||'0')+'.'}
   else{if(v.replace('.','').length>=max)return;if(!int&&v==='0')v='';v+=k}
   el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));
@@ -430,7 +466,7 @@ function homeV(){
   const closed=`<div class="card text-center step"><div class="trk-ic no">${ic('lock')}</div><h2 class="text-xl font-extrabold mt-3">الموقع مقفول حالياً</h2><p class="text-sm opacity-70 mt-1">استقبال الطلبات متوقف مؤقتاً، والصفحة هتتحدث لوحدها أول ما يتفتح تاني.</p></div>`;
   return head('أهلاً بيك')+(u.ajelOn?`<div class="mt-4 bg-white rounded-2xl p-4 text-ink flex items-center justify-between"><div><div class="text-xs opacity-60">رصيد الآجل المستحق عليك</div><div class="num text-3xl font-extrabold">${f(u.used)} <span class="text-sm">ج.م</span></div></div><button class="btn s" ${u.used>0&&!cl?'':'disabled style="opacity:.4"'} onclick="startPay()">سداد</button></div>`:'')+`</div>
   <div class="px-4 space-y-3">${adsV()}${tr.map(o=>`<div class="card text-center"><div class="flex justify-between items-center mb-4"><b>${o.kind==='repay'?'سداد آجل · ':''}${o.kind==='withdraw'?'طلب سحب':f(o.amount)+' ج.م'}</b>${chip(o.status)}</div>${trk(o)}</div>`).join('')}
-  ${cl?closed:tile('in','توريد لنفسي','ورّد عهدتك في 3 خطوات',"startWiz('self')")+tile('users','توريد لشخص آخر','ورّد لأي شخص، مسجل أو لا',"startWiz('other')")}
+  ${cl?closed+tile('key','استخراج كلمة مرور طلبات','الصق الرسالة وانسخ كلمة المرور بس',"openPw()"):tile('in','توريد لنفسي','ورّد عهدتك في 3 خطوات',"startWiz('self')")+tile('users','توريد لشخص آخر','ورّد لأي شخص، مسجل أو لا',"startWiz('other')")+tile('key','استخراج كلمة مرور طلبات','الصق الرسالة وانسخ كلمة المرور بس',"openPw()")}
   ${inc.length?`<div class="font-extrabold px-1">طلبات واردة ليك</div>${inc.map(ordCard).join('')}`:''}
   ${!tr.length&&!inc.length?`<div class="card text-center opacity-70 py-5 text-sm">مفيش طلبات جارية دلوقتي.<br>كل عملياتك السابقة في تاب <b>السجل</b>.</div>`:''}
   </div>`;
@@ -448,9 +484,9 @@ function wizV(){
   <input id="npA" data-np="dec" data-max="9" readonly class="inp num text-center text-4xl font-extrabold" type="text" inputmode="none" placeholder="0" value="${esc(w.amount)}" oninput="w.amount=this.value">
   <div class="text-center text-sm opacity-60 mt-1">ج.م</div><button class="btn mt-4" data-npgo onclick="s1()">التالي</button>${back('home()')}`;
   if(w.step===2){
-    const C=FC(),ms=[['insta','bank','انستا باي','رسم '+C.insta+' ج.م'],['wallet','phone','محفظة إلكترونية','رسم '+C.wal+' ج.م (حتى '+f(C.walMax)+')'],['ajel','receipt','آجل','رسم '+C.ajL+' ج.م (حتى '+f(C.ajT)+') · '+C.ajH+' ج.م فوق كده']];
+    const ms=[['insta','bank','انستا باي',tierTxt('insta')],['wallet','phone','محفظة إلكترونية',tierTxt('wallet')],['ajel','receipt','آجل',tierTxt('ajel')]];
     b=`<h2 class="text-xl font-extrabold mb-1">اختار طريقة السداد</h2><p class="mb-3 opacity-60">المبلغ <b class="num">${f(a)}</b> ج.م</p><div class="space-y-2">`+ms.map(m=>{
-      const x=dsc(m[0],fee(m[0],a)).fe,why=x===null?(m[0]==='wallet'?'المحفظة لحد '+f(C.walMax)+' ج.م فقط':''):m[0]==='ajel'&&!u.ajelOn?'الآجل مش مفعّل لحسابك':'';
+      const x=dsc(m[0],fee(m[0],a)).fe,why=x===null?'المبلغ ده خارج الحدود المتاحة للطريقة دي':m[0]==='ajel'&&!u.ajelOn?'الآجل مش مفعّل لحسابك':'';
       return `<button ${why?'disabled':''} onclick="w.method='${m[0]}';w.disc='';w.via=w.method==='wallet'&&!U().fawryOn?'tr':'';w.step=3;render()" class="card w-full flex items-center gap-3 text-right ${why?'opacity-40':'border-2 border-transparent hover:border-sun'}"><span class="tic !w-11 !h-11 ${m[0]==='insta'?'insta':''}">${ic(m[1])}</span><span class="flex-1"><b class="block">${m[2]}</b><span class="text-sm opacity-60">${why||m[3]}</span></span>${x!==null&&!why?`<b class="num">+${x}</b>`:''}</button>`}).join('')+`</div>${back('w.step=1;render()')}`;
   }
   if(w.step===3){
@@ -488,13 +524,14 @@ function tfPin(){const pin=String(w.pin||'').replace(/\D/g,''),ok=pin.length>=4,
   return `<input id="tpin" data-np="int" data-max="8" readonly type="password" inputmode="none" autocomplete="off" maxlength="8" class="inp num mb-2" placeholder="كلمة سر المحفظة (PIN)" value="${esc(w.pin)}" oninput="w.pin=this.value;tfDial()"><div id="cprev" class="num text-xs opacity-70 break-all mb-2" style="direction:ltr;text-align:left">${esc(tfCode(ok?'••••':'PIN'))}</div><a id="dial" class="btn et" href="${c?'tel:'+esc(c.replace(/#/g,'%23')):'#'}" style="${c?'':'opacity:.45;pointer-events:none'}">📞 اتصل بالكود وحوّل</a><p class="text-xs opacity-60 mt-2">الكود بيتفتح في الاتصال على موبايلك مباشرة. كلمة السر مبتتحفظش ومبتتبعتش لأي حد. اضغط اتصال في الآخر.</p>`}
 function tfBody(){const p=pfx(w.from);
   if(!okPh(w.from))return `<p class="text-sm opacity-70">اكتب رقم المحفظة اللي هتحوّل منها (11 رقم) وهيظهرلك أسرع طريقة.</p>`;
-  if(p==='011')return `<a class="btn et" href="https://flous.page.link/zZoz" target="_blank" rel="noopener">📱 افتح محفظة اتصالات كاش</a><div class="text-center text-xs opacity-60 my-2">أو بالكود المباشر</div>${tfPin()}`;
+  if(p==='011'){const wn=String(WAL()||'').replace(/\D/g,'');return `<a class="btn et" href="https://eandcash.eand.com.eg/?appScreen=send_money&dial=${encodeURIComponent(wn)}" target="_blank" rel="noopener">📱 افتح محفظة اتصالات كاش</a><div class="text-center text-xs opacity-60 my-2">أو بالكود المباشر</div>${tfPin()}`}
   if(p==='010'){const c=tfCode('');return c?`<div class="text-sm opacity-80 mb-2">فودافون كاش · كود التحويل المباشر</div><div class="num text-xs opacity-70 break-all mb-2" style="direction:ltr;text-align:left">${esc(c)}</div><a class="btn vf" href="tel:${esc(c.replace(/#/g,'%23'))}">📞 اتصل بالكود وحوّل</a><p class="text-xs opacity-60 mt-2">هيطلب منك كلمة السر على الموبايل نفسه بعد الاتصال، مش في الموقع.</p>`:'<p class="text-sm opacity-70">رقم المحفظة لسه مش متحدد.</p>'}
   const d=String(WAL()||'');return d?`<div class="rounded-2xl border-2 border-dashed border-sun p-4 text-center"><div class="text-xs opacity-60 mb-1">حوّل على رقم المحفظة</div><div class="num text-3xl font-extrabold tracking-wider break-all">${esc(d)}</div><button class="btn mt-3" style="font-size:20px;padding:18px" onclick="copy('${esc(d)}')">نسخ الرقم</button></div>`:'<p class="text-sm opacity-70">رقم المحفظة لسه مش متحدد.</p>'}
 const tfx=()=>{const e=$('#tfx');if(e)e.innerHTML=tfBody();npSync()};
 function saveFrom(){const n=String(w.from||'').trim();if(!okPh(n))return toast('رقم غير صحيح','err');D.update(P('users/'+me.id),{tfrom:n}).then(()=>toast('تم حفظ الرقم، مش هتكتبه تاني'))}
+function instaOpen(){setTimeout(()=>{if(!document.hidden)toast('لو التطبيق مفتحش، افتحه من قايمة تطبيقات موبايلك','err')},1800)}
 function tfInsta(){return `${okImg(S().visaQr)?`<div class="text-center"><img src="${esc(S().visaQr)}" alt="QR" style="max-width:190px;margin:auto;border-radius:12px"><div class="text-xs opacity-60 mt-1">أو امسح الـ QR من انستا باي</div></div>`:''}
-  ${isAnd?`<a class="btn insta" href="intent://#Intent;package=com.egyptianbanks.instapay;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.egyptianbanks.instapay;end">📱 افتح تطبيق انستا باي</a>`:''}
+  ${isAnd?`<a class="btn insta" onclick="instaOpen()" href="intent://ipn.eg/#Intent;scheme=https;package=com.egyptianbanks.instapay;end">📱 افتح تطبيق انستا باي</a><a class="block text-center text-xs underline opacity-60 mt-1" href="https://play.google.com/store/apps/details?id=com.egyptianbanks.instapay" target="_blank">التطبيق مش عندي؟ حمّله</a>`:''}
   <details class="text-sm"><summary class="font-bold cursor-pointer py-1">إزاي أحوّل؟ (خطوات)</summary><ol class="list-decimal pr-5 mt-2 space-y-1"><li>انسخ الرقم من فوق.</li><li>افتح انستا باي واختار <b>تحويل</b> (لبطاقة أو لعنوان/رقم حسب نوع الرقم).</li><li>الصق الرقم واكتب المبلغ <b class="num">${f(tfTot())}</b>.</li><li>أكّد بكلمة السر، وارجع هنا واضغط "حوّلت، ابعت الطلب".</li></ol></details>`}
 function tfPanel(){
   if(w.from===undefined)w.from=(U().tfrom||U().phone||'');
@@ -506,7 +543,7 @@ function tfPanel(){
 /* ============ سكرين التحويل (رفع على ImgBB) ============ */
 const IMGBB='7469a4d4ac62bbe093224cff73e519f6',SHOT_EXP=604800;
 const shotNeed=x=>x&&x.shot!==undefined?!!x.shot:!!S().shotAll;
-function shotResize(file){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(file);im.onload=()=>{const k=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.72).split(',')[1])};im.onerror=()=>no();im.src=u})}
+function shotResize(file,mx=1000,q=.72){return new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(file);im.onload=()=>{const k=Math.min(1,mx/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);const g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',q).split(',')[1])};im.onerror=()=>no();im.src=u})}
 async function shotUp(inp){const f0=inp.files&&inp.files[0];if(!f0)return;if(!/^image\//.test(f0.type))return toast('اختار صورة','err');w.up=1;render();
   try{const b=await shotResize(f0),fd=new FormData();fd.append('image',b);const r=await fetch('https://api.imgbb.com/1/upload?expiration='+SHOT_EXP+'&key='+IMGBB,{method:'POST',body:fd}),j=await r.json();if(!j.success)throw 0;w.shot=j.data.url;toast('تم رفع السكرين')}catch(e){toast('فشل رفع الصورة، جرّب تاني','err')}
   w.up=0;render()}
@@ -550,12 +587,12 @@ function discV(){
   return head('خصوماتي')+`</div><div class="px-4 space-y-3"><div class="card step"><div class="font-extrabold mb-1">عندك كود خصم؟</div><p class="text-sm opacity-60 mb-3">فعّله هنا وهيظهرلك كعرض في خطوة التحويل، وانت تختار تستخدمه ولا لأ.</p><div class="flex gap-2"><input id="dc" class="inp num" style="direction:ltr;text-transform:uppercase" placeholder="CODE" onkeydown="if(event.key==='Enter')redeem()"><button class="btn !w-auto px-6" onclick="redeem()">تفعيل</button></div></div>
   <div class="font-extrabold px-1">خصوماتك الحالية</div>${L.length?L.map(d=>`<div class="card flex items-center gap-3"><span class="tic">${ic('tag')}</span><div class="flex-1"><b class="num text-lg">${esc(d.code)}</b><div class="text-sm opacity-70">خصم ${d.pct}% على رسوم ${mn[d.method]||''}</div><div class="text-xs opacity-50">${d.left>0?'متبقي '+d.left+' استخدام':'غير محدود'}</div></div><b class="num text-2xl text-[#ff5a00]">${d.pct}%</b></div>`).join(''):'<div class="card text-center opacity-60 py-6 text-sm">مفيش خصومات مفعّلة لسه.</div>'}</div>`;
 }
-const dnav=c=>`<nav class="fixed bottom-0 inset-x-0 bg-white/90 dark:bg-[#251317]/90 backdrop-blur border-t border-[#eadfce] dark:border-[#3d2128] z-40"><div class="max-w-lg mx-auto grid grid-cols-3 pb-[env(safe-area-inset-bottom)]">${[['home','home','الرئيسية'],['log','list','السجل'],['disc','tag','خصوماتي']].map(n=>`<button onclick="view='${n[0]}';render()" class="py-2 text-xs font-bold ${c===n[0]?'text-[#e04e00]':'opacity-60'}"><div class="flex justify-center mb-0.5">${ic(n[1])}</div>${n[2]}</button>`).join('')}</div></nav>`;
+const dnav=c=>`<nav class="fixed bottom-0 inset-x-0 bg-white/90 dark:bg-[#251317]/90 backdrop-blur border-t border-[#eadfce] dark:border-[#3d2128] z-40"><div class="max-w-lg mx-auto grid grid-cols-3 pb-[env(safe-area-inset-bottom)]">${[['home','home','الرئيسية'],['log','list','السجل'],['disc','tag','خصوماتي']].map(n=>`<button onclick="view='${n[0]}';render()" class="py-2 text-xs font-bold ${c===n[0]?'text-[#e04e00] navon':'opacity-60'}"><div class="flex justify-center mb-0.5">${ic(n[1])}</div>${n[2]}</button>`).join('')}</div></nav>`;
 function logV(){
   const L=ords().filter(o=>o.from===me.id||o.target===me.id).filter(kfl).slice(0,100);
   return head('سجل عملياتك')+`</div><div class="px-4">${kfBar()}<div class="text-xs opacity-60 px-1 mb-2">${L.length} عملية</div><div class="space-y-3">${L.map(ordCard).join('')||'<div class="card text-center opacity-60 py-6 text-sm">مفيش عمليات هنا لسه.</div>'}</div></div>`;
 }
-async function redeem(){const c=($('#dc').value||'').trim().toUpperCase(),d=(S().codes||{})[c];if(!c)return toast('اكتب الكود','err');if(!d||d.on===false)return toast('الكود غير صحيح','err');if((U().disc||{})[c])return toast('الكود مفعّل بالفعل','err');const n=(U().dcnt||{})[c]||0;if(d.uses>0&&n>=d.uses)return toast('الكود استُخدم بالكامل','err');await D.set(P('users/'+me.id+'/disc/'+c),{left:d.uses>0?d.uses-n:0});toast('تم تفعيل الخصم')}
+async function redeem(){const c=($('#dc').value||'').trim().toUpperCase(),d=(S().codes||{})[c];if(!c)return toast('اكتب الكود','err');if(!d||d.on===false||(d.only&&!d.only[me.id]))return toast('الكود غير صحيح','err');if((U().disc||{})[c])return toast('الكود مفعّل بالفعل','err');const n=(U().dcnt||{})[c]||0;if(d.uses>0&&n>=d.uses)return toast('الكود استُخدم بالكامل','err');await D.set(P('users/'+me.id+'/disc/'+c),{left:d.uses>0?d.uses-n:0});toast('تم تفعيل الخصم')}
 
 /* ============ سداد الآجل ============ */
 let rp={};
@@ -608,17 +645,17 @@ function userCard(x){
     st=x.banned?['محظور','bg-rose-100 text-rose-800 dark:bg-rose-400/15 dark:text-rose-300']:on?['متصل','bg-emerald-100 text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-300']:['غير متصل','bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300'],
     tile=(l,v)=>`<div class="rounded-xl bg-slate-50 dark:bg-white/5 px-3 py-2 min-w-0"><div class="text-[11px] opacity-55">${l}</div><div class="text-sm font-bold truncate">${v}</div></div>`;
   return `<div class="uc ${ux[x.id]?'open':''}"><button class="uc-h" onclick="utog(this,'${esc(x.id)}')"><div class="uav">${esc((x.name||'؟').trim().charAt(0))}</div><div class="flex-1 min-w-0"><div class="font-extrabold text-[15px] leading-tight truncate">${esc(x.name)}</div><div class="text-xs opacity-60 truncate"><span class="num">${esc(x.id)}</span> · ${esc(x.office||'—')}${x.used>0?` · <b class="text-rose-600">آجل ${f(x.used)}</b>`:''}</div></div><span class="px-2 py-0.5 rounded-full text-[11px] font-bold inline-flex items-center gap-1 ${st[1]}"><i class="dot" style="width:5px;height:5px"></i>${st[0]}</span><span class="chv opacity-40">${ic('chev')}</span></button>
-  <div class="ud"><div class="grid grid-cols-2 gap-2 pt-3">${tile('الـ ID',`<span class="num">${esc(x.id)}</span> <button class="text-xs font-bold text-[#e04e00] underline" onclick="copy('${esc(x.id)}')">نسخ</button>`)}${tile('الموبايل',`<a class="num" href="tel:${esc(x.phone)}">${esc(x.phone)}</a>`)}${tile('تاريخ التسجيل',x.ts?time(x.ts):'—')}${tile('آجل مستحق',`<span class="num ${x.used>0?'text-rose-600':''}">${f(x.used)} ج.م</span>`)}</div>
+  <div class="ustats"><div><span>الموبايل</span><a class="num font-bold" href="tel:${esc(x.phone)}">${esc(x.phone)}</a></div><div><span>آجل مستحق</span><b class="num ${x.used>0?'text-rose-600':''}">${f(x.used)} ج.م</b></div><div><span>التسجيل</span><b>${x.ts?time(x.ts):'—'}</b></div></div>
+  <div class="ud"><div class="grid grid-cols-2 gap-2 pt-3">${tile('الـ ID',`<span class="num">${esc(x.id)}</span> <button class="text-xs font-bold text-[#e04e00] underline" onclick="copy('${esc(x.id)}')">نسخ</button>`)}${tile('المكتب',esc(x.office||'—'))}</div>
   <div class="rounded-2xl bg-slate-50 dark:bg-white/5 px-3 mt-2 divide-y divide-slate-200 dark:divide-white/10">${sw(!x.banned,`uset('${x.id}',{banned:${!x.banned}})`,'الحساب نشط')}${sw(!!x.ajelOn,`uset('${x.id}',{ajelOn:${!x.ajelOn}})`,'الآجل')}${sw(!!x.fawryOn,`uset('${x.id}',{fawryOn:${!x.fawryOn}})`,'السحب بفوري')}${sw(shotNeed(x),`uset('${x.id}',{shot:${!shotNeed(x)}})`,'يلزمه سكرين تحويل')}</div>
-  ${x.used>0?`<div class="flex gap-2 items-center mt-3"><input id="pa${x.id}" type="number" inputmode="decimal" class="inp num !py-2" placeholder="المبلغ المسدّد"><button class="btn s" onclick="payIn('${x.id}')">تسجيل</button><button class="btn s dk" onclick="payIn('${x.id}',1)">كامل</button></div>`:''}
+  <div class="rounded-2xl bg-slate-50 dark:bg-white/5 p-3 mt-3 space-y-2"><div class="text-xs font-extrabold opacity-70">➕ إضافة آجل على المندوب</div>
+  <div class="flex gap-2"><input id="adjA${x.id}" type="number" inputmode="decimal" class="inp num !py-2" style="flex:0 0 38%" placeholder="المبلغ"><input id="adjN${x.id}" class="inp !py-2 flex-1" placeholder="سبب (اختياري)"></div>
+  <button class="btn s" onclick="addAdj('${x.id}')">تسجيل كآجل عليه</button></div>
   <div class="rounded-2xl bg-slate-50 dark:bg-white/5 p-3 mt-3 space-y-2"><div class="text-xs font-extrabold opacity-70">✏️ تعديل بيانات المندوب</div>
   <input id="en${x.id}" class="inp !py-2" placeholder="الاسم" value="${esc(x.name)}">
   <input id="eo${x.id}" class="inp !py-2" placeholder="اسم المكتب" value="${esc(x.office)}">
   <input id="ep${x.id}" class="inp num !py-2" placeholder="رقم الموبايل" value="${esc(x.phone)}">
   <button class="btn s dk" onclick="uedit('${x.id}')">حفظ التعديلات</button></div>
-  <div class="rounded-2xl border-2 border-dashed border-amber-400/70 p-3 mt-2 space-y-2"><div class="text-xs font-extrabold opacity-70">➕ تسجيل آجل يدوي (يظهرله كعملية خارجية في السجل)</div>
-  <div class="flex gap-2"><input id="adjA${x.id}" type="number" inputmode="decimal" class="inp num !py-2" style="flex:0 0 40%" placeholder="المبلغ"><input id="adjN${x.id}" class="inp !py-2 flex-1" placeholder="سبب/ملاحظة (اختياري)"></div>
-  <button class="btn s" onclick="addAdj('${x.id}')">تسجيل كآجل عليه</button></div>
   <button class="btn rd mt-3" onclick="udel('${x.id}')">🗑 حذف الحساب نهائيًا</button></div></div>`;
 }
 async function uedit(id){
@@ -632,7 +669,7 @@ async function addAdj(id){
   const u=DB.users[id];if(!u)return;
   const a=+(($('#adjA'+id)||{}).value),note=(($('#adjN'+id)||{}).value||'').trim().slice(0,60);
   if(!(a>0))return toast('اكتب مبلغ صحيح','err');
-  if(!confirm(`تأكيد تسجيل ${f(a)} ج.م آجل على ${u.name} (${id})؟`))return;
+  if(!confirm(`تأكيد تسجيل ${f(a)} ج.م آجل على ${u.name} (${id})؟`+(u.ajelOn?'':'\n(الآجل مش مفعّل لحسابه، هيتسجل عليه المبلغ برضو)')))return;
   await D.runTransaction(P('users/'+id),c=>{if(c)c.used=(c.used||0)+a;return c});
   await D.set(D.push(P('orders')),{kind:'adj',from:id,fromName:u.name,fromOffice:u.office||'',amount:a,note,status:'done',manual:true,ts:Date.now()});
   const e1=$('#adjA'+id),e2=$('#adjN'+id);if(e1)e1.value='';if(e2)e2.value='';
@@ -654,26 +691,48 @@ function adminV(){
   if(tab==='orders')b=strip+(open.length?`<div class="font-extrabold mb-2 px-1">طلبات معلقة (${open.length})</div><div class="space-y-3">${open.map(adminOrd).join('')}</div>`:'<div class="card text-center opacity-70 py-6">مفيش طلبات معلقة. هيجيلك إشعار فوري أول ما يوصل طلب.</div>');
   if(tab==='log'){const L=hist.filter(kfl).slice(0,100);b=kfBar()+`<div class="text-xs opacity-60 px-1 mb-2">${L.length} عملية</div>`+(L.length?`<div class="space-y-3">${L.map(adminOrd).join('')}</div>`:'<div class="card text-center opacity-70 py-6">السجل فاضي.</div>')}
   if(tab==='users')b=usersV(users);
+  if(tab==='ajel')b=ajelV(users);
   if(tab==='stats')b=statsV(all,open,users);
   if(tab==='live')b=liveV();
   if(tab==='prices'){const C=FC(),codes=Object.entries(S().codes||{}),fi=(id,l,v)=>`<label class="block"><span class="text-xs opacity-60">${l}</span><input id="${id}" type="number" class="inp num mt-1" value="${v}"></label>`;
-  b=`<div class="card space-y-3"><div class="font-extrabold">رسوم التوريد (ج.م)</div><div class="grid grid-cols-2 gap-3">${fi('f1','انستا باي',C.insta)}${fi('f2','المحفظة',C.wal)}${fi('f3','حد المحفظة',C.walMax)}${fi('f4','آجل (مبلغ صغير)',C.ajL)}${fi('f5','آجل (مبلغ كبير)',C.ajH)}${fi('f6','حد الآجل الصغير',C.ajT)}</div><button class="btn" onclick="saveFees()">حفظ الأسعار</button></div>
+  b=ftEditor()+`
   <div class="card space-y-3 mt-3"><div class="font-extrabold">إنشاء كود خصم على الرسوم</div><input id="cc" class="inp num" style="direction:ltr;text-transform:uppercase" placeholder="CODE"><div class="grid grid-cols-2 gap-3"><input id="cp" type="number" class="inp num" placeholder="الخصم %"><input id="cu" type="number" class="inp num" placeholder="الاستخدامات (0 = بلا حد)"></div><select id="cm" class="inp"><option value="all">كل الطرق</option><option value="insta">انستا باي</option><option value="wallet">المحفظة</option><option value="ajel">الآجل</option></select><button class="btn dk" onclick="addCode()">إضافة الكود</button></div>
-  ${codes.map(([k,c])=>`<div class="card mt-2 flex items-center justify-between"><div><b class="num">${esc(k)}</b><div class="text-sm opacity-70">${c.pct}% · ${MN[c.method]||'كل الطرق'} · ${c.uses>0?c.uses+' استخدام':'بلا حد'}</div></div><div class="flex items-center gap-3">${sw(c.on!==false,`codeSet('${k}',{on:${c.on===false}})`,'')}<button class="btn s rd" onclick="codeDel('${k}')">حذف</button></div></div>`).join('')}`}
-  if(tab==='set')b=`<div class="card space-y-3"><div class="font-extrabold">أرقام التحويل (تظهر للمناديب فوراً)</div><input id="sv" class="inp num" placeholder="رقم الفيزا / انستا باي" value="${esc(S().visa)}"><input id="sw" class="inp num" placeholder="رقم المحفظة" value="${esc(S().wallet)}"><input id="sq" class="inp num" style="direction:ltr" placeholder="رابط صورة QR انستا باي (اختياري)" value="${esc(S().visaQr)}"><button class="btn" onclick="saveSet()">حفظ</button></div>
-  <div class="card mt-3"><div class="font-extrabold">سكرين التحويل</div><p class="text-xs opacity-60">الافتراضي لكل المناديب. وتقدر تغيّره لكل مندوب من كارته في تاب المناديب.</p>${sw(!!S().shotAll,`D.update(P('settings'),{shotAll:${!S().shotAll}})`,'إلزام الكل برفع سكرين')}</div>
+  ${dgCard()}${codes.map(([k,c])=>`<div class="card mt-2 flex items-center justify-between"><div><b class="num">${esc(k)}</b><div class="text-sm opacity-70">${c.pct}% · ${MN[c.method]||'كل الطرق'} · ${c.uses>0?c.uses+' استخدام':'بلا حد'}</div>${c.only?'<div class="text-xs opacity-60">👤 '+Object.keys(c.only).map(i=>esc((DB.users[i]||{}).name||i)).join('، ')+'</div>':''}</div><div class="flex items-center gap-3">${sw(c.on!==false,`codeSet('${k}',{on:${c.on===false}})`,'')}<button class="btn s rd" onclick="codeDel('${k}')">حذف</button></div></div>`).join('')}`}
+  if(tab==='set')b=`<div class="card space-y-3"><div class="font-extrabold">أرقام التحويل (تظهر للمناديب فوراً)</div><input id="sv" class="inp num" placeholder="رقم الفيزا / انستا باي" value="${esc(S().visa)}"><input id="sw" class="inp num" placeholder="رقم المحفظة" value="${esc(S().wallet)}"><input id="sq" class="inp num" style="direction:ltr" placeholder="رابط صورة QR انستا باي (اختياري)" value="${esc(S().visaQr)}"></div>
+  <div class="card mt-3"><button class="btn" onclick="saveSet()">حفظ كل الإعدادات</button></div>
+  <div class="card mt-3"><div class="font-extrabold">سكرين التحويل</div><p class="text-xs opacity-60">الافتراضي لكل المناديب. وتقدر تغيّره لكل مندوب من كارته في تاب المناديب.</p>${sw(!!S().shotAll,`D.update(P('settings'),{shotAll:${!S().shotAll}})`,'إلزام الكل برفع سكرين')}${shotPick()}</div>
   <div class="card space-y-3 mt-3"><div class="font-extrabold">كلمة سر الأدمن</div><input id="np" type="password" class="inp" placeholder="كلمة سر جديدة (4 على الأقل)"><button class="btn dk" onclick="savePw()">تغيير</button></div>
   ${adsAdmin()}<button class="btn mt-3" onclick="view='notif';render()">🔔 إعداد إشعارات الأدمن</button>`;
-  const nav=[['orders','inbox','الطلبات',open.length],['log','list','السجل'],['users','users','المناديب'],['live','eye','مباشر'],['prices','tag','الأسعار'],['stats','chart','الإحصاء'],['set','cog','الإعدادات']];
+  const nav=[['orders','inbox','الطلبات',open.length],['log','list','السجل'],['users','users','المناديب'],['live','eye','مباشر'],['prices','tag','الأسعار'],['ajel','receipt','الآجل',all.length&&users.filter(x=>x.used>0).length],['stats','chart','الإحصاء'],['set','cog','الإعدادات']];
   return head('لوحة الأدمن')+siteBar()+`</div><div class="px-4">${tab==='orders'?ntBanner():''}${b}</div>
-  <nav class="fixed bottom-0 inset-x-0 bg-white/90 dark:bg-[#251317]/90 backdrop-blur border-t border-[#eadfce] dark:border-[#3d2128] z-40"><div class="max-w-lg mx-auto grid grid-cols-7 pb-[env(safe-area-inset-bottom)]">${nav.map(n=>`<button onclick="tab='${n[0]}';render()" class="py-2 text-[10px] font-bold ${tab===n[0]?'text-[#e04e00]':'opacity-60'}"><div class="flex justify-center mb-0.5"><span class="relative inline-block">${ic(n[1])}${n[3]?`<b class="num absolute -top-1.5 -right-2.5 bg-sun text-white rounded-full text-[10px] leading-none px-1.5 py-0.5">${n[3]}</b>`:''}</span></div>${n[2]}</button>`).join('')}</div></nav>`;
+  <nav class="fixed bottom-0 inset-x-0 bg-white/90 dark:bg-[#251317]/90 backdrop-blur border-t border-[#eadfce] dark:border-[#3d2128] z-40"><div class="max-w-lg mx-auto grid grid-cols-8 pb-[env(safe-area-inset-bottom)]">${nav.map(n=>`<button onclick="tab='${n[0]}';render()" class="py-2 text-[10px] font-bold ${tab===n[0]?'text-[#e04e00] navon':'opacity-60'}"><div class="flex justify-center mb-0.5"><span class="relative inline-block">${ic(n[1])}${n[3]?`<b class="num absolute -top-1.5 -right-2.5 bg-sun text-white rounded-full text-[10px] leading-none px-1.5 py-0.5">${n[3]}</b>`:''}</span></div>${n[2]}</button>`).join('')}</div></nav>`;
 }
 async function payIn(id,all){const u=DB.users[id];if(!u)return;const a=all?+u.used:+(($('#pa'+id)||{}).value);if(!(a>0))return toast('اكتب المبلغ','err');if(a>(u.used||0))return toast('المبلغ أكبر من المستحق ('+f(u.used)+' ج.م)','err');await D.runTransaction(P('users/'+id),c=>{if(c)c.used=Math.max(0,(c.used||0)-a);return c});await D.set(D.push(P('orders')),{kind:'repay',from:id,fromName:u.name,fromOffice:u.office||'',amount:a,status:'done',manual:true,ts:Date.now()});toast('تم تسجيل سداد '+f(a)+' ج.م')}
-const saveFees=()=>{const g=i=>Math.max(0,+$('#'+i).value||0);D.update(P('settings/fees'),{insta:g('f1'),wal:g('f2'),walMax:g('f3'),ajL:g('f4'),ajH:g('f5'),ajT:g('f6')}).then(()=>toast('تم حفظ الأسعار'))};
+let ftd=null;
+const ftClone=()=>({insta:FT('insta').map(x=>({...x})),wallet:FT('wallet').map(x=>({...x})),ajel:FT('ajel').map(x=>({...x}))});
+function ftEditor(){if(!ftd)ftd=ftClone();
+  return '<div class="card text-sm opacity-80">حدّد الرسم لكل شريحة مبلغ: <b>من</b> – <b>إلى</b> (سيب "إلى" فاضي = بلا حد أقصى). الرسم ثابت بالجنيه أو نسبة %. لو المبلغ على حد بين شريحتين بتتطبق الأولى. أي مبلغ خارج الشرائح مش بيتقبل للطريقة دي.</div>'+
+  Object.keys(FM).map(m=>`<div class="card space-y-3 mt-3"><div class="font-extrabold">${FM[m]}</div>`+ftd[m].map((x,i)=>`<div class="rounded-2xl p-3 space-y-2" style="background:#ff5a000d">
+   <div class="grid grid-cols-2 gap-2"><label><span class="text-xs opacity-60">من (ج.م)</span><input type="number" min="0" class="inp num mt-1" value="${x.f}" oninput="ftSet('${m}',${i},'f',this.value)"></label>
+   <label><span class="text-xs opacity-60">إلى (فاضي = ∞)</span><input type="number" min="0" class="inp num mt-1" value="${x.t==null?'':x.t}" placeholder="∞" oninput="ftSet('${m}',${i},'t',this.value)"></label>
+   <label><span class="text-xs opacity-60">الرسم</span><input type="number" min="0" step="any" class="inp num mt-1" value="${x.v}" oninput="ftSet('${m}',${i},'v',this.value)"></label>
+   <label><span class="text-xs opacity-60">نوعه</span><select class="inp mt-1" onchange="ftSet('${m}',${i},'p',this.value)"><option value="0" ${x.p?'':'selected'}>ج.م ثابت</option><option value="1" ${x.p?'selected':''}>نسبة %</option></select></label></div>
+   ${ftd[m].length>1?`<button class="text-sm font-bold" style="color:#dc2626" onclick="ftDel('${m}',${i})">🗑 حذف الشريحة</button>`:''}</div>`).join('')+
+  `<button class="btn gh" onclick="ftAdd('${m}')">+ إضافة شريحة</button></div>`).join('')+
+  '<button class="btn mt-3" onclick="saveFees()">حفظ الأسعار</button>'}
+function ftSet(m,i,k,v){const x=ftd[m][i];if(k==='t')x.t=v===''?null:+v;else if(k==='p')x.p=+v?1:0;else x[k]=+v||0}
+function ftAdd(m){const L=ftd[m],l=L[L.length-1];L.push({f:l?(l.t!=null?l.t+1:l.f+1):0,t:null,v:0,p:0});render()}
+function ftDel(m,i){ftd[m].splice(i,1);render()}
+const saveFees=()=>{const out={};
+  for(const m of Object.keys(FM)){const L=ftd[m].map(x=>({...x})).sort((a,b)=>a.f-b.f);
+    for(const x of L){if(x.f<0||x.v<0||(x.t!=null&&x.t<x.f))return toast('راجع شرائح '+FM[m]+': "إلى" لازم يكون أكبر من "من"','err')}
+    out[m]=L.map(x=>{const o={f:x.f,v:x.v,p:x.p};if(x.t!=null)o.t=x.t;return o})}
+  D.update(P('settings/fees'),{tiers:out}).then(()=>{ftd=null;toast('تم حفظ الأسعار')})};
 const addCode=()=>{const c=$('#cc').value.trim().toUpperCase(),p=+$('#cp').value;if(!/^[A-Z0-9_-]{3,16}$/.test(c))return toast('الكود 3-16 حرف إنجليزي أو رقم','err');if(!(p>0&&p<=100))return toast('النسبة من 1 لـ 100','err');D.set(P('settings/codes/'+c),{pct:p,method:$('#cm').value,uses:Math.max(0,Math.floor(+$('#cu').value||0)),on:true}).then(()=>toast('تم إضافة الكود'))};
-const codeSet=(k,b)=>D.update(P('settings/codes/'+k),b),codeDel=k=>D.remove(P('settings/codes/'+k)).then(()=>toast('تم الحذف'));
+const codeSet=(k,b)=>D.update(P('settings/codes/'+k),b),codeDel=k=>{const c=(S().codes||{})[k],o={['settings/codes/'+k]:null};Object.keys((c&&c.only)||{}).forEach(i=>o['users/'+i+'/disc/'+k]=null);D.update(P(''),o).then(()=>toast('تم الحذف'))};
 const uset=(id,b)=>D.update(P('users/'+id),b).then(()=>toast('تم الحفظ'));
 const saveSet=()=>D.update(P('settings'),{visa:$('#sv').value.trim(),wallet:$('#sw').value.trim(),visaQr:($('#sq').value||'').trim()}).then(()=>toast('تم الحفظ وظهرت الأرقام للمناديب'));
+
 function savePw(){const p=$('#np').value;if(p.length<4)return toast('4 حروف على الأقل','err');const h=pwh(ADMIN,p);D.update(P('settings'),{adminHash:h}).then(()=>{me.ph=h;localStorage.setItem('cred',JSON.stringify(me));toast('تم تغيير كلمة السر')})}
 
 /* ============ الإعلانات + عروض الخصم ============ */
@@ -689,13 +748,14 @@ function adCard(a,one){
   if(okImg(a.img)){const h2=okImg(a.img2);return `<${tag}${at} class="ad-img${one?' one':''}" style="${pr||lk?'cursor:pointer':''}"><img class="ad-l${h2?' has2':''}" src="${esc(a.img)}" alt="${esc(a.title||'إعلان')}">${h2?`<img class="ad-d" src="${esc(a.img2)}" alt="">`:''}</${tag}>`}
   return `<${tag}${at} class="ad${one?' one':''}" style="${adBg(a)};${pr||lk?'cursor:pointer':''}"><div class="ad-main">${a.tag||pr?`<span class="ad-tag">${esc(a.tag||'عرض خاص')}</span>`:''}<div>${t?`<b class="ad-t block">${esc(t)}</b>`:''}${x?`<span class="ad-x block mt-1">${esc(x)}</span>`:''}</div>${pr?'<span class="ad-cta">ورّد واستفد من الخصم ‹</span>':lk?'<span class="ad-cta">اعرف المزيد ‹</span>':''}</div>${pr?`<div class="ad-pct"><b class="num">${pr.pct}<small>%</small></b><span>خصم على العمولة</span>${mt?`<span>${mt}</span>`:''}<div class="ad-code">${esc(a.code)}</div></div>`:''}</${tag}>`;
 }
-const adsV=()=>{const L=adList().filter(a=>a.on!==false).slice(0,10);return L.length?`<div><div id="ads" class="ads-sc" onscroll="adDots()" onpointerdown="adPause=Date.now()+8000" ontouchstart="adPause=Date.now()+8000">${L.map(a=>adCard(a,L.length===1)).join('')}</div>${L.length>1?`<div class="ad-dots" id="adots">${L.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`:''}</div>`:''};
+const adOk=a=>{const c=a.code&&(S().codes||{})[a.code];return isA()||!(c&&c.only)||!!c.only[me.id]};
+const adsV=()=>{const L=adList().filter(a=>a.on!==false&&adOk(a)).slice(0,10);return L.length?`<div><div id="ads" class="ads-sc" onscroll="adDots()" onpointerdown="adPause=Date.now()+8000" ontouchstart="adPause=Date.now()+8000">${L.map(a=>adCard(a,L.length===1)).join('')}</div>${L.length>1?`<div class="ad-dots" id="adots">${L.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`:''}</div>`:''};
 function adIdx(e){const r=e.getBoundingClientRect();let i=0,b=1e9;[...e.children].forEach((c,j)=>{const d=Math.abs(c.getBoundingClientRect().right-r.right);if(d<b){b=d;i=j}});return i}
 function adDots(){const e=$('#ads'),d=$('#adots');if(!e||!d)return;const i=adIdx(e);[...d.children].forEach((x,j)=>x.classList.toggle('on',j===i))}
 setInterval(()=>{const e=$('#ads');if(!e||e.children.length<2||Date.now()<adPause)return;const n=e.children[(adIdx(e)+1)%e.children.length];e.scrollBy({left:n.getBoundingClientRect().right-e.getBoundingClientRect().right,behavior:'smooth'})},4000);
 /* عروض الخصم المتاحة للمندوب في خطوة التحويل (من إعلانات الكود + كوداته المفعّلة) */
 const offers=m=>{const C=S().codes||{},u=U()||{},seen={},out=[];
-  const add=k=>{const c=C[k];if(!c||c.on===false||!c.pct||seen[k])return;seen[k]=1;if((c.method||'all')!=='all'&&c.method!==m)return;
+  const add=k=>{const c=C[k];if(!c||c.on===false||!c.pct||seen[k])return;seen[k]=1;if(c.only&&!c.only[u.id])return;if((c.method||'all')!=='all'&&c.method!==m)return;
     const own=(u.disc||{})[k],n=(u.dcnt||{})[k]||0;if(!own&&c.uses>0&&n>=c.uses)return;
     out.push({code:k,pct:c.pct,left:own?own.left:(c.uses>0?c.uses-n:0)})};
   Object.keys(u.disc||{}).forEach(add);adList().filter(a=>a.on!==false&&a.code).forEach(a=>add(a.code));return out};
@@ -704,19 +764,73 @@ const offerBox=a=>{const L=offers(w.method),bf=fee(w.method,a);if(!L.length||bf=
   return `<div class="mb-3 space-y-2"><div class="font-extrabold text-sm px-1">🎁 عروض خصم متاحة ليك</div>${L.map(o=>{const on=w.disc===o.code,sv=bf-Math.round(bf*(1-o.pct/100));return `<button class="offer ${on?'on':''}" onclick="pickDisc('${esc(o.code)}')"><span class="tic !w-11 !h-11">${ic('tag')}</span><span class="flex-1"><b class="num block">${esc(o.code)}</b><span class="text-xs opacity-70 block">خصم ${o.pct}% على الرسوم · توفّر ${sv} ج.م${o.left>0?' · متبقي '+o.left:''}</span><span class="text-xs font-bold ${on?'text-emerald-600':'text-[#e04e00]'}">${on?'مفعّل على الطلب ده ✅':'اضغط لتفعيل الخصم'}</span></span><span class="sw ${on?'on':''}"><i></i></span></button>`}).join('')}</div>`};
 const adsAdmin=()=>`<div class="card space-y-2 mt-3"><div class="font-extrabold">👁️ معاينة: شكل البنر عند المندوب دلوقتي</div><p class="text-xs opacity-60">ده نفس البنر اللي هيشوفه المندوب في الرئيسية، بيتحدّث أول ما تحفظ.</p><div class="adprev">${mirrorClean(adsV()||'<div class="text-sm opacity-60 text-center py-6">مفيش إعلانات شغالة دلوقتي، المكان هيبقى فاضي عند المندوب.</div>')}</div></div>
 <div class="card space-y-3 mt-3"><div class="font-extrabold">الإعلانات (بنر المناديب)</div><p class="text-xs opacity-60">اربط الإعلان بكود خصم (أنشئه الأول من تاب الأسعار) والمندوب هيشوف الخصم في خطوة التحويل ويختار يفعّله. إعلان واحد = بنر كامل، أكتر = كروت بتتحرك لوحدها.</p>
-<select id="ad6" class="inp"><option value="">بدون كود خصم</option>${Object.entries(S().codes||{}).map(([k,c])=>`<option value="${esc(k)}">كود ${esc(k)} — ${c.pct}%</option>`).join('')}</select>
-<input id="ad7" class="inp" maxlength="24" placeholder="شارة قصيرة (مثال: لفترة محدودة)"><input id="ad1" class="inp" maxlength="60" placeholder="عنوان الإعلان (اختياري مع الكود)"><input id="ad2" class="inp" maxlength="140" placeholder="نص قصير (اختياري)"><input id="ad3" class="inp num" style="direction:ltr" placeholder="رابط الصورة المباشر https://i.ibb.co/… (بتتعرض زي ما هي)"><input id="ad8" class="inp num" style="direction:ltr" placeholder="صورة الوضع الداكن (اختياري)"><input id="ad4" class="inp num" style="direction:ltr" placeholder="رابط عند الضغط (للإعلان بدون كود)">
-<select id="ad5" class="inp">${Object.entries(ADC).map(([k,c])=>`<option value="${k}">لون: ${c[2]}</option>`).join('')}</select><button class="btn dk" onclick="addAd()">إضافة الإعلان</button>
+<select class="inp" onchange="adf.cd=this.value"><option value="">بدون كود خصم</option>${Object.entries(S().codes||{}).map(([k,c])=>`<option value="${esc(k)}" ${adf.cd===k?'selected':''}>كود ${esc(k)} — ${c.pct}%</option>`).join('')}</select>
+<input class="inp" maxlength="24" placeholder="شارة قصيرة (مثال: لفترة محدودة)" value="${esc(adf.tg)}" oninput="adf.tg=this.value"><input class="inp" maxlength="60" placeholder="عنوان الإعلان (اختياري مع الكود)" value="${esc(adf.t)}" oninput="adf.t=this.value"><input class="inp" maxlength="140" placeholder="نص قصير (اختياري)" value="${esc(adf.x)}" oninput="adf.x=this.value">
+${adUpBox('img','🖼️ صورة الإعلان (بتتعرض زي ما هي)')}${adUpBox('img2','🌙 صورة الوضع الداكن (اختياري)')}
+<input class="inp num" style="direction:ltr" placeholder="رابط عند الضغط (للإعلان بدون كود)" value="${esc(adf.lk)}" oninput="adf.lk=this.value">
+<select class="inp" onchange="adf.co=this.value">${Object.entries(ADC).map(([k,c])=>`<option value="${k}" ${adf.co===k?'selected':''}>لون: ${c[2]}</option>`).join('')}</select><button class="btn dk" onclick="addAd()">إضافة الإعلان</button>
 ${adList().map(a=>`<div class="rounded-2xl border border-[#eadfce] dark:border-[#3d2128] p-2.5 flex items-center gap-3"><div style="width:44px;height:44px;border-radius:12px;flex:none;${adBg(a)}"></div><div class="flex-1 min-w-0"><b class="block truncate text-sm">${esc(a.title||(a.code?'إعلان خصم':'(صورة فقط)'))}</b><span class="text-xs opacity-60 truncate block">${a.code?'كود '+esc(a.code)+' · ':''}${esc(a.text||'')}</span></div>${sw(a.on!==false,`adSet('${a.id}',{on:${a.on===false}})`,'')}<button class="btn s rd" onclick="adDel('${a.id}')">حذف</button></div>`).join('')}</div>`;
 function addAd(){
-  const t=$('#ad1').value.trim(),x=$('#ad2').value.trim(),im=$('#ad3').value.trim(),lk=$('#ad4').value.trim(),cd=$('#ad6').value,tg=$('#ad7').value.trim(),im2=$('#ad8').value.trim();
-  if(!t&&!im&&!cd)return toast('اختار كود خصم أو اكتب عنوان أو حط صورة','err');
-  if((im&&!okImg(im))||(im2&&!okImg(im2)))return toast('رابط الصورة لازم يبدأ بـ https وبدون مسافات','err');
-  if(/^https?:\/\/(www\.)?ibb\.co\//i.test(im+' '+im2))return toast('ده رابط صفحة مش صورة، استخدم الرابط المباشر اللي بيبدأ بـ i.ibb.co','err');
+  const{t,x,cd,tg,img:im,img2:im2,co}=adf,lk=adf.lk.trim();
+  if(adf.up)return toast('استنى الصورة تخلص رفع','err');
+  if(!t.trim()&&!im&&!cd)return toast('اختار كود خصم أو اكتب عنوان أو ارفع صورة','err');
   if(lk&&!okLink(lk))return toast('رابط الضغط لازم يبدأ بـ https','err');
-  D.set(D.push(P('settings/ads')),{title:t.slice(0,60),text:x.slice(0,140),img:im,img2:im2,link:lk,code:cd,tag:tg,color:$('#ad5').value,on:true,ts:Date.now()}).then(()=>{['ad1','ad2','ad3','ad4','ad7','ad8'].forEach(i=>{const e=$('#'+i);if(e)e.value=''});toast('تم إضافة الإعلان')});
+  D.set(D.push(P('settings/ads')),{title:t.trim().slice(0,60),text:x.trim().slice(0,140),img:im,img2:im2,link:lk,code:cd,tag:tg.trim(),color:co,on:true,ts:Date.now()}).then(()=>{adf={t:'',x:'',lk:'',cd:'',tg:'',co:co,img:'',img2:'',up:''};render();toast('تم إضافة الإعلان')});
 }
+const adUpBox=(k,l)=>`<div class="rounded-2xl border-2 border-dashed border-sun p-3 text-center"><div class="font-bold text-sm mb-2">${l}</div>${adf[k]?`<img src="${esc(adf[k])}" alt="" style="max-height:140px;margin:0 auto 6px;border-radius:12px"><div class="text-emerald-600 font-bold text-sm mb-2">تم الرفع ✅</div>`:''}<div class="flex gap-2 justify-center"><label class="btn s dk" style="cursor:pointer">${adf.up===k?'جاري الرفع…':adf[k]?'تغيير الصورة':'ارفع الصورة'}<input type="file" accept="image/*" class="hidden" onchange="adUp(this,'${k}')" ${adf.up?'disabled':''}></label>${adf[k]?`<button class="btn s rd" onclick="adf['${k}']='';render()">إزالة</button>`:''}</div></div>`;
+async function adUp(inp,k){const f0=inp.files&&inp.files[0];if(!f0)return;if(!/^image\//.test(f0.type))return toast('اختار صورة','err');adf.up=k;render();
+  try{const b=await shotResize(f0,1600,.88),fd=new FormData();fd.append('image',b);const r=await fetch('https://api.imgbb.com/1/upload?key='+IMGBB,{method:'POST',body:fd}),j=await r.json();if(!j.success)throw 0;adf[k]=j.data.url;toast('تم رفع الصورة')}catch(e){toast('فشل رفع الصورة، جرّب تاني','err')}
+  adf.up='';render()}
 const adSet=(k,b)=>D.update(P('settings/ads/'+k),b),adDel=k=>{if(confirm('حذف الإعلان؟'))D.remove(P('settings/ads/'+k)).then(()=>toast('تم الحذف'))};
+
+/* ============ اختيار مناديب (خصم خاص + إعفاء السكرين) ============ */
+const dgMatch=(x,q)=>{q=(q||'').trim().toLowerCase();return!q||[x.name,x.office,x.id].some(v=>String(v||'').toLowerCase().includes(q))};
+const repRow=(x,on,fn)=>`<button class="flex items-center gap-3 w-full text-right py-2 px-1" onclick="${fn}"><span class="flex-1 min-w-0"><b class="block truncate text-sm">${esc(x.name)}</b><span class="text-xs opacity-60 truncate block"><span class="num">${esc(x.id)}</span> · ${esc(x.office||'—')}</span></span><span class="sw ${on?'on':''}"><i></i></span></button>`;
+const emp='<div class="text-center text-sm opacity-60 py-3">مفيش نتائج.</div>';
+const dgL=()=>{const L=Object.values(DB.users).filter(x=>dgMatch(x,dg.q));return L.length?L.map(x=>repRow(x,!!dg.sel[x.id],`dgTog('${esc(x.id)}')`)).join(''):emp};
+const dgUp=()=>{const l=$('#dgl'),n=$('#dgn');if(l)l.innerHTML=dgL();if(n)n.textContent=Object.keys(dg.sel).length+' مختار'};
+const dgTog=id=>{dg.sel[id]?delete dg.sel[id]:dg.sel[id]=1;dgUp()};
+const dgAll=v=>{if(!v)dg.sel={};else Object.values(DB.users).filter(x=>dgMatch(x,dg.q)).forEach(x=>dg.sel[x.id]=1);dgUp()};
+const dgCard=()=>`<div class="card space-y-3 mt-3"><div class="font-extrabold">🎯 خصم لمناديب معينين</div><p class="text-xs opacity-60">اختار المناديب وحدد نسبة الخصم على الرسوم، والخصم هيظهرلهم لوحدهم في خطوة التحويل من غير ما يكتبوا كود.</p>
+<input class="inp" placeholder="ابحث بالاسم أو الـ ID أو المكتب" value="${esc(dg.q)}" oninput="dg.q=this.value;dgUp()">
+<div class="flex gap-2 items-center"><button class="btn s gh" onclick="dgAll(1)">تحديد الكل</button><button class="btn s gh" onclick="dgAll(0)">إلغاء الكل</button><span id="dgn" class="num text-sm font-bold" style="margin-inline-start:auto">${Object.keys(dg.sel).length} مختار</span></div>
+<div id="dgl" class="max-h-64 overflow-y-auto divide-y divide-[#f0e7da] dark:divide-[#3d2128]">${dgL()}</div>
+<div class="grid grid-cols-2 gap-3"><input class="inp num" type="number" placeholder="الخصم %" value="${esc(dg.pct)}" oninput="dg.pct=this.value"><input class="inp num" type="number" placeholder="الاستخدامات (0 = بلا حد)" value="${esc(dg.uses)}" oninput="dg.uses=this.value"></div>
+<select class="inp" onchange="dg.m=this.value">${[['all','كل الطرق'],['insta','انستا باي'],['wallet','المحفظة'],['ajel','الآجل']].map(m=>`<option value="${m[0]}" ${dg.m===m[0]?'selected':''}>${m[1]}</option>`).join('')}</select>
+<input class="inp num" style="direction:ltr;text-transform:uppercase" placeholder="اسم الكود (اختياري، بيتولد تلقائي)" value="${esc(dg.code)}" oninput="dg.code=this.value">
+<button class="btn dk" onclick="dgAdd()">منح الخصم للمناديب المختارين</button></div>`;
+async function dgAdd(){
+  const ids=Object.keys(dg.sel).filter(i=>DB.users[i]),p=+dg.pct,us=Math.max(0,Math.floor(+dg.uses||0)),c=dg.code.trim().toUpperCase()||'VIP'+Math.random().toString(36).slice(2,6).toUpperCase();
+  if(!ids.length)return toast('اختار مندوب واحد على الأقل','err');
+  if(!(p>0&&p<=100))return toast('النسبة من 1 لـ 100','err');
+  if(!/^[A-Z0-9_-]{3,16}$/.test(c))return toast('الكود 3-16 حرف إنجليزي أو رقم','err');
+  if((S().codes||{})[c])return toast('الكود ده موجود بالفعل، غيّر الاسم','err');
+  const o={},only={};ids.forEach(i=>{only[i]=1;o['users/'+i+'/disc/'+c]={left:us}});
+  o['settings/codes/'+c]={pct:p,method:dg.m,uses:us,on:true,only,ts:Date.now()};
+  await D.update(P(''),o);dg={pct:'',uses:'',m:'all',code:'',sel:{},q:''};render();toast('تم منح خصم '+p+'% لـ '+ids.length+' مندوب');
+}
+const spL=()=>{const L=Object.values(DB.users).filter(x=>dgMatch(x,sp.q));return L.length?L.map(x=>repRow(x,!shotNeed(x),`spTog('${esc(x.id)}')`)).join(''):emp};
+const spN=()=>Object.values(DB.users).filter(x=>!shotNeed(x)).length;
+const spUp=()=>{const l=$('#spl'),n=$('#spn');if(l)l.innerHTML=spL();if(n)n.textContent=spN()};
+const shotPick=()=>`<button class="btn dk mt-3" onclick="sp.open=!sp.open;render()">👥 اختار المناديب المعفيين من السكرين (<span id="spn" class="num">${spN()}</span> من ${Object.keys(DB.users).length})</button>${sp.open?`<div class="mt-3 space-y-3"><div class="text-xs opacity-60">الزر المفعّل = المندوب معفي ومش مطلوب منه سكرين.</div><input class="inp" placeholder="ابحث بالاسم أو الـ ID أو المكتب" value="${esc(sp.q)}" oninput="sp.q=this.value;spUp()"><div class="flex gap-2"><button class="btn s gh" onclick="spAll(1)">إعفاء الكل</button><button class="btn s gh" onclick="spAll(0)">إلزام الكل</button></div><div id="spl" class="max-h-72 overflow-y-auto divide-y divide-[#f0e7da] dark:divide-[#3d2128]">${spL()}</div></div>`:''}`;
+function spSet(ids,ex){const o={},d=!!S().shotAll;ids.forEach(i=>{o['users/'+i+'/shot']=(!ex)===d?null:!ex});return D.update(P(''),o).then(spUp)}
+const spTog=id=>spSet([id],shotNeed(DB.users[id])),spAll=v=>spSet(Object.values(DB.users).filter(x=>dgMatch(x,sp.q)).map(x=>x.id),!!v);
+
+/* ============ تاب الآجل ============ */
+const aj={q:'',c:''},ajL=()=>{const L=Object.values(DB.users).filter(x=>dgMatch(x,aj.q));return L.length?L.map(x=>repRow(x,!!x.ajelOn,`ajTog('${esc(x.id)}')`)).join(''):emp},ajUp=()=>{const l=$('#ajl');if(l)l.innerHTML=ajL()},ajTog=id=>D.update(P('users/'+id),{ajelOn:!DB.users[id].ajelOn}).then(ajUp);
+const ajCard=x=>`<div class="uc ${ux['a'+x.id]?'open':''}"><button class="uc-h" onclick="utog(this,'a${esc(x.id)}')"><div class="uav">${esc((x.name||'؟').trim().charAt(0))}</div><div class="flex-1 min-w-0 text-right"><div class="font-extrabold truncate">${esc(x.name)}</div><div class="text-xs opacity-60 truncate"><span class="num">${esc(x.id)}</span> · ${esc(x.office||'—')}</div></div><div class="text-left"><div class="num text-lg font-extrabold ${x.used>0?'text-rose-600':''}">${f(x.used)}</div><div class="text-[11px] opacity-60">${x.ajelOn?'ج.م مستحق':'ج.م · غير مفعّل'}</div></div><span class="chv opacity-40">${ic('chev')}</span></button>
+  <div class="ud"><div class="rounded-2xl bg-slate-50 dark:bg-white/5 px-3 mt-3">${sw(!!x.ajelOn,`uset('${x.id}',{ajelOn:${!x.ajelOn}})`,'الآجل مفعّل')}</div>
+  <div class="rounded-2xl bg-slate-50 dark:bg-white/5 p-3 mt-3 space-y-2"><div class="text-xs font-extrabold opacity-70">➕ إضافة آجل</div><div class="flex gap-2"><input id="adjA${x.id}" type="number" inputmode="decimal" class="inp num !py-2" style="flex:0 0 38%" placeholder="المبلغ"><input id="adjN${x.id}" class="inp !py-2 flex-1" placeholder="سبب (اختياري)"></div><button class="btn s" onclick="addAdj('${x.id}')">تسجيل كآجل عليه</button></div>
+  <div class="rounded-2xl bg-slate-50 dark:bg-white/5 p-3 mt-3 space-y-2"><div class="text-xs font-extrabold opacity-70">💵 تسجيل سداد</div><div class="flex gap-2 items-center"><input id="pa${x.id}" type="number" inputmode="decimal" class="inp num !py-2" placeholder="المبلغ المسدّد"><button class="btn s" onclick="payIn('${x.id}')">تسجيل</button>${x.used>0?`<button class="btn s dk" onclick="payIn('${x.id}',1)">كامل</button>`:''}</div></div></div></div>`;
+const ajcL=()=>{const q=(aj.c||'').trim();let L=Object.values(DB.users);L=q?L.filter(x=>dgMatch(x,q)):L.filter(x=>x.used>0||x.ajelOn);L.sort((a,b)=>(b.used||0)-(a.used||0)||String(a.name).localeCompare(String(b.name),'ar'));return L.length?L.slice(0,40).map(ajCard).join(''):'<div class="card text-center opacity-70 py-6 text-sm">'+(q?'مفيش مندوب بالاسم ده.':'مفيش مناديب عليهم آجل أو مفعّل لهم. ابحث عن أي مندوب عشان تسجّل عليه.')+'</div>'};
+const ajcUp=()=>{const l=$('#ajc');if(l)l.innerHTML=ajcL()};
+function ajelV(us){
+  const sec=t=>`<div class="font-extrabold px-1 mt-5 mb-2">${t}</div>`,tot=us.reduce((s,x)=>s+(+x.used||0),0),O=ords().filter(o=>o.method==='ajel'||o.kind==='repay'||o.kind==='adj').slice(0,15);
+  return `<div class="hero"><div class="text-sm opacity-85">إجمالي الآجل المستحق على المناديب</div><div class="num text-4xl font-extrabold mt-1">${f(tot)} <span class="text-lg">ج.م</span></div><div class="text-sm opacity-85 mt-1">${us.filter(x=>x.used>0).length} مندوب عليهم آجل · ${us.filter(x=>x.ajelOn).length} مفعّل لهم الآجل</div></div>`+
+  sec('إضافة آجل / تسجيل سداد')+`<div class="card space-y-3"><div class="text-xs opacity-60">ابحث عن أي مندوب (حتى لو معليهوش آجل) وافتح كارته عشان تسجّل آجل أو سداد. من غير بحث بتظهر لك كروت اللي عليهم آجل أو مفعّل لهم.</div><input class="inp" placeholder="ابحث بالاسم أو الـ ID أو المكتب" value="${esc(aj.c)}" oninput="aj.c=this.value;ajcUp()"><div id="ajc" class="space-y-2">${ajcL()}</div></div>`+
+  sec('تفعيل الآجل للمناديب')+`<div class="card space-y-3"><div class="text-xs opacity-60">الزر المفعّل = الآجل شغال للمندوب.</div><input class="inp" placeholder="ابحث بالاسم أو الـ ID أو المكتب" value="${esc(aj.q)}" oninput="aj.q=this.value;ajUp()"><div id="ajl" class="max-h-72 overflow-y-auto divide-y divide-[#f0e7da] dark:divide-[#3d2128]">${ajL()}</div></div>`+
+  sec('آخر عمليات الآجل')+`<div class="card !py-1">${O.length?O.map(o=>`<div class="kv"><span class="min-w-0"><b class="block truncate">${esc(o.fromName)}</b><span class="text-xs opacity-60">${kmeta(o).l} · ${time(o.ts)}</span></span><span class="text-left"><b class="num block">${f((o.amount||0)+(o.method==='ajel'?(o.fee||0):0))} ج.م</b>${chip(o.status)}</span></div>`).join(''):'<div class="text-center opacity-60 py-5 text-sm">مفيش عمليات.</div>'}</div>`;
+}
 
 /* ============ فلترة الإحصائيات ============ */
 const SF=[['today','اليوم'],['yest','أمس'],['7','آخر 7 أيام'],['30','آخر 30 يوم'],['all','الكل'],['custom','فترة محددة']];
@@ -763,6 +877,74 @@ function render(){
 }
 {const _r=render;render=function(){_r();npSync();trkScr()}}
 render();initFB();
+</script>
+
+<div id="pwm" onclick="if(event.target===this)closePw()">
+ <div class="pws">
+  <div class="pwh"><span class="tic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></svg></span><div class="flex-1"><b class="text-lg block">استخراج كلمة مرور طلبات</b><span class="text-xs opacity-60">الصق الرسالة وهنطلعلك كلمة المرور بس</span></div><button onclick="closePw()" class="pwx" aria-label="إغلاق">✕</button></div>
+  <button class="btn" onclick="pwPaste()">📋 لصق من الحافظة</button>
+  <textarea id="pwin" class="inp mt-3" rows="3" dir="ltr" placeholder="أو الصق الرسالة هنا (اضغط مطولاً ← لصق)" oninput="pwRun(this.value)" onpaste="setTimeout(()=>pwRun(this.value),30)"></textarea>
+  <p id="pwhint" class="text-xs mt-2" style="display:none;color:#c2410c"></p>
+  <div class="text-xs opacity-60 mt-3 mb-1 font-bold">كلمة المرور</div>
+  <div id="pwout">—</div>
+  <div class="grid grid-cols-2 gap-2 mt-3"><button id="pwcp" class="btn dk" style="opacity:.4" onclick="pwCopy()">نسخ</button><button class="btn gh" onclick="pwClear()">مسح</button></div>
+ </div>
+</div>
+<div id="pwa" class="card">
+ <div class="flex items-center gap-3"><span class="tic" style="width:42px;height:42px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></span>
+ <div class="flex-1"><b class="text-sm block">ثبّت الصفحة على الشاشة الرئيسية</b><p id="pwat" class="text-xs opacity-70 mt-0.5"></p></div></div>
+ <div class="flex gap-2 mt-3"><button id="pwai" class="btn s flex-1" style="display:none" onclick="pwaInstall()">تثبيت</button><button class="btn s gh flex-1" onclick="pwaHide()">مش دلوقتي</button></div>
+</div>
+<style>
+.pwbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid #ff5a00;color:#e04e00;font-weight:800;border-radius:999px;padding:12px 16px;background:#ff5a0012;font-size:15px}.pwbtn:active{background:#ff5a0030}
+.pwdiv{display:flex;align-items:center;gap:10px;font-size:12px;opacity:.5;font-weight:700}.pwdiv::before,.pwdiv::after{content:"";flex:1;height:1px;background:currentColor;opacity:.35}
+.nk.sec{background:#f6efe5;color:#3f1319;font-size:16px}.dark .nk.sec{background:#2e1a1f;color:#f1f5f9}
+#pwm{display:none;position:fixed;inset:0;z-index:60;background:#000a;align-items:flex-end;justify-content:center}
+.pws{background:#fff;width:100%;max-width:32rem;border-radius:28px 28px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}.dark .pws{background:#251317}
+.pwh{display:flex;align-items:center;gap:12px;margin-bottom:16px}.pwx{width:36px;height:36px;border-radius:12px;background:#0000000d;font-size:16px}.dark .pwx{background:#ffffff14}
+#pwout{border:2px dashed #ff5a00;border-radius:18px;padding:16px;text-align:center;direction:ltr;font-variant-numeric:tabular-nums;font-weight:800;font-size:24px;word-break:break-all;min-height:66px;display:flex;align-items:center;justify-content:center;opacity:.5;user-select:all;-webkit-user-select:all}
+#pwa{display:none;position:fixed;top:calc(10px + env(safe-area-inset-top));left:12px;right:12px;margin:auto;max-width:32rem;z-index:55;padding:14px}
+body.pwo #npad{display:none!important}
+</style>
+<script>
+/* ===== استخراج كلمة مرور طلبات ===== */
+let pwVal='';
+const pwX=t=>{const m=String(t||'').match(/password\s*(?:is)?\s*[:：]\s*(\S+)/i)||String(t||'').match(/كلمة\s*(?:ال)?(?:مرور|سر)[^:：]*[:：]\s*(\S+)/);return m?m[1].replace(/[.,;،]+$/,''):''};
+function pwRun(t){const o=$('#pwout'),b=$('#pwcp');pwVal=pwX(t);if(pwVal){o.textContent=pwVal;o.style.opacity=1;b.style.opacity=1}else{o.textContent=t&&t.trim()?'مش لاقي كلمة مرور في النص':'—';o.style.opacity=.5;b.style.opacity=.4}}
+function openPw(){const m=$('#pwm');m.style.display='flex';document.body.classList.add('pwo');pwClear()}
+function closePw(){$('#pwm').style.display='none';document.body.classList.remove('pwo')}
+function pwClear(){$('#pwin').value='';$('#pwhint').style.display='none';pwRun('')}
+function pwManual(msg){const h=$('#pwhint'),x=$('#pwin');h.textContent=msg;h.style.display='block';x.focus();x.style.borderColor='#ff5a00'}
+async function pwPaste(){
+  if(!navigator.clipboard||!navigator.clipboard.readText)return pwManual(isSecureContext?'متصفحك مش بيدعم اللصق التلقائي. اضغط مطولاً جوه المربع واختار "لصق".':'اللصق التلقائي مش شغال لأن الصفحة مفتوحة كملف. اضغط مطولاً جوه المربع واختار "لصق" (أو افتح الموقع من رابط https).');
+  try{const t=await navigator.clipboard.readText();if(!t||!t.trim())return pwManual('الحافظة فاضية. انسخ الرسالة الأول وجرب تاني.');$('#pwhint').style.display='none';$('#pwin').value=t;pwRun(t);if(!pwVal)toast('مش لاقي كلمة مرور في النص','err')}
+  catch(e){pwManual('المتصفح محتاج إذن اللصق. اسمح بالإذن، أو اضغط مطولاً جوه المربع واختار "لصق".')}
+}
+function pwCopy(){if(!pwVal)return toast('الصق الرسالة الأول','err');copy(pwVal)}
+
+/* ===== تثبيت الصفحة على الشاشة الرئيسية ===== */
+let pwaEv=null;
+const pwaStandalone=()=>matchMedia('(display-mode:standalone)').matches||navigator.standalone===true;
+const pwaIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+(function(){try{
+  const c=document.createElement('canvas');c.width=c.height=512;const g=c.getContext('2d');g.fillStyle='#ff5a00';g.fillRect(0,0,512,512);g.fillStyle='#fff';g.beginPath();g.moveTo(150,205);g.lineTo(362,205);g.lineTo(345,375);g.quadraticCurveTo(342,400,315,400);g.lineTo(197,400);g.quadraticCurveTo(170,400,167,375);g.closePath();g.fill();
+  const ic=c.toDataURL('image/png');
+  const mf={name:'طلبات | توريد المناديب',short_name:'طلبات',lang:'ar',dir:'rtl',display:'standalone',background_color:'#f6efe5',theme_color:'#ff5a00',start_url:location.href.split('#')[0],icons:[{src:ic,sizes:'512x512',type:'image/png',purpose:'any'}]};
+  const l=document.createElement('link');l.rel='manifest';l.href='data:application/manifest+json;charset=utf-8,'+encodeURIComponent(JSON.stringify(mf));document.head.appendChild(l);
+  const a=document.createElement('link');a.rel='apple-touch-icon';a.href=ic;document.head.appendChild(a);
+  [['apple-mobile-web-app-capable','yes'],['mobile-web-app-capable','yes'],['apple-mobile-web-app-title','طلبات']].forEach(([n,v])=>{const m=document.createElement('meta');m.name=n;m.content=v;document.head.appendChild(m)});
+}catch(e){}})();
+const pwaDismissed=()=>{const t=+localStorage.getItem('pwa_dis')||0;return Date.now()-t<7*864e5};
+function pwaShow(){if(pwaStandalone()||pwaDismissed())return;const t=$('#pwat'),b=$('#pwai');
+  if(pwaEv){t.textContent='ضيفه كتطبيق على موبايلك وافتحه بضغطة واحدة.';b.style.display='inline-block'}
+  else if(pwaIOS){t.textContent='دوس على زرار المشاركة ⎋ في سفاري، وبعدين "إضافة إلى الشاشة الرئيسية".'}
+  else{t.textContent='من قايمة المتصفح ⋮ اختار "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية".'}
+  $('#pwa').style.display='block'}
+function pwaHide(){localStorage.setItem('pwa_dis',Date.now());$('#pwa').style.display='none'}
+async function pwaInstall(){if(!pwaEv)return;pwaEv.prompt();try{await pwaEv.userChoice}catch(e){}pwaEv=null;$('#pwa').style.display='none'}
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();pwaEv=e;if($('#pwa').style.display==='block')pwaShow()});
+addEventListener('appinstalled',()=>{$('#pwa').style.display='none'});
+setTimeout(pwaShow,2500);
 </script>
 </body>
 </html>
